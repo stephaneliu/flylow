@@ -11,6 +11,12 @@ class Scrap
 
   end
 
+  def working_example
+    agent = Mechanize.new
+    agent.ssl_version = 'SSLv3'
+    page = agent.get "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=PDX&dest=HNL&traveler=1&isDM=false&isRoundTrip=true&depDate=5/9/2013&owORob=false&clickedDate=5/9/2013&isEAward=false"
+  end
+
   def start_url
     "https://fly.hawaiianairlines.com/reservations"
   end
