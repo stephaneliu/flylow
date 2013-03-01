@@ -1,0 +1,42 @@
+common: &dev
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  username: root
+  password:
+<% if RUBY_PLATFORM =~ /darwin/i %>
+  socket: /tmp/mysql.sock
+<% elsif RUBY_PLATFORM =~ /linux/i %>
+  socket: /var/run/mysqld/mysqld.sock 
+<% 
+  else
+    raise "OS platform not yet configured. Please configure database.yml" 
+  end
+%>
+
+sqlite: &sqlite
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+
+development: 
+  <<: *sqlite
+  database: db/development.sqlite3
+
+test: &test
+  <<: *sqlite
+  database: db/test.sqlite3
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: ENV['PRODUCTION_DB_NAME']
+  pool: 5
+  username: root
+  password: ENV['PRODUCTION_DB_PASSWORD']
+  socket: /var/run/mysqld/mysqld.sock
+
+cucumber:
+  <<: *test
