@@ -1,8 +1,19 @@
 class Scrap
-  def initialize
-    # @agent  = Mechanize.new
-    # @agent.ssl_version = 'SSLv3'
-    # # @agent.cookie_jar = set_cookies
+
+  attr_accessor :origin, :destination, :travelers
+
+  # origin / destintaion - airport.code
+  def initialize(origin, destination, options={})
+    @agent        = create_agent
+    @origin       = origin
+    @destination  = destination
+
+    @travelers    = options[:travelers] || 2
+    @start_month  = options[:start_month] || Time.now.month
+    # @round_trip   = options[:round_trip] || true
+
+    
+
     # @page   = @agent.get start_url
     # form    = get_form(@page)
 
@@ -11,76 +22,51 @@ class Scrap
 
   end
 
+  def get_fares_by_day(outbound=true)
+    day_with_fare = {}
+    page          = get_page(outbound)
+
+    # non-cheap fares
+    page.css('td.CalendarDayDefault').each_with_object(day_with_fare) do |day_fare, all| 
+      day, fare = day_fare.content.split("$")
+      puts "day: #{day} / fare: #{fare}"
+      all[day]  = fare
+    end
+    day_with_fare
+  end
+
+  def temp_url
+    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=PDX&dest=HNL&traveler=1&isDM=false&isRoundTrip=true&depDate=5/9/2013&owORob=false&isEAward=false"
+  end
+
   def working_example
     agent = Mechanize.new
     agent.ssl_version = 'SSLv3'
-    page = agent.get "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=PDX&dest=HNL&traveler=1&isDM=false&isRoundTrip=true&depDate=5/9/2013&owORob=false&clickedDate=5/9/2013&isEAward=false"
+    file = agent.get "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=PDX&dest=HNL&traveler=1&isDM=false&isRoundTrip=true&depDate=5/9/2013&owORob=false&isEAward=false"
+    page = Nokogiri::HTML.parse "<html>#{file.content}</html>"
+    #page.css('td.CalendarDayDefault > div.Fare').each {|fare| fare.content}
   end
 
-  def start_url
-    "https://fly.hawaiianairlines.com/reservations"
+  private 
+
+  def create_agent
+    agent              = Mechanize.new
+    agent.ssl_version  = 'SSLv3'
+    agent
   end
 
-  def page
-    @page
+  def departure_date
+    tomorrow = 1.day.from_now.localtime
+    "#{tomorrow.month}/#{tomorrow.day}/#{tomorrow.year.to_s[-2..-1]}"
   end
 
-  def get_form(page)
-    raise "Unexpected forms on page" if page.forms.size > 1
-    page.forms.first
+  def get_page(outbound=true)
+    file = @agent.get calendar_url(outbound)
+    Nokogiri::HTML.parse "<html>#{file.content}</html>"
   end
 
-  def post_url
-    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx"
-  end
-
-  def params
-    { "orig"=>"PDX", "dest"=>"HNL", "traveler"=>"1", "isDM"=>"false", "isRoundTrip"=>"true", "depDate"=>"5/9/2013", "owORob"=>"false", "clickedDate"=>"5/9/2013", "isEAward"=>"false"}
-  end
-
-  def fill_form(form)
-    { 'TripType_Name' => 'Roundtrip',
-      'TripType_Code' => 'RT',
-      'Travelers_Name' => '2 Travelers',
-      'Travelers_Code' => '2',
-      'Origin_Name' => 'Oahu - Honolulu, HI (HNL)',
-      'Origin_Code' => 'HNL',
-      'Destination_Name' => 'Portland, OR (PDX)',
-      'Destination_Code' => 'PDX',
-      'departureDate' => 5.days.from_now.strftime("%m/%d/%y").gsub(/^0/,'').gsub(/\/0/, '/'),
-      'returnDate' => 15.days.from_now.strftime("%m/%d/%y").gsub(/^0/,'').gsub(/\/0/, '/')
-    }.each do |field, value|
-      fields_in_form = form.fields_with(name: Regexp.new(field)).size
-
-      if fields_in_form == 0
-        raise "Could not find #{field} in form"
-      elsif fields_in_form > 1
-        raise "More than one #{field} field in form"
-      end
-
-      form[form.field_with(name: Regexp.new(field)).name] = value
-    end
-  end
-
-  def set_cookies
-    # @TODO - read from YAML file
-    #
-    cookie_jar  = Mechanize::CookieJar.new
-
-    { 'FlightSearch1.tripType' => 'RT',
-      'FlightSearch1.travelers' => '2',
-      'FlightSearch1.destination' => 'PDX',
-      'FlightSearch1.departureDate' => '3/4/2013',
-      'FlightSearch1.returnDate' => '3/14/2013',
-      'FlightSearch1.altCity' => 'false' }.each do |name, value|
-        cookie_jar << Mechanize::Cookie.new(
-                        name:   name,
-                        value:  value,
-                        domain: 'fly.hawaiianairlines.com',
-                        secure: true,
-                        path:   '/')
-    end
-    cookie_jar
+  def calendar_url(outbound=true)
+    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=#{origin}&dest=#{destination}&traveler=#{travelers}&depDate=#{departure_date}&owORob=#{outbound}&isDM=false&isRoundTrip=true&isEAward=false".tap { |url| puts url}
   end
 
 end
