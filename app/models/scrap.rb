@@ -22,6 +22,14 @@ class Scrap
     page.forms.first
   end
 
+  def post_url
+    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx"
+  end
+
+  def params
+    { "orig"=>"PDX", "dest"=>"HNL", "traveler"=>"1", "isDM"=>"false", "isRoundTrip"=>"true", "depDate"=>"5/9/2013", "owORob"=>"false", "clickedDate"=>"5/9/2013", "isEAward"=>"false"}
+  end
+
   def fill_form(form)
     { 'TripType_Name' => 'Roundtrip',
       'TripType_Code' => 'RT',
