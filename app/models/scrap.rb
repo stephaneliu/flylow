@@ -1,12 +1,14 @@
 class Scrap
   def initialize
     # @agent  = Mechanize.new
+    # @agent.ssl_version = 'SSLv3'
     # # @agent.cookie_jar = set_cookies
     # @page   = @agent.get start_url
     # form    = get_form(@page)
 
     # fill_form(form)
     # page = agent.submit(form)
+
   end
 
   def start_url
