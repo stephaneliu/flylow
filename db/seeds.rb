@@ -8,15 +8,21 @@
 # Environment variables (ENV['...']) are set in the file config/application.yml.
 # See http://railsapps.github.com/rails-environment-variables.html
 puts 'ROLES'
-YAML.load(ENV['ROLES']).each do |role|
-  Role.find_or_create_by_name({ :name => role }, :without_protection => true)
-  puts 'role: ' << role
-end
-puts 'DEFAULT USERS'
-user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
-puts 'user: ' << user.name
-user.add_role :admin
 
+if Rails.env == "production"
+  %w(admin, user, VIP).each do |role|
+    Role.find_or_create_by_name({ :name => role }, :without_protection => true)
+  end
+else
+  YAML.load(ENV['ROLES']).each do |role|
+    Role.find_or_create_by_name({ :name => role }, :without_protection => true)
+    puts 'role: ' << role
+  end
+  puts 'DEFAULT USERS'
+  user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
+  puts 'user: ' << user.name
+  user.add_role :admin
+end
 
 { "Oahu" => ["HNL", "Domestic"], 
   "Hawaii Island - Hilo, HI" => ["ITO", "Domestic"],
@@ -76,4 +82,4 @@ user.add_role :admin
   "Tokyo-Haneda, Japan" => ["HND", "International"]}.each do |city, code_region|
     code, region = code_region
     Airport.find_or_create_by_city(city: city, code: code, region: region)
-end
+  end
