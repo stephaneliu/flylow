@@ -13,13 +13,12 @@
 
 ActiveRecord::Schema.define(:version => 20130301062224) do
 
-  create_table "airports", :force => true do |t|
+  create_table "cities", :force => true do |t|
+    t.string   "name"
     t.string   "region"
-    t.string   "city"
-    t.string   "code"
-    t.text     "comment"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "airport_code"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "roles", :force => true do |t|

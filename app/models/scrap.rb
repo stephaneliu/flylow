@@ -9,27 +9,21 @@ class Scrap
     @origin         = origin
     @destination    = destination
     @travelers      = options[:travelers] || 2
-    #@departure_date = format_departure(options[:departure_date] || 1.day.from_now.localtime)
-    @departure_date = format_departure 1.day.from_now.localtime
+    @departure_date = format_departure(options[:departure_date] || 1.day.from_now.localtime)
+    @debug          = options[:debug]
+    #@departure_date = format_departure 1.day.from_now.localtime
   end
 
-  def get_fares_by_day(outbound=true)
+  def get_days_with_fare(outbound=true)
     page          = get_page(outbound)
 
     page.css('td.CalendarDayDefault').each_with_object({}) do |day_fare, all| 
-      day   = day_fare.css('.Text').first.content
-      fare  = day_fare.css('.Fare').first.content
+      day       = day_fare.css('.Text').first.content
+      fare      = day_fare.css('.Fare').first.content
+      all[day]  = fare
 
-      puts "day: #{day} / fare: #{fare}"
-
-      all[day] = fare
-      # day, fare = day_fare.content.split("$")
-      # all[day]  = fare
+      puts "day: #{day} / fare: #{fare}" if @debug
     end
-  end
-
-  def temp_url
-    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=PDX&dest=HNL&traveler=1&isDM=false&isRoundTrip=true&depDate=5/9/2013&owORob=false&isEAward=false"
   end
 
   private 
@@ -53,7 +47,7 @@ class Scrap
   end
 
   def calendar_url(outbound=true)
-    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=#{origin}&dest=#{destination}&traveler=#{travelers}&depDate=#{@departure_date}&owORob=#{outbound}&isDM=false&isRoundTrip=true&isEAward=false".tap { |url| puts url}
+    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=#{origin}&dest=#{destination}&traveler=#{travelers}&depDate=#{@departure_date}&owORob=#{outbound}&isDM=false&isRoundTrip=true&isEAward=false".tap { |url| puts url if @debug}
   end
 
 end

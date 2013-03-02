@@ -81,5 +81,5 @@ end
   "Taipei, Taiwan" => ["TPE", "International"],
   "Tokyo-Haneda, Japan" => ["HND", "International"]}.each do |city, code_region|
     code, region = code_region
-    Airport.find_or_create_by_city(city: city, code: code, region: region)
+    City.find_or_create_by_name(name: city, airport_code: code, region: region)
   end
