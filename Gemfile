@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-
-gem 'sqlite3'
+gem "thin", "~>1.5.0"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -24,7 +23,6 @@ gem "mechanize", "~>2.5.1"
 group :development, :test do
   gem "rspec-rails", ">= 2.12.2"
   gem "factory_girl_rails", ">= 4.2.0"
-  gem "thin", ">= 1.5.0"
 end
 
 group :development do
@@ -33,6 +31,7 @@ group :development do
   gem "binding_of_caller", ">= 0.6.9"
   gem "debugger"
   gem "html2haml", ">= 1.0.0"
+  gem 'sqlite3'
 end
 
 group :test do
@@ -43,7 +42,6 @@ group :test do
   gem "capybara", ">= 2.0.2"
 end
 
-
 group :production do
-  gem "unicorn", ">= 4.3.1"
+  gem "pg", "~>0.14.1"
 end
