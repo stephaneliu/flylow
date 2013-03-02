@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem "thin", "~>1.5.0"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -9,9 +8,9 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem "thin", "~>1.5.0"
 gem 'jquery-rails'
 gem "haml-rails", ">= 0.4"
-
 gem "bootstrap-sass", ">= 2.3.0.0"
 gem "devise", ">= 2.2.3"
 gem "cancan", ">= 1.6.8"
@@ -19,11 +18,6 @@ gem "rolify", ">= 3.2.0"
 gem "simple_form", ">= 2.0.4"
 gem "figaro", ">= 0.5.3"
 gem "mechanize", "~>2.5.1"
-
-group :development, :test do
-  gem "rspec-rails", ">= 2.12.2"
-  gem "factory_girl_rails", ">= 4.2.0"
-end
 
 group :development do
   gem "quiet_assets", ">= 1.0.1"
@@ -40,6 +34,11 @@ group :test do
   gem "cucumber-rails", ">= 1.3.0", :require => false
   gem "launchy", ">= 2.2.0"
   gem "capybara", ">= 2.0.2"
+end
+
+group :development, :test do
+  gem "rspec-rails", ">= 2.12.2"
+  gem "factory_girl_rails", ">= 4.2.0"
 end
 
 group :production do
