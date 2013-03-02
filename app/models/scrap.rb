@@ -9,20 +9,18 @@ class Scrap
     @origin         = origin
     @destination    = destination
     @travelers      = options[:travelers] || 2
-    @departure_date = format_departure(options[:departure_date] || 1.day.from_now.localtime)
+    @departure_date = options[:departure_date] || 1.day.from_now.localtime
     @debug          = options[:debug]
     #@departure_date = format_departure 1.day.from_now.localtime
   end
 
   def get_days_with_fare(outbound=true)
-    page          = get_page(outbound)
+    get_page(outbound).css('td.CalendarDayDefault').each_with_object({}) do |day_fare, day_with_fare| 
+      date                = Date.parse("#{departure_date.year}/#{departure_date.month}/#{day_fare.css('.Text').first.content}")
+      fare                = day_fare.css('.Fare').first.content[1..-1].to_f
+      day_with_fare[date] = fare
 
-    page.css('td.CalendarDayDefault').each_with_object({}) do |day_fare, all| 
-      day       = day_fare.css('.Text').first.content
-      fare      = day_fare.css('.Fare').first.content
-      all[day]  = fare
-
-      puts "day: #{day} / fare: #{fare}" if @debug
+      puts "day: #{date} / fare: #{fare}" if @debug
     end
   end
 
@@ -36,18 +34,15 @@ class Scrap
   end
 
   def create_secure_agent
-    agent              = Mechanize.new
-    agent.ssl_version  = 'SSLv3'
-    agent
+    Mechanize.new.tap {|mech| mech.ssl_version  = 'SSLv3'}
   end
 
   def get_page(outbound=true)
-    file = @agent.get calendar_url(outbound)
-    Nokogiri::HTML.parse "<html>#{file.content}</html>"
+    Nokogiri::HTML.parse "<html>#{@agent.get(calendar_url(outbound)).content}</html>".tap {|page| puts page if @debug}
   end
 
   def calendar_url(outbound=true)
-    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=#{origin}&dest=#{destination}&traveler=#{travelers}&depDate=#{@departure_date}&owORob=#{outbound}&isDM=false&isRoundTrip=true&isEAward=false".tap { |url| puts url if @debug}
+    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=#{origin}&dest=#{destination}&traveler=#{travelers}&depDate=#{format_departure(@departure_date)}&owORob=#{outbound}&isDM=false&isRoundTrip=true&isEAward=false".tap { |url| puts url if @debug}
   end
 
 end
