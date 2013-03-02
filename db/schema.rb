@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130301062224) do
+ActiveRecord::Schema.define(:version => 20130302052219) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(:version => 20130301062224) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "tickets", :force => true do |t|
+    t.decimal  "price",          :precision => 8, :scale => 2
+    t.date     "departure_date"
+    t.integer  "origin_id"
+    t.integer  "destination_id"
+    t.text     "comments"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
