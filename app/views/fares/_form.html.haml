@@ -1,0 +1,12 @@
+= simple_form_for(@fare) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :departure_date
+    = f.input :price
+    = f.input :origin_id
+    = f.input :destination_id
+    = f.input :comments
+
+  .form-actions
+    = f.button :submit

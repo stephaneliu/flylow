@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Price:
+  = @fare.price
+%p
+  %b Origin:
+  = @fare.origin_id
+%p
+  %b Destination:
+  = @fare.destination_id
+%p
+  %b Comments:
+  = @fare.comments
+
+= link_to 'Edit', edit_fare_path(@farfe)
+\|
+= link_to 'Back', fares_path

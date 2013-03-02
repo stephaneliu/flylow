@@ -1,0 +1,25 @@
+%h1 Listing Fares
+
+%table
+  %tr
+    %th Price
+    %th Origin
+    %th Destination
+    %th Comments
+    %th
+    %th
+    %th
+
+  - @fares.each do |fare|
+    %tr
+      %td= fare.price
+      %td= fare.origin_id
+      %td= fare.destination_id
+      %td= fare.comments
+      %td= link_to 'Show', fare
+      %td= link_to 'Edit', edit_fare_path(fare)
+      %td= link_to 'Destroy', fare, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New fare', new_fare_path
