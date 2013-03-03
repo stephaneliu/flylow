@@ -44,7 +44,7 @@
           %br
           %strong
             Total: 
-          -total = (low_return.present? low_return.first.price : 0) + low_outbound.first.price
+          -total = (low_return.present? ? low_return.first.price : 0) + low_outbound.first.price
           =number_to_currency(total)
           %br
           As of #{low_return.last.updated_at.to_s(:long)} HST
