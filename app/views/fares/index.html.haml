@@ -1,25 +1,27 @@
-%h1 Listing Fares
+%h1 Best Fares
 
-%table
-  %tr
-    %th Price
-    %th Origin
-    %th Destination
-    %th Comments
-    %th
-    %th
-    %th
+%h3 All fares are without taxes (currently ~$40)
 
-  - @fares.each do |fare|
-    %tr
-      %td= fare.price
-      %td= fare.origin_id
-      %td= fare.destination_id
-      %td= fare.comments
-      %td= link_to 'Show', fare
-      %td= link_to 'Edit', edit_fare_path(fare)
-      %td= link_to 'Destroy', fare, :method => :delete, :data => { :confirm => 'Are you sure?' }
+#cheap_listing
+  -@favorite_cities.sort_by {|city| city.name}.each do |origin|
+    -destinations = @favorite_cities.dup.reject {|destination| destination == origin}
 
-%br
-
-= link_to 'New fare', new_fare_path
+    -destinations.each do |destination|
+      -outbound_fare = Fare.where(origin_id: origin, destination_id: destination).where("departure_date > ?", Time.now.beginning_of_day.localtime).order(:price).limit(1).first
+      -if outbound_fare
+        -return_fare = Fare.where(origin_id: destination, destination_id: origin).where("departure_date > ?", outbound_fare.departure_date).order(:price).limit(1).first
+        %p
+          From #{origin.name} to #{destination.name}
+          %br
+          Depart
+          =outbound_fare.departure_date
+          Return
+          =return_fare.departure_date
+          %br
+          Depart
+          =number_to_currency(outbound_fare.price)
+          Return
+          =number_to_currency(return_fare.price)
+          %br
+          Total: 
+          =number_to_currency(outbound_fare.price + return_fare.price)

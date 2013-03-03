@@ -1,9 +1,12 @@
 class FaresController < ApplicationController
 
+  authorize_resource
+
   # GET /fares
   # GET /fares.json
   def index
-    @fares = Fare.all
+    @favorite_cities  = City.favorites
+    @fares            = Fare.all
 
     respond_to do |format|
       format.html # index.html.erb

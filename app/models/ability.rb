@@ -3,7 +3,16 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
-    authorize
+
+    can :use, :public_areas
+
+    if user.has_role? :user
+      can :read , :fare
+    end
+
+    if user.has_role? :admin
+      can :manage, :all
+    end
 
     # Define abilities for the passed in user here. For example:
     #
@@ -27,11 +36,5 @@ class Ability
     #   can :update, Article, :published => true
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-  end
-
-  def authorize
-    if user.has_role? :admin
-      can :manage, :all
-    end
   end
 end

@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-  skip_authorization_check
+  before_filter :authorize_public_area!
 
   def index
     @favorites = City.favorites
