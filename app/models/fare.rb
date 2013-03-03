@@ -29,7 +29,6 @@ class Fare < ActiveRecord::Base
       existing.touch
       true
     else
-      puts "price existing/new: (#{existing.price.to_s}/#{price.to_s} on #{departure_date} from #{origin.name} to #{destination.name}"
       self.save
     end
   end
