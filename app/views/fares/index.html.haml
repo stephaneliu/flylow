@@ -1,6 +1,9 @@
 %h1 Best Fares
 
-%h3 All fares are without taxes (currently ~$40)
+%h3 
+  All fares are without taxes (currently ~$40).
+%h4
+  Origins and destinations are interchangeable.
 
 #cheap_listing
   -destinations = @favorite_cities.dup
@@ -24,7 +27,6 @@
         %p
           %h4
             From #{origin.name} to #{destination.name}
-          %br
           %strong
             Depart
           =low_outbound.map(&:departure_date).uniq.sort
@@ -43,3 +45,5 @@
           %strong
             Total: 
           =number_to_currency(low_outbound.first.price + low_return.first.price)
+          %br
+          As of #{low_return.last.updated_at.to_s(:long)} HST
