@@ -23,16 +23,25 @@ class Fare < ActiveRecord::Base
 
   # if price does not change for departure_date, update updated_at
   def smart_save
-    existing = Fare.where(origin_id: self.origin).
-      where(destination_id: self.destination).
-      where(departure_date: self.departure_date).
-      order(:created_at).first
+    existing = find_existing(origin, destination, departure_date)
 
-    if existing.price == self.price
+    puts "found #{existing.price.to_s}"
+
+    if existing && existing.price == self.price
       existing.touch
       true
     else
+      puts "price change, new record"
       self.save
     end
+  end
+
+  private
+
+  def find_existing(origin,  destination, departure_date)
+    Fare.where(origin_id: self.origin).
+      where(destination_id: self.destination).
+      where(departure_date: self.departure_date).
+      order(:created_at).last
   end
 end
