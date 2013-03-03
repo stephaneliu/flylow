@@ -11,9 +11,9 @@ class Scrap
     @travelers      = options[:travelers] || 2
     @departure_date = options[:departure_date] || 1.day.from_now.localtime
     @debug          = options[:debug]
-    #@departure_date = format_departure 1.day.from_now.localtime
   end
 
+  # Endpoint distinguishes between origin -> destination from reverse
   def get_days_with_fare(outbound=true)
     get_page(outbound).css('td.CalendarDayDefault').each_with_object({}) do |day_fare, day_with_fare| 
       date                = Date.parse("#{departure_date.year}/#{departure_date.month}/#{day_fare.css('.Text').first.content}")
@@ -26,13 +26,6 @@ class Scrap
 
   private 
 
-  def format_departure(date_or_time)
-    unless [ActiveSupport::TimeWithZone, Time, Date].include? date_or_time.class
-      raise ArgumentError, "Expected departure_date to be a Date or Time"
-    end
-    date_or_time.strftime('%m/%d/%y')
-  end
-
   def create_secure_agent
     Mechanize.new.tap {|mech| mech.ssl_version  = 'SSLv3'}
   end
@@ -42,7 +35,20 @@ class Scrap
   end
 
   def calendar_url(outbound=true)
-    "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?orig=#{origin}&dest=#{destination}&traveler=#{travelers}&depDate=#{format_departure(@departure_date)}&owORob=#{outbound}&isDM=false&isRoundTrip=true&isEAward=false".tap { |url| puts url if @debug}
+    ("https://fly.hawaiianairlines.com/Calendar/Calendar.aspx" +
+      "?orig=#{origin}" +
+      "&dest=#{destination}" +
+      "&traveler=#{travelers}" +
+      "&depDate=#{format_departure(@departure_date)}" +
+      "&owORob=#{outbound}" +
+      "&isDM=false&isRoundTrip=true&isEAward=false").tap { |url| puts url if @debug }
+  end
+
+  def format_departure(date_or_time)
+    unless [ActiveSupport::TimeWithZone, Time, Date].include? date_or_time.class
+      raise ArgumentError, "Expected departure_date to be a Date or Time"
+    end
+    date_or_time.strftime('%m/%d/%y')
   end
 
 end
