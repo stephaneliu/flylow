@@ -4,26 +4,42 @@
 
 #cheap_listing
   -destinations = @favorite_cities.dup
+  -reported = []
 
   -@favorite_cities.sort_by {|city| city.name}.each do |origin|
-    -destinations.reject {|destination| destination == origin}
+    - reported << origin
 
     -destinations.each do |destination|
-      -outbound_fare = Fare.where(origin_id: origin, destination_id: destination).where("departure_date > ?", Time.now.beginning_of_day.localtime).order(:price).limit(1).first
-      -if outbound_fare
-        -return_fare = Fare.where(origin_id: destination, destination_id: origin).where("departure_date > ?", outbound_fare.departure_date).order(:price).limit(1).first
+      - next if reported.include? destination
+
+      -low_outbound       = Fare.where(origin_id: origin, destination_id: destination).where("departure_date > ?", Time.now.beginning_of_day.localtime).order(:price)
+      -low_outbound_price = low_outbound.first
+      -low_outbound.reject {|fare| fare != low_outbound_price}
+
+      -if low_outbound.present?
+        -low_return = Fare.where(origin_id: destination, destination_id: origin).order(:price)
+        -low_price  = low_return.first
+        -low_return.reject {|fare| fare != low_price}
+
         %p
-          From #{origin.name} to #{destination.name}
+          %h4
+            From #{origin.name} to #{destination.name}
           %br
-          Depart
-          =outbound_fare.departure_date
-          Return
-          =return_fare.departure_date
+          %strong
+            Depart
+          =low_outbound.map(&:departure_date).uniq.sort
           %br
-          Depart
-          =number_to_currency(outbound_fare.price)
-          Return
-          =number_to_currency(return_fare.price)
+          %strong
+            Return
+          =low_return.map(&:departure_date).uniq.sort
           %br
-          Total: 
-          =number_to_currency(outbound_fare.price + return_fare.price)
+          %strong
+            Depart
+          =number_to_currency(low_outbound.first.price)
+          %strong
+            Return
+          =number_to_currency(low_return.first.price)
+          %br
+          %strong
+            Total: 
+          =number_to_currency(low_outbound.first.price + low_return.first.price)

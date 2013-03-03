@@ -25,13 +25,11 @@ class Fare < ActiveRecord::Base
   def smart_save
     existing = find_existing(origin, destination, departure_date)
 
-    puts "found #{existing.price.to_s}"
-
     if existing && existing.price == self.price
       existing.touch
       true
     else
-      puts "price change, new record"
+      puts "price existing/new: (#{existing.price.to_s}/#{price.to_s} on #{departure_date} from #{origin.name} to #{destination.name}"
       self.save
     end
   end
