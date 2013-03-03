@@ -1,7 +1,8 @@
 HAL Fare
 ========================
 
-<a href="https://codeclimate.com/github/stephaneliu/hal_fare"><img src="https://codeclimate.com/github/stephaneliu/hal_fare.png" /></a>
+!img src="https://codeclimate.com/github/stephaneliu/hal_fare.png"!:
+https://codeclimate.com/github/stephaneliu/hal_fare
 
 This application was generated with the rails_apps_composer gem:
 https://github.com/RailsApps/rails_apps_composer
