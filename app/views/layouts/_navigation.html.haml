@@ -1,7 +1,9 @@
 = link_to "Fly Low", root_path, :class => 'brand'
 %ul.nav
 
-  -# - if user_signed_in?
+  -if user_signed_in?
+    %li
+      =link_to 'Fares', fares_path
   -#   - if current_user.has_role? :admin
   -#     %li
   -#       = link_to 'Edit account', edit_user_registration_path
