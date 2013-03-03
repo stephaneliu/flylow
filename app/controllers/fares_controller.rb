@@ -1,4 +1,5 @@
 class FaresController < ApplicationController
+
   # GET /fares
   # GET /fares.json
   def index

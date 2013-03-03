@@ -1,10 +1,10 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :ticket do
+  factory :fare do
     price "9.99"
-    origin_id 1
-    destination_id 1
+    association :origin, factory: :city
+    association :destination_id, factory: :city
     comments "MyText"
   end
 end
