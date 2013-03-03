@@ -21,7 +21,7 @@ namespace :get_fares do
     cities  = City.where(favorite: true)
 
     cities.each do |origin|
-      months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month.localtime ]
+      months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month, 2.months.from_now.beginning_of_month]
       destinations  = cities.dup.reject {|city| city == origin}
 
       destinations.each do |destination|
