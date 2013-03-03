@@ -15,19 +15,35 @@ class Scrap
 
   # Endpoint distinguishes between origin -> destination from reverse
   def get_days_with_fare(outbound=true)
-    get_page(outbound).css('td.CalendarDayDefault').each_with_object({}) do |day_fare, day_with_fare| 
-      date                = Date.parse("#{departure_date.year}/#{departure_date.month}/#{day_fare.css('.Text').first.content}")
-      fare                = day_fare.css('.Fare').first.content[1..-1].to_f
-      day_with_fare[date] = fare
-
-      puts "day: #{date} / fare: #{fare}" if @debug
-    end
+    parse_page(get_page(outbound))
   end
 
   private 
 
   def create_secure_agent
     Mechanize.new.tap {|mech| mech.ssl_version  = 'SSLv3'}
+  end
+
+  def parse_page(page)
+    page.css('td.CalendarDayDefault').each_with_object({}) do |day_fare, day_with_fare| 
+      date                = parse_date_from_element(day_fare)
+      fare                = parse_fare_from_element(day_fare)
+      day_with_fare[date] = fare
+
+      puts "day: #{date} / fare: #{fare}" if @debug
+    end
+  end
+
+  def parse_date_from_element(element)
+    Date.parse("#{departure_date.year}/#{departure_date.month}/#{parse_day_from_element(element)}")
+  end
+
+  def parse_fare_from_element(element)
+   (element.css('.Fare').first.content[1..-1]).to_f
+  end
+
+  def parse_day_from_element(element)
+    element.css('.Text').first.content
   end
 
   def get_page(outbound=true)
