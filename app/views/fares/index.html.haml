@@ -40,10 +40,11 @@
           =number_to_currency(low_outbound.first.price)
           %strong
             Return
-          =number_to_currency(low_return.first.price)
+          =number_to_currency(low_return.first.price) if low_return.present?
           %br
           %strong
             Total: 
-          =number_to_currency(low_outbound.first.price + low_return.first.price)
+          -total = (low_return.present? low_return.first.price : 0) + low_outbound.first.price
+          =number_to_currency(total)
           %br
           As of #{low_return.last.updated_at.to_s(:long)} HST
