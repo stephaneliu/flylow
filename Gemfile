@@ -26,6 +26,7 @@ group :development do
   gem "debugger"
   gem "html2haml", ">= 1.0.0"
   gem 'sqlite3'
+  gem 'annotate'
 end
 
 group :test do
