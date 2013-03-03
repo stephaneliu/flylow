@@ -7,13 +7,9 @@
 
 #cheap_listing
   -destinations = @favorite_cities.dup
-  -reported = []
 
   -@favorite_cities.sort_by {|city| city.name}.each do |origin|
-    - reported << origin
-
     -destinations.each do |destination|
-      - next if reported.include? destination
 
       -low_outbound       = Fare.where(origin_id: origin, destination_id: destination).where("departure_date > ?", Time.now.beginning_of_day.localtime).order(:price)
       -low_outbound_price = low_outbound.first
