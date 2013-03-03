@@ -90,6 +90,6 @@ end
   City.find_by_airport_code(code).update_attribute(:favorite, true)
   end
 
-["ITO", "KOA", "LIH", "JHM", "BOS", "ORD", "SAN", "FLL", "MRY", "EWR", "OAK", "SJC"].each do |code|
+["ITO", "KOA", "LIH", "OGG", "JHM", "BOS", "ORD", "SAN", "FLL", "MRY", "EWR", "OAK", "SJC"].each do |code|
   City.find_by_airport_code(code).update_attribute(:favorite, false)
 end
