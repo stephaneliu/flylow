@@ -3,8 +3,9 @@
 FactoryGirl.define do
   factory :fare do
     price "9.99"
+    departure_date Time.now.to_date
     association :origin, factory: :city
-    association :destination_id, factory: :city
+    association :destination, factory: :city
     comments "MyText"
   end
 end

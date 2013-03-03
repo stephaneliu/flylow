@@ -21,14 +21,10 @@ namespace :get_fares do
     cities  = City.where(favorite: true)
 
     cities.each do |origin|
-      months        = [1.day.from_now.localtime,
-                       1.month.from_now.beginning_of_month.localtime,
-                       2.months.from_now.beginning_of_month.localtime
-                      ]
+      months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month.localtime ]
       destinations  = cities.dup.reject {|city| city == origin}
 
       destinations.each do |destination|
-
         months.each do |month|
           puts "#{month.month}: #{origin.name} to #{destination.name}" if debug
 
@@ -38,8 +34,11 @@ namespace :get_fares do
               puts "origin: #{origin.code} / destination: #{destination.code}"
             end
 
-            # TODO - How should days without fares be handled? 
-            if Fare.create(price: fare, departure_date: day, origin: origin, destination: destination)
+            fare = Fare.new(price: fare, departure_date: day, origin: origin, destination: destination)
+
+
+            if fare.smart_save
+              puts "smart save from #{fare.origin.name} to #{fare.destination.name} for #{fare.price} on #{fare.departure_date}"  
               puts "Successfully added fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug
             else
               puts "Could not add fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug

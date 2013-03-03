@@ -15,7 +15,9 @@ class Scrap
 
   # Endpoint distinguishes between origin -> destination from reverse
   def get_days_with_fare(outbound=true)
-    parse_page(get_page(outbound))
+    page = get_page(outbound)
+
+    parse_page(page, find_cheap=true).merge(parse_page(page, find_cheap=false))
   end
 
   private 
@@ -24,8 +26,9 @@ class Scrap
     Mechanize.new.tap {|mech| mech.ssl_version  = 'SSLv3'}
   end
 
-  def parse_page(page)
-    page.css('td.CalendarDayDefault').each_with_object({}) do |day_fare, day_with_fare| 
+  def parse_page(page, find_cheap_fares=true)
+    element_class = find_cheap_fares ? 'td.CalendarDayCheapest' : 'td.CalendarDayDefault'
+    page.css(element_class).each_with_object({}) do |day_fare, day_with_fare| 
       date                = parse_date_from_element(day_fare)
       fare                = parse_fare_from_element(day_fare)
       day_with_fare[date] = fare

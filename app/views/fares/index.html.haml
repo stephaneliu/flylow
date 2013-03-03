@@ -3,8 +3,10 @@
 %h3 All fares are without taxes (currently ~$40)
 
 #cheap_listing
+  -destinations = @favorite_cities.dup
+
   -@favorite_cities.sort_by {|city| city.name}.each do |origin|
-    -destinations = @favorite_cities.dup.reject {|destination| destination == origin}
+    -destinations.reject {|destination| destination == origin}
 
     -destinations.each do |destination|
       -outbound_fare = Fare.where(origin_id: origin, destination_id: destination).where("departure_date > ?", Time.now.beginning_of_day.localtime).order(:price).limit(1).first

@@ -18,4 +18,21 @@ class Fare < ActiveRecord::Base
 
   belongs_to :origin, class_name: 'City'
   belongs_to :destination, class_name: 'City'
+
+  validates_presence_of :price, :departure_date, :origin_id, :destination_id
+
+  # if price does not change for departure_date, update updated_at
+  def smart_save
+    existing = Fare.where(origin_id: self.origin).
+      where(destination_id: self.destination).
+      where(departure_date: self.departure_date).
+      order(:created_at).first
+
+    if existing.price == self.price
+      existing.touch
+      true
+    else
+      self.save
+    end
+  end
 end
