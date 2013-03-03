@@ -26,7 +26,7 @@
 
         %p
           %h4
-            From #{origin.name} to #{destination.name}
+            From #{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code})
           %strong
             Depart
           =low_outbound.map(&:departure_date).uniq.sort
