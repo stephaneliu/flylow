@@ -9,6 +9,7 @@ group :assets do
 end
 
 gem "thin", "~>1.5.0"
+gem "pg", "~>0.14.1"
 gem 'jquery-rails'
 gem "haml-rails", ">= 0.4"
 gem "bootstrap-sass", ">= 2.3.0.0"
@@ -27,6 +28,7 @@ group :development do
   gem "html2haml", ">= 1.0.0"
   gem 'sqlite3'
   gem 'annotate'
+  gem 'travis-lint'
 end
 
 group :test do
@@ -40,8 +42,4 @@ end
 group :development, :test do
   gem "rspec-rails", ">= 2.12.2"
   gem "factory_girl_rails", ">= 4.2.0"
-end
-
-group :production do
-  gem "pg", "~>0.14.1"
 end
