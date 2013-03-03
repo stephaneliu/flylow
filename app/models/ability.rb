@@ -7,7 +7,7 @@ class Ability
     can :use, :public_areas
 
     if user.has_role? :user
-      can :read , :fare
+      can :index, Fare
     end
 
     if user.has_role? :admin
