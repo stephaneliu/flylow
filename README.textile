@@ -1,7 +1,6 @@
 h1. HAL Fare
 
-!https://codeclimate.com/github/stephaneliu/hal_fare.png!:https://codeclimate.com/github/stephaneliu/hal_fare
-!https://travis-ci.org/stephaneliu/hal_fare.png?branch=master!:https://travis-ci.org/stephaneliu/hal_fare
+!https://codeclimate.com/github/stephaneliu/hal_fare.png!:https://codeclimate.com/github/stephaneliu/hal_fare !https://travis-ci.org/stephaneliu/hal_fare.png?branch=master!:https://travis-ci.org/stephaneliu/hal_fare
 
 This application was generated with the "rails_apps_composer":https://github.com/RailsApps/rails_apps_composer gem provided by the "RailsApps Project":http://railsapps.github.com/.
 
