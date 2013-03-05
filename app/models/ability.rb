@@ -4,7 +4,8 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
-    can :use, :public_areas
+    can [:read, :update], User, id: user.id
+    cannot :index, User
 
     if user.has_role? :user
       can :index, Fare
