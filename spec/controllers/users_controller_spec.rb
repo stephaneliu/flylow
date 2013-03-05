@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UsersController, :focus do
+describe UsersController do
 
   before do
     @user = create :user
