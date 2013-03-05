@@ -43,3 +43,7 @@ group :development, :test do
   gem "rspec-rails", ">= 2.12.2"
   gem "factory_girl_rails", ">= 4.2.0"
 end
+
+group :production do
+  gem 'newrelic_rpm'
+end
