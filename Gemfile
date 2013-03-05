@@ -30,6 +30,7 @@ group :development do
   gem 'sqlite3'
   gem 'annotate'
   gem 'travis-lint'
+  gem 'spork'
 end
 
 group :test do
