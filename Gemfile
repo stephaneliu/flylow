@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+def os_platform_only(require_as, os=:darwin)
+  RUBY_PLATFORM.include?(os.to_s) && require_as
+end
+
 gem 'rails', '3.2.12'
 
 group :assets do
@@ -31,6 +35,14 @@ group :development do
   gem 'annotate'
   gem 'travis-lint'
   gem 'spork'
+  gem 'guard-livereload'
+  gem 'guard-spork'
+  gem 'guard-rspec'
+  gem 'guard-livereload'
+  gem 'guard-ctags-bundler'
+  gem 'guard-schema'
+  gem 'terminal-notifier-guard', require: os_platform_only('terminal-notifier-guard') # notify to darwin notification
+  gem 'rb-inotify', require: os_platform_only('rb-inotify', :linux)
 end
 
 group :test do
