@@ -51,6 +51,7 @@ group :test do
   gem "cucumber-rails", ">= 1.3.0", :require => false
   gem "launchy", ">= 2.2.0"
   gem "capybara", ">= 2.0.2"
+  gem 'rspec-instafail'
 end
 
 group :development, :test do

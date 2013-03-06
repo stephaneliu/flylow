@@ -13,5 +13,4 @@ ADMIN_NAME: First User
 ADMIN_EMAIL: user@example.com
 ADMIN_PASSWORD: changeme
 ROLES: [admin, user, VIP]
-PRODUCTION_DB_NAME: ["hal_production"]
-PRODUCTION_DB_PASSWORD: ["password"]
+TEST_LOCAL: true
