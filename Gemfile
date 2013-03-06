@@ -52,6 +52,7 @@ group :test do
   gem "launchy", ">= 2.2.0"
   gem "capybara", ">= 2.0.2"
   gem 'rspec-instafail'
+  gem 'timecop', "~>0.5.9"
 end
 
 group :development, :test do
