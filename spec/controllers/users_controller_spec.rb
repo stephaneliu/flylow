@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UsersController do
 
   before do
-    @user = create :user
+    @user = create :plain_user
     sign_in @user
   end
 

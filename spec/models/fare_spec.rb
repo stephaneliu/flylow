@@ -33,8 +33,8 @@ describe Fare do
         @not_first.reload
       end
 
-      subject { @not_first_updated_at }
-      it      { should == @not_first.updated_at}
+      subject { @not_first_updated_at.to_s }
+      it      { should == @not_first.updated_at.to_s}
 
 
     end
