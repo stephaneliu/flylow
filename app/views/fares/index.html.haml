@@ -4,29 +4,36 @@
   Origins and destinations are interchangeable.
   All fares are without taxes (currently ~$40).
 
-#cheap_listing
+#cheap_listing.accordion
   -@low_fares.each do |low_fare|
     - total = low_fare.low_outbound_price + low_fare.low_return_price
-    %p
-      %h4
-        From #{low_fare.origin.name} (#{low_fare.origin.code}) to #{low_fare.destination.name} (#{low_fare.destination.code}) - (#{number_to_currency(total)})
-      %strong
-        Depart
-      =number_to_currency(low_fare.low_outbound_price)
-      %strong
-        Return
-      =number_to_currency(low_fare.low_return_price)
-      %br
-      %strong
-        Depart
-      =low_fare.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
-      %br
-      %strong
-        Return
-      =low_fare.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
-      %br
-      %strong
-        Total: 
-      =number_to_currency(total)
-      %br
-      Last checked: #{low_fare.origin.updated_at.strftime("%-m/%-d/%y @ %l:%M %p")}
+    - origin = low_fare.origin
+    - destination = low_fare.destination
+    .accordion-group
+      .accordion-heading
+        =link_to "#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(total)})", '#',
+          data: {target: "#fare_details_#{origin.code}_#{destination.code}",
+          toggle: 'collapse', parent: '#cheap_listing'},
+          class: 'accordion-toggle'
+      .accordion-body.collapse{id: "fare_details_#{origin.code}_#{destination.code}"}
+        .accordion-inner
+          %strong
+            Depart
+          =number_to_currency(low_fare.low_outbound_price)
+          %strong
+            Return
+          =number_to_currency(low_fare.low_return_price)
+          %br
+          %strong
+            Depart
+          =low_fare.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+          %br
+          %strong
+            Return
+          =low_fare.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+          %br
+          %strong
+            Total: 
+          =number_to_currency(total)
+          %br
+          Last checked: #{low_fare.origin.updated_at.strftime("%-m/%-d/%y @ %l:%M %p")}
