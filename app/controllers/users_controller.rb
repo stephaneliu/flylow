@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
   end
-  
+
   def update
     if @user.update_attributes(params[:user], :as => :admin)
       redirect_to users_path, :notice => "User updated."

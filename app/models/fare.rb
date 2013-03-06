@@ -21,6 +21,11 @@ class Fare < ActiveRecord::Base
 
   validates_presence_of :price, :departure_date, :origin_id, :destination_id
 
+  scope :upcoming_for, lambda { |origin, destination|
+    where(origin_id: origin, destination_id: destination).
+      where("departure_date > ?", Time.now.beginning_of_day.localtime)
+  }
+
   # if price does not change for departure_date, update updated_at
   def smart_save
     existing = find_existing(origin, destination, departure_date)

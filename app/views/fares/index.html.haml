@@ -1,50 +1,32 @@
 %h1 Best Fares
 
-%h3 
-  All fares are without taxes (currently ~$40).
-%h4
+.alert.alert-info
   Origins and destinations are interchangeable.
+  All fares are without taxes (currently ~$40).
 
 #cheap_listing
-  -destinations = @favorite_cities.dup
-  -reported = []
-
-  -@favorite_cities.sort_by {|city| city.name}.each do |origin|
-    - reported << origin
-
-    -destinations.each do |destination|
-      - next if reported.include? destination
-
-      -low_outbound       = Fare.where(origin_id: origin, destination_id: destination).where("departure_date > ?", Time.now.beginning_of_day.localtime).order(:price)
-      -low_outbound_price = low_outbound.first
-      -low_outbound.reject {|fare| fare != low_outbound_price}
-
-      -if low_outbound.present?
-        -low_return = Fare.where(origin_id: destination, destination_id: origin).order(:price)
-        -low_price  = low_return.first
-        -low_return.reject {|fare| fare != low_price}
-
-        %p
-          %h4
-            From #{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code})
-          %strong
-            Depart
-          =low_outbound.map(&:departure_date).uniq.sort
-          %br
-          %strong
-            Return
-          =low_return.map(&:departure_date).uniq.sort
-          %br
-          %strong
-            Depart
-          =number_to_currency(low_outbound.first.price)
-          %strong
-            Return
-          =number_to_currency(low_return.first.price) if low_return.present?
-          %br
-          %strong
-            Total: 
-          -total = (low_return.present? ? low_return.first.price : 0) + low_outbound.first.price
-          =number_to_currency(total)
-          %br
-          As of #{low_outbound.last.updated_at.to_s(:long)} HST
+  -@low_fares.each do |low_fare|
+    - total = low_fare.low_outbound_price + low_fare.low_return_price
+    %p
+      %h4
+        From #{low_fare.origin.name} (#{low_fare.origin.code}) to #{low_fare.destination.name} (#{low_fare.destination.code}) - (#{number_to_currency(total)})
+      %strong
+        Depart
+      =number_to_currency(low_fare.low_outbound_price)
+      %strong
+        Return
+      =number_to_currency(low_fare.low_return_price)
+      %br
+      %strong
+        Depart
+      =low_fare.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+      %br
+      %strong
+        Return
+      =low_fare.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+      %br
+      %strong
+        Total: 
+      =number_to_currency(total)
+      %br
+      Last checked: #{low_fare.origin.updated_at.strftime("%-m/%-d/%y @ %l:%M %p")}

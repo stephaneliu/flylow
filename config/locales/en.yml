@@ -3,3 +3,6 @@
 
 en:
   hello: "Hello world"
+  time:
+    formats:
+      tz: "%-m/%-d/%y %l:%M %p"

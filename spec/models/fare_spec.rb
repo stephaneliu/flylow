@@ -35,8 +35,6 @@ describe Fare do
 
       subject { @not_first_updated_at.to_s }
       it      { should == @not_first.updated_at.to_s}
-
-
     end
 
     context "when price has not change" do
@@ -51,6 +49,18 @@ describe Fare do
       subject { @not_first_updated_at }
       it      { should_not == @not_first.updated_at }
     end
+  end
+
+  describe '#upcoming_for' do
+    before do
+      @fare   = create(:fare, price: 700.00)
+      @fare_2 = create(:fare, origin: @fare.origin, destination: @fare.destination)
+      other   = create(:fare)
+    end
+
+    subject { Fare.upcoming_for(@fare.origin, @fare.destination) }
+    it      { should include @fare }
+    it      { should include @fare_2 }
   end
 
 end

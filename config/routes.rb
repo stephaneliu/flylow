@@ -1,6 +1,4 @@
 HawaiianAir::Application.routes.draw do
-  resources :fares
-
   authenticated :user do
     root :to => 'fares#index'
   end
@@ -10,4 +8,5 @@ HawaiianAir::Application.routes.draw do
   devise_for :users
 
   resources :users
+  resources :fares
 end

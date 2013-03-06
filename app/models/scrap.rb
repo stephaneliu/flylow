@@ -1,6 +1,6 @@
 class Scrap
 
-  attr_accessor :origin, :destination, :travelers, :departure_date
+  attr_reader :origin, :destination, :travelers, :departure_date
 
   # origin / destintaion - airport.code
   def initialize(origin, destination, options={})
