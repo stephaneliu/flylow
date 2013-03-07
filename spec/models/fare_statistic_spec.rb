@@ -1,6 +1,21 @@
 require 'spec_helper'
 
 describe FareStatistic do
+
+  describe '#return_dates' do
+    context 'when initialized as nil' do
+      before  { @fare_stat = build(:fare_statistic, return_dates: nil) }
+      subject { @fare_stat.return_dates }
+      it      { should == [] }
+    end
+
+    context 'when assigned' do
+      before  { @fare_stat = build(:fare_statistic, return_dates: [Time.now.to_date]) }
+      subject { @fare_stat.return_dates }
+      it      { should_not be_empty }
+    end
+  end
+
   describe '#low_upcoming_fares_for' do
     before do
       @depart_city = create :city

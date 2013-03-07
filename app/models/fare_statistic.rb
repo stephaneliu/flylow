@@ -1,6 +1,6 @@
 class FareStatistic
 
-  attr_reader :origin, :destination, :departure_dates, :return_dates, :checked_on
+  attr_reader :origin, :destination, :departure_dates, :checked_on
 
   def initialize(params) 
     @origin             = params[:origin]
@@ -20,6 +20,11 @@ class FareStatistic
   def low_return_price
     return 0 if @low_return_price.blank?
     @low_return_price
+  end
+
+  def return_dates
+    return [] if @return_dates.blank?
+    @return_dates
   end
 
   def self.low_upcoming_fares_for(cities, updated_since=1.hour.ago)
