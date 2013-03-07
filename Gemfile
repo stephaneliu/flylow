@@ -14,7 +14,6 @@ group :assets do
 end
 
 gem "thin", "~>1.5.0"
-gem "pg", "~>0.14.1"
 gem 'jquery-rails'
 gem "haml-rails", ">= 0.4"
 gem "bootstrap-sass", ">= 2.3.0.0"
@@ -62,4 +61,5 @@ end
 
 group :production do
   gem 'newrelic_rpm'
+  gem "pg", "~>0.14.1"
 end
