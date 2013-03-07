@@ -1,7 +1,6 @@
 class FareStatistic
 
-  attr_reader :origin, :destination, :low_outbound_price, :low_return_price,
-    :departure_dates, :return_dates, :checked_on
+  attr_reader :origin, :destination, :departure_dates, :return_dates, :checked_on
 
   def initialize(params) 
     @origin             = params[:origin]
@@ -11,6 +10,16 @@ class FareStatistic
     @departure_dates    = params[:departure_dates]
     @return_dates       = params[:return_dates]
     @checked_on         = params[:checked_on]
+  end
+
+  def low_outbound_price
+    return 0 if @low_outbound_price.blank?
+    @low_outbound_price
+  end
+
+  def low_return_price
+    return 0 if @low_return_price.blank?
+    @low_return_price
   end
 
   def self.low_upcoming_fares_for(cities, updated_since=1.hour.ago)
@@ -51,7 +60,7 @@ class FareStatistic
     if(fares = Fare.upcoming_for(origin, destination).where('updated_at > ?', updated_since).order(:price)).present?
       lowest_fare                           = fares.first
       departure_dates                       = fares.reject {|fare| fare.price != lowest_fare.price}.map(&:departure_date)
-      low_outbound_price, low_return_price  = outbound ? [lowest_fare.price, 0] : [0, lowest_fare.price]
+      low_outbound_price, low_return_price  = outbound ? [lowest_fare.price, nil] : [nil, lowest_fare.price]
       departure_dates, return_dates         = outbound ? [departure_dates, nil] : [nil, departure_dates]
       checked_on                            = outbound ? lowest_fare.updated_at : nil
 
