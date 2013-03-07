@@ -57,7 +57,10 @@ class FareStatistic
   end
 
   def self.one_way_low_fare_stat(origin, destination, updated_since, outbound=true)
-    if(fares = Fare.upcoming_for(origin, destination).where('updated_at > ?', updated_since).order(:price)).present?
+    fares = Fare.upcoming_for(origin, destination).
+      where('updated_at > ?', updated_since).order(:price)
+
+    if fares.present?
       lowest_fare                           = fares.first
       departure_dates                       = fares.reject {|fare| fare.price != lowest_fare.price}.map(&:departure_date)
       low_outbound_price, low_return_price  = outbound ? [lowest_fare.price, nil] : [nil, lowest_fare.price]
