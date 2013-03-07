@@ -8,6 +8,16 @@ FactoryGirl.define do
       favorite true
     end
 
+    trait :domestic do
+      region 'Domestic'
+    end
+
+    trait :international do
+      region 'International'
+    end
+
     factory :favorite_city, traits: [:favorite]
+    factory :domestic_city, traits: [:domestic]
+    factory :international_city, traits: [:international]
   end
 end
