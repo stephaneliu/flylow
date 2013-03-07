@@ -11,12 +11,14 @@
     - destination = low_fare.destination
     .accordion-group
       .accordion-heading
-        =link_to "#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(total)})", '#',
+        -row_id = "fare_details_#{origin.code}_#{destination.code}"
+        =link_to "#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(total)})", "##{row_id}",
           data: {target: "#fare_details_#{origin.code}_#{destination.code}",
           toggle: 'collapse', parent: '#cheap_listing'},
           class: 'accordion-toggle'
-      .accordion-body.collapse{id: "fare_details_#{origin.code}_#{destination.code}"}
+      .accordion-body.collapse{id: row_id}
         .accordion-inner
+          %a{name: "#{row_id}"}
           %strong
             Depart
           =number_to_currency(low_fare.low_outbound_price)
