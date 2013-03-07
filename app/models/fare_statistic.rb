@@ -13,7 +13,7 @@ class FareStatistic
     @checked_on         = params[:checked_on]
   end
 
-  def self.low_upcoming_fares_for(cities)
+  def self.low_upcoming_fares_for(cities, updated_since=1.hour.ago)
     destinations  = cities.dup
     reported      = []
 
@@ -22,32 +22,44 @@ class FareStatistic
 
       destinations.each do |destination|
         next if reported.include? destination
-
-        outbound_fares      = Fare.upcoming_for(origin, destination).order(:price)
-
-        next if outbound_fares.empty?
-
-        checked_on          = outbound_fares.order(:id).last.updated_at
-        low_outbound_price  = outbound_fares.first.price
-        departure_dates     = outbound_fares.reject {|fare| fare.price != low_outbound_price}.
-                                map(&:departure_date)
-
-        if low_outbound_price.present?
-          return_fares      = Fare.upcoming_for(destination, origin).order(:price)
-          low_return_price  = return_fares.present? ? return_fares.first.price : 0
-          return_dates      = return_fares.reject {|fare| fare.price != low_return_price}.
-                                map(&:departure_date)
-        end
-
-        low_fares << FareStatistic.new(origin: origin, destination: destination,
-                                       low_outbound_price: low_outbound_price,
-                                       low_return_price: low_return_price,
-                                       departure_dates: departure_dates, 
-                                       return_dates: return_dates,
-                                       checked_on: checked_on)
+        low_fares << self.roundtrip_low_fare_stat(origin, destination, updated_since)
       end
+    end.compact
+  end
+
+  def merge(other)
+    self.instance_variables.each_with_object(FareStatistic.new({})) do |attrib, new_fare_statistic|
+      val = if other.instance_variable_get(attrib.to_sym).blank?
+              self.instance_variable_get(attrib.to_sym)
+            else
+              other.instance_variable_get(attrib.to_sym)
+            end
+      new_fare_statistic.instance_variable_set(attrib.to_sym, val)
     end
   end
 
+  private
+
+  def self.roundtrip_low_fare_stat(origin, destination, updated_since)
+    lowest_outbound_stat = self.one_way_low_fare_stat(origin, destination, updated_since)
+    if lowest_outbound_stat.present?
+      lowest_outbound_stat.merge(self.one_way_low_fare_stat(destination, origin, updated_since, outbound=false))
+    end
+  end
+
+  def self.one_way_low_fare_stat(origin, destination, updated_since, outbound=true)
+    if(fares = Fare.upcoming_for(origin, destination).where('updated_at > ?', updated_since).order(:price)).present?
+      lowest_fare                           = fares.first
+      departure_dates                       = fares.reject {|fare| fare.price != lowest_fare.price}.map(&:departure_date)
+      low_outbound_price, low_return_price  = outbound ? [lowest_fare.price, 0] : [0, lowest_fare.price]
+      departure_dates, return_dates         = outbound ? [departure_dates, nil] : [nil, departure_dates]
+      checked_on                            = outbound ? lowest_fare.updated_at : nil
+
+      FareStatistic.new(origin: origin, destination: destination,
+                        low_outbound_price: low_outbound_price, low_return_price: low_return_price,
+                        departure_dates: departure_dates, return_dates: return_dates,
+                        checked_on: checked_on)
+    end
+  end
 
 end
