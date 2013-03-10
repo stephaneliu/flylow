@@ -40,6 +40,7 @@ group :development do
   gem 'guard-livereload'
   gem 'guard-ctags-bundler'
   gem 'guard-schema'
+  gem 'rb-fsevent', '~>0.9'
   gem 'terminal-notifier-guard', require: os_platform_only('terminal-notifier-guard') # notify to darwin notification
   gem 'rb-inotify', require: os_platform_only('rb-inotify', :linux)
 end

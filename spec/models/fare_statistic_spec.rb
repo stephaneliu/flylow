@@ -6,7 +6,7 @@ describe FareStatistic do
     context 'when initialized as nil' do
       before  { @fare_stat = build(:fare_statistic, return_dates: nil) }
       subject { @fare_stat.return_dates }
-      it      { should == [] }
+      it      { should == nil }
     end
 
     context 'when assigned' do
@@ -25,12 +25,30 @@ describe FareStatistic do
 
     context 'when there are no fares' do
       subject { FareStatistic.low_upcoming_fares_for(@cities) }
-      it      { should be_empty }
+      specify { subject.should be_kind_of(Array) }
     end
     
     context 'return collection' do
       subject { FareStatistic.low_upcoming_fares_for(@cities) }
       it      { should be_a Array }
+
+      context 'departure_dates sort order' do
+        before do
+          low_fare        = 200
+          depart_latest   = create(:fare, departure_date: 7.days.from_now.to_date,
+                                   origin: @depart_city, destination: @return_city, price: low_fare)
+          depart_earliest = create(:fare, departure_date: 2.days.from_now.to_date,
+                                   origin: @depart_city, destination: @return_city, price: low_fare)
+          depart_later    = create(:fare, departure_date: 5.days.from_now.to_date,
+                                   origin: @depart_city, destination: @return_city, price: low_fare)
+          @fares          = [depart_earliest.departure_date, depart_later.departure_date,
+                             depart_latest.departure_date]
+        end
+
+        subject { FareStatistic.low_upcoming_fares_for(@cities).first.departure_dates }
+        it      { should == @fares }
+      end
+
     end
 
     context 'return collection element' do
@@ -45,43 +63,36 @@ describe FareStatistic do
 
     context 'when no return fares' do
       before  { @origin = create :fare, origin: @cities.first, destination: @cities.last }
-      subject { FareStatistic.low_upcoming_fares_for(@cities).map(&:low_return_price) }
-      it      { should == [0] }
+      subject { FareStatistic.low_upcoming_fares_for(@cities) }
+      specify { subject.map(&:low_return_price).map(&:to_s).should == ["0"] }
     end
 
     context 'since_last_updated_at parameter' do
       context 'with default value' do
-        before do
-          departure = 1.week.from_now.to_date
-          Timecop.freeze(2.hours.ago) do
-            create(:fare, price: 200, origin: @depart_city, destination: @return_city,
-                   departure_date: departure)
-          end
-          Timecop.freeze(35.minutes.ago) do
-            @lowest_fare = create(:fare, price: 400, origin: @depart_city,
-                                  destination: @return_city, departure_date: departure)
-          end
-        end
-
-        context "lowest outbound fare" do
-          subject { FareStatistic.low_upcoming_fares_for(@cities) }
-          specify { subject.first.low_outbound_price.to_s.should == @lowest_fare.price.to_s }
-        end
-
-        context "lowest return fare" do
+        context "lowest fares" do
           before do
-            departure = 2.week.from_now.to_date
+            departure_date      = 2.week.from_now.to_date
+            @current_low_price  = 400.0
+
             Timecop.freeze(2.hours.ago) do
-              create :fare, price: 200, origin: @cities.last, destination: @cities.first, departure_date: departure
+              create_mirror_flights(200, @cities.first, @cities.last, departure_date)
             end
             Timecop.freeze(55.minutes.ago) do
-              @lowest_return_fare = create :fare, price: 400, origin: @cities.last, destination: @cities.first, departure_date: departure
+              create_mirror_flights(@current_low_price, @cities.first, @cities.last, departure_date)
             end
           end
 
           subject { FareStatistic.low_upcoming_fares_for(@cities) }
           specify { subject.size.should == 1}
-          specify { subject.first.low_return_price.to_s.should == @lowest_return_fare.price.to_s }
+          specify { subject.first.low_outbound_price.to_s.should == @current_low_price.to_s }
+          specify { subject.first.low_return_price.to_s.should == @current_low_price.to_s }
+        end
+
+        def create_mirror_flights(price, origin, destination, departure_date)
+          create(:fare, price: price, origin: origin,
+                 destination: destination, departure_date: departure_date)
+          create(:fare, price: price, origin: destination,
+                 destination: origin, departure_date: departure_date)
         end
       end
 
@@ -101,34 +112,6 @@ describe FareStatistic do
         specify { subject.first.low_outbound_price.to_s.should == @lowest_fare.price.to_s }
       end
     end
-  end
-
-  describe "#merge" do
-    before do
-      @fare_stat      = build :fare_statistic
-      @nil_fare_stat  = FareStatistic.new({})
-    end
-
-    it "Attributes with values should overwrite nil attributes" do
-      merged_stat = @fare_stat.merge(@nil_fare_stat)
-      merged_stat.instance_variables.each do |attribute| 
-        @fare_stat.instance_variable_get(attribute.to_sym).should == merged_stat.instance_variable_get(attribute.to_sym)
-      end
-    end
-
-    context "when object's attributes being merged has value" do
-      it "should behave like a hash merge" do
-        {1 => 2, 2 => 3}.merge({1 => 5}).should == {1 => 5, 2 => 3}
-      end
-
-      it "should merge with object passed in value" do
-        origin        = "I am the new origin"
-        assumed_stat  = FareStatistic.new(origin: origin)
-
-        @fare_stat.merge(assumed_stat).origin.should == origin
-      end
-    end
-
   end
 
 end
