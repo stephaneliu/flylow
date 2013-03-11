@@ -18,7 +18,7 @@ namespace :get_fares do
   task :for_cities => :environment do
 
     debug   = false
-    cities  = City.where(favorite: true)
+    cities  = City.favorites
 
     cities.each do |origin|
       months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month,

@@ -16,6 +16,24 @@ describe FareStatistic do
     end
   end
 
+  describe ".sort" do
+    before do
+      @first  = build(:fare_statistic, origin: build(:city, name: "A I am first"))
+      @second = build(:fare_statistic, origin: build(:city, name: "B I am second"))
+      @third  = build(:fare_statistic, origin: build(:city, name: "C I am second"))
+      @fare_statistics = [@second, @third, @first]
+    end
+
+    subject { @fare_statistics.sort }
+    it      { should == [@first, @second, @third] }
+
+    context "when elements does not have origin" do
+      before  { @fare_statistics << (@fourth = build(:fare_statistic, origin: nil)) }
+      subject { @fareStatistics.sort }
+      it      { should = [@first, @second, @third, @fourth] }
+    end
+  end
+
   describe '#low_upcoming_fares_for' do
     before do
       @depart_city = create :city
@@ -111,6 +129,20 @@ describe FareStatistic do
         subject { FareStatistic.low_upcoming_fares_for(@cities, 1.day.ago) }
         specify { subject.first.low_outbound_price.to_s.should == @lowest_fare.price.to_s }
       end
+    end
+
+    context "sorting" do
+      before do
+        @fare_a = create(:fare, price: 100, origin: create(:city, name: 'AAAA'),
+                         departure_date: 2.days.from_now)
+        @fare_b = create(:fare, price: 100, origin: create(:city, name: 'BBBB'),
+                         departure_date: 3.days.from_now)
+        @fare_c = create(:fare, price: 100, origin: create(:city, name: 'CCCC'),
+                         departure_date: 1.days.from_now)
+        @unsorted_cities = [@fare_a.origin, @fare_b.origin, @fare_c.origin]
+      end
+      subject { FareStatistic.low_upcoming_fares_for(@unsorted_cities).map(&:origin).map(&:name) }
+      it      {  should == [@fare_a.origin.name, @fare_a.origin.name, @fare_b.origin.name] }
     end
   end
 

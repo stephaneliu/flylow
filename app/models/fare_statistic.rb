@@ -17,23 +17,30 @@ class FareStatistic
     destinations  = cities.dup
     reported      = []
 
-    cities.sort_by {|city| city.name}.each_with_object([]) do |origin, low_fares|
+    cities.each_with_object([]) do |origin, low_fares|
       reported << origin
 
       destinations.each do |destination|
         next if reported.include? destination
         low_fares << self.roundtrip_low_fare_stat(origin, destination, updated_since)
       end
-    end.compact
+    end.compact.sort
+  end
+
+  def <=>(other)
+    return -1 if self.origin.blank?
+    return 1 if other.origin.blank?
+    self.origin.name <=> other.origin.name
   end
 
   private
 
   def self.roundtrip_low_fare_stat(origin, destination, updated_since)
+    attributes                  = {origin: origin, destination: destination}
     lowest_outbound_attributes  = self.one_way_low_fare_stat(origin, destination, updated_since)
-    lowest_return_attributes    = self.one_way_low_fare_stat(origin, destination, updated_since, false)
+    lowest_return_attributes    = self.one_way_low_fare_stat(destination, origin, updated_since, false)
 
-    FareStatistic.new(lowest_outbound_attributes.merge(lowest_return_attributes))
+    FareStatistic.new(attributes.merge(lowest_outbound_attributes).merge(lowest_return_attributes))
   end
 
   def self.one_way_low_fare_stat(origin, destination, updated_since, outbound=true)
