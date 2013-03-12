@@ -8,9 +8,9 @@ class FareStatistic
     @destination        = attributes[:destination]
     @low_outbound_price = attributes.fetch(:low_outbound_price, 0)
     @low_return_price   = attributes.fetch(:low_return_price, 0)
-    @departure_dates    = attributes[:departure_dates]
+    @departure_dates    = attributes.fetch(:departure_dates, [])
     @return_dates       = attributes.fetch(:return_dates, [])
-    @checked_on         = attributes.fetch(:checked_on, [])
+    @checked_on         = attributes[:checked_on]
   end
 
   def self.low_upcoming_fares_for(cities, updated_since=1.hour.ago)
@@ -36,18 +36,25 @@ class FareStatistic
   private
 
   def self.roundtrip_low_fare_stat(origin, destination, updated_since)
-    attributes                  = {origin: origin, destination: destination}
     lowest_outbound_attributes  = self.one_way_low_fare_stat(origin, destination, updated_since)
     lowest_return_attributes    = self.one_way_low_fare_stat(destination, origin, updated_since, false)
 
-    FareStatistic.new(attributes.merge(lowest_outbound_attributes).merge(lowest_return_attributes))
+    if lowest_outbound_attributes.present? or lowest_return_attributes.present?
+      FareStatistic.new(lowest_outbound_attributes.merge(lowest_return_attributes))
+    end
   end
 
   def self.one_way_low_fare_stat(origin, destination, updated_since, outbound=true)
     attributes = {}
+
+    puts "#### #{Fare.count}"
+    fr = Fare.upcoming_for(origin, destination)
+
     if (fares = Fare.upcoming_for(origin, destination).where('updated_at > ?', updated_since).order(:price)).present?
-      lowest_price                  = fares.first.price
-      valid_for_dates               = fares.reject {|fare| fare.price != lowest_price}.
+      attributes[:origin]       = origin
+      attributes[:destination]  = destination
+      lowest_price              = fares.first.price
+      valid_for_dates           = fares.reject {|fare| fare.price != lowest_price}.
                                         map(&:departure_date).sort
       if outbound
         attributes[:low_outbound_price] = lowest_price
@@ -56,6 +63,7 @@ class FareStatistic
         attributes[:low_return_price]   = lowest_price
         attributes[:return_dates]       = valid_for_dates
       end
+      attributes[:checked_on]           = fares.first.updated_at
     end
     attributes
   end

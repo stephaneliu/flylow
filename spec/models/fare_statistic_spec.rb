@@ -131,7 +131,7 @@ describe FareStatistic do
       end
     end
 
-    context "sorting" do
+    context "sorting", :focus do
       before do
         @fare_a = create(:fare, price: 100, origin: create(:city, name: 'AAAA'),
                          departure_date: 2.days.from_now)
