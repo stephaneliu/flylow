@@ -67,7 +67,7 @@ class FareStatistic
 
     if fares.present?
       lowest_fare                           = fares.first
-      departure_dates                       = fares.reject {|fare| fare.price != lowest_fare.price}.map(&:departure_date)
+      departure_dates                       = fares.reject {|fare| fare.price != lowest_fare.price}.map(&:departure_date).sort
       low_outbound_price, low_return_price  = outbound ? [lowest_fare.price, nil] : [nil, lowest_fare.price]
       departure_dates, return_dates         = outbound ? [departure_dates, nil] : [nil, departure_dates]
       checked_on                            = outbound ? lowest_fare.updated_at : nil
