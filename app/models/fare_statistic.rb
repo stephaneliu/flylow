@@ -17,7 +17,7 @@ class FareStatistic
     low_outbound_price + low_return_price
   end
 
-  def self.low_upcoming_fares_for(cities, updated_since=1.hour.ago)
+  def self.low_upcoming_fares_for(cities, updated_since=2.hour.ago)
     destinations  = cities.dup
     reported      = []
 
@@ -46,6 +46,8 @@ class FareStatistic
     lowest_outbound_attributes  = self.one_way_low_fare_stat(origin, destination, updated_since)
     lowest_return_attributes    = self.one_way_low_fare_stat(destination, origin, updated_since, false)
 
+    puts "##### #{lowest_return_attributes[:low_return_price]}"
+
     FareStatistic.new(attributes.merge(lowest_outbound_attributes).merge(lowest_return_attributes))
   end
 
@@ -59,11 +61,14 @@ class FareStatistic
         attributes[:low_outbound_price] = lowest_price
         attributes[:departure_dates]    = valid_for_dates
         attributes[:checked_on]         = fares.order(:updated_at).last.updated_at
+
+        puts "#### outbound: attrib #{attributes}"
       else
         attributes[:low_return_price]   = lowest_price
         attributes[:return_dates]       = valid_for_dates
       end
     end
+    puts "#### attrib #{attributes}"
     attributes
   end
 
