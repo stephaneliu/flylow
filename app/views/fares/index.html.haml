@@ -6,13 +6,12 @@
 
 #cheap_listing.accordion
   -@low_fares.each do |low_fare|
-    - total = low_fare.low_outbound_price + low_fare.low_return_price
     - origin = low_fare.origin
     - destination = low_fare.destination
     .accordion-group
       .accordion-heading
         -row_id = "fare_details_#{origin.code}_#{destination.code}"
-        =link_to "#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(total)})", "##{row_id}",
+        =link_to "#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(low_fare.total_price)})", "##{row_id}",
           data: {target: "#fare_details_#{origin.code}_#{destination.code}",
           toggle: 'collapse', parent: '#cheap_listing'},
           class: 'accordion-toggle'
@@ -36,6 +35,6 @@
           %br
           %strong
             Total: 
-          =number_to_currency(total)
+          =number_to_currency(low_fare.total_price)
           %br
           Last checked: #{low_fare.checked_on.strftime("%-m/%-d/%y @ %l:%M %p")}

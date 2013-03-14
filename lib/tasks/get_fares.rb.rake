@@ -14,8 +14,39 @@ namespace :get_fares do
     puts "True! Outbound and Return fares are the same!" if fares.uniq.size == 2
   end
 
-  desc "Obtain fares for cities"
+  desc "Obtain fares for cities with origin from Oahu"
   task :for_cities => :environment do
+    debug         = false
+    cities        = City.favorites
+    months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month,
+                      2.months.from_now.beginning_of_month]
+    origin        = City.find_by_airport_code("HNL")
+    destinations  = cities.reject {|city| city == origin}
+
+    destinations.each do |destination|
+      months.each do |month|
+        puts "#{month.month}: #{origin.name} to #{destination.name}" if debug
+
+        Scrap.new(origin.code, destination.code, departure_date: month, debug: debug).get_days_with_fare.each do |day, fare|
+          if debug
+            puts "Adding record on #{day} for #{fare}"
+            puts "origin: #{origin.code} / destination: #{destination.code}"
+          end
+
+          fare = Fare.new(price: fare, departure_date: day, origin: origin, destination: destination)
+
+          if fare.smart_save
+            puts "Successfully added fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug
+          else
+            puts "Could not add fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug
+          end
+        end
+      end
+    end
+  end
+
+  desc "Obtain fares for cities"
+  task :for_favorites_cities => :environment do
 
     debug   = false
     cities  = City.favorites
