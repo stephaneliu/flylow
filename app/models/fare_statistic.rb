@@ -8,9 +8,13 @@ class FareStatistic
     @destination        = attributes[:destination]
     @low_outbound_price = attributes.fetch(:low_outbound_price, 0)
     @low_return_price   = attributes.fetch(:low_return_price, 0)
-    @departure_dates    = attributes[:departure_dates]
+    @departure_dates    = attributes.fetch(:departure_dates, [])
     @return_dates       = attributes.fetch(:return_dates, [])
-    @checked_on         = attributes.fetch(:checked_on, [])
+    @checked_on         = attributes.fetch(:checked_on, DateUnknown.new)
+  end
+
+  def total_price
+    low_outbound_price + low_return_price
   end
 
   def self.low_upcoming_fares_for(cities, updated_since=1.hour.ago)
@@ -50,6 +54,7 @@ class FareStatistic
       if outbound
         attributes[:low_outbound_price] = lowest_price
         attributes[:departure_dates]    = valid_for_dates
+        attributes[:checked_on]         = fares.order(:updated_at).last.updated_at
       else
         attributes[:low_return_price]   = lowest_price
         attributes[:return_dates]       = valid_for_dates
@@ -58,4 +63,10 @@ class FareStatistic
     attributes
   end
 
+end
+
+class DateUnknown
+  def strftime(format)
+    "Unknown"
+  end
 end

@@ -146,4 +146,15 @@ describe FareStatistic do
     end
   end
 
+  describe "total_price" do
+    before do
+      @outbound_price = 200
+      @return_price   = 300
+      @fare_stat = build(:fare_statistic, low_outbound_price: @outbound_price,
+                        low_return_price: @return_price)
+    end
+    subject { @fare_stat.total_price }
+    it      { should == @outbound_price + @return_price }
+  end
+
 end
