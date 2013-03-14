@@ -47,9 +47,6 @@ class FareStatistic
   def self.one_way_low_fare_stat(origin, destination, updated_since, outbound=true)
     attributes = {}
 
-    puts "#### #{Fare.count}"
-    fr = Fare.upcoming_for(origin, destination)
-
     if (fares = Fare.upcoming_for(origin, destination).where('updated_at > ?', updated_since).order(:price)).present?
       attributes[:origin]       = origin
       attributes[:destination]  = destination
