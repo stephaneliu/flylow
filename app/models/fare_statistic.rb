@@ -26,7 +26,11 @@ class FareStatistic
 
       destinations.each do |destination|
         next if reported.include? destination
-        low_fares << self.roundtrip_low_fare_stat(origin, destination, updated_since)
+        low_fare = self.roundtrip_low_fare_stat(origin, destination, updated_since)
+
+        unless low_fare.total_price < 1
+          low_fares << low_fare
+        end
       end
     end.compact.sort
   end
