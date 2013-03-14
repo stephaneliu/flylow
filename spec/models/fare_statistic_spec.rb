@@ -56,16 +56,20 @@ describe FareStatistic do
           Timecop.freeze(2.hours.ago) do
             create(:fare, price: 200, origin: @depart_city, destination: @return_city,
                    departure_date: departure)
+            create(:fare, price: 200, origin: @return_city, destination: @depart_city,
+                   departure_date: departure)
           end
           Timecop.freeze(35.minutes.ago) do
-            @lowest_fare = create(:fare, price: 400, origin: @depart_city,
-                                  destination: @return_city, departure_date: departure)
+            @lowest_fare = 400.0
+            # need mirror flight since algorithm doesn't care who is origin or destination
+            create(:fare, price: 400, origin: @depart_city, destination: @return_city, departure_date: departure)
+            create(:fare, price: 400, origin: @return_city, destination: @depart_city, departure_date: departure)
           end
         end
 
         context "lowest outbound fare" do
           subject { FareStatistic.low_upcoming_fares_for(@cities) }
-          specify { subject.first.low_outbound_price.to_s.should == @lowest_fare.price.to_s }
+          specify { subject.first.low_outbound_price.to_s.should == @lowest_fare.to_s }
         end
 
         context "lowest return fare" do
