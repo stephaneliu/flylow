@@ -13,6 +13,9 @@
 #
 
 class City < ActiveRecord::Base
+
+  include Comparable
+
   attr_accessible :name, :region, :airport_code
 
   scope :favorites, where(favorite: true)
