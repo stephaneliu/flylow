@@ -27,14 +27,14 @@ describe FaresController do
 
   describe "GET index" do
     before do
-      @fare_statistic = create(:fare_statistic)
+      @low_fare_statistic = create(:low_fare_statistic)
       create :favorite_city
-      FareStatistic.should_receive(:low_upcoming_fares_for).with(any_args).
-        and_return([@fare_statistic])
+      LowFareStatistic.should_receive(:low_upcoming_fares_for).with(any_args).
+        and_return([@low_fare_statistic])
     end
     it "assigns all fares as @fares" do
       get :index, {}
-      assigns(:low_fares).should eq([@fare_statistic])
+      assigns(:low_fares).should eq([@low_fare_statistic])
     end
   end
 
