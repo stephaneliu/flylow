@@ -1,6 +1,6 @@
 class FaresController < ApplicationController
-
   authorize_resource
+  caches_action :index, cache_path: :index_cache_path.to_proc
 
   # GET /fares
   # GET /fares.json
@@ -81,6 +81,16 @@ class FaresController < ApplicationController
     respond_to do |format|
       format.html { redirect_to fares_url }
       format.json { head :no_content }
+    end
+  end
+
+  protected
+
+  def index_cache_path
+    if current_user.has_role? :admin
+      '/admin/fares'
+    else
+      '/user/fares'
     end
   end
 end

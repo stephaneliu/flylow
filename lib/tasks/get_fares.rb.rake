@@ -47,5 +47,11 @@ namespace :get_fares do
         end
       end
     end
+
+    # expire fragment cache
+    ['/admin/fares', '/user/fares'].each do |fragment_path|
+      ActionController::Base.new.expire_fragment(fragment_path)
+    end
   end
+
 end
