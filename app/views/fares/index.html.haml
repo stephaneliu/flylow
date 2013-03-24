@@ -1,7 +1,11 @@
 %h1 Best Fares
 
 .alert.alert-info
-  All fares are without taxes (currently ~$40).
+  %ul
+    %li
+      Prices based on roundtrip for 2 travelers. Actual prices may be higher if traveling with more people.
+    %li
+      Prices are show without taxes (currently ~$40).
 
 #cheap_listing.accordion
   -@low_fares.each do |low_fare|

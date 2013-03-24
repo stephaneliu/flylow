@@ -23,6 +23,7 @@ gem "rolify", ">= 3.2.0"
 gem "simple_form", ">= 2.0.4"
 gem "figaro", ">= 0.5.3"
 gem "mechanize", "~>2.5.1"
+gem 'high_voltage', '~>1.2.2'
 
 group :development do
   gem "quiet_assets", ">= 1.0.1"

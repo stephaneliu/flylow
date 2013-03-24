@@ -5,4 +5,8 @@ class HomeController < ApplicationController
   def index
     @favorites = City.favorites
   end
+
+  def whats_new
+
+  end
 end

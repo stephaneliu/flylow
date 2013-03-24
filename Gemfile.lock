@@ -136,6 +136,7 @@ GEM
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
     hashr (0.0.22)
+    high_voltage (1.2.2)
     hike (1.2.1)
     hpricot (0.8.6)
     html2haml (1.0.1)
@@ -310,6 +311,7 @@ DEPENDENCIES
   guard-schema
   guard-spork
   haml-rails (>= 0.4)
+  high_voltage (~> 1.2.2)
   html2haml (>= 1.0.0)
   jquery-rails
   launchy (>= 2.2.0)
