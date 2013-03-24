@@ -9,4 +9,6 @@ HawaiianAir::Application.routes.draw do
 
   resources :users
   resources :fares
+
+  resources :pages, controller: 'pages', only: [:show]
 end

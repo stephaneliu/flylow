@@ -106,6 +106,8 @@ GEM
     ffi (1.4.0)
     figaro (0.5.4)
       rails (~> 3.0)
+    foreman (0.62.0)
+      thor (>= 0.13.6)
     gherkin (2.11.6)
       json (>= 1.7.6)
     guard (1.6.2)
@@ -136,6 +138,7 @@ GEM
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
     hashr (0.0.22)
+    high_voltage (1.2.2)
     hike (1.2.1)
     hpricot (0.8.6)
     html2haml (1.0.1)
@@ -150,6 +153,7 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.7)
+    kgio (2.8.0)
     launchy (2.2.0)
       addressable (~> 2.3)
     listen (0.7.3)
@@ -206,6 +210,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
+    raindrops (0.10.0)
     rake (10.0.3)
     rb-fsevent (0.9.3)
     rb-inotify (0.9.0)
@@ -278,6 +283,10 @@ GEM
     unf (0.0.5)
       unf_ext
     unf_ext (0.0.6)
+    unicorn (4.6.2)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     warden (1.2.1)
       rack (>= 1.0)
     webrobots (0.1.0)
@@ -304,12 +313,14 @@ DEPENDENCIES
   email_spec (>= 1.4.0)
   factory_girl_rails (>= 4.2.0)
   figaro (>= 0.5.3)
+  foreman (~> 0.62.0)
   guard-ctags-bundler
   guard-livereload
   guard-rspec
   guard-schema
   guard-spork
   haml-rails (>= 0.4)
+  high_voltage (~> 1.2.2)
   html2haml (>= 1.0.0)
   jquery-rails
   launchy (>= 2.2.0)
@@ -334,3 +345,4 @@ DEPENDENCIES
   travis-lint
   turbo-sprockets-rails3
   uglifier (>= 1.0.3)
+  unicorn (~> 4.6.2)

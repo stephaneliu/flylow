@@ -7,6 +7,8 @@
     -if current_user.has_role? :admin
       %li
         =link_to 'Admin', users_path
+    %li
+      =link_to "What's New", page_path("whats_new")
 
 %ul.nav.pull-right
   - if user_signed_in?

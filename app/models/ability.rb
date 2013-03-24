@@ -8,6 +8,7 @@ class Ability
       can :index, Fare
       can [:read, :update], User, id: user.id
       cannot :index, User
+      can :read, :static_pages 
     end
 
     if user.has_role? :admin
