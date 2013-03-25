@@ -50,6 +50,10 @@ class LowFareStatistic
      "?qrys=qres&Trip=RT" +
      "&adult_no=#{travelers}" +
      "&departure=#{origin.code}" +
+     "&out_day=#{departure_dates.first.strftime('%d')}" +
+     "&out_month=#{departure_dates.first.strftime('%m')}" +
+     "&return_day=#{return_dates.first.strftime('%d')}" +
+     "&return_month=#{return_dates.first.strftime('%m')}" +
      "&destination=#{destination.code}")
   end
 
