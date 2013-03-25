@@ -7,33 +7,37 @@
     %li
       Prices are show without taxes (currently ~$40).
 
+Display flights departing from: 
+=select_tag "origin_filter", options_for_select([["All Cities", "all"], ["Oahu", "from_oahu"], ["Mainland", "from_mainland"]])
 #cheap_listing.accordion
   -@low_fares.each do |low_fare|
-    - origin = low_fare.origin
-    - destination = low_fare.destination
-    .accordion-group
+    -origin       = low_fare.origin
+    -destination  = low_fare.destination
+    -row_class    = origin == City.oahu ? 'from_oahu' : 'from_mainland'
+
+    .accordion-group{class: row_class}
       .accordion-heading
         -row_id = "fare_details_#{origin.code}_#{destination.code}"
-        =link_to "#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(low_fare.total_price)})", "##{row_id}",
-          data: {target: "#fare_details_#{origin.code}_#{destination.code}",
-          toggle: 'collapse', parent: '#cheap_listing'},
-          class: 'accordion-toggle'
+
+        %i{class: 'icon-chevron-right accordion-toggle', data: {target: "##{row_id}", toggle: 'collapse'}}
+          &nbsp;
+        ="#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(low_fare.total_price)} R/T)"
+
       .accordion-body.collapse{id: row_id}
         .accordion-inner
-          %a{name: "#{row_id}"}
           %strong
-            Depart
+            Depart $:
           =number_to_currency(low_fare.low_outbound_price)
           %strong
-            Return
+            Return $:
           =number_to_currency(low_fare.low_return_price)
           %br
           %strong
-            Depart
+            Depart Dates:
           =low_fare.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
           %br
           %strong
-            Return
+            Return Dates:
           =low_fare.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
           %br
           %strong
