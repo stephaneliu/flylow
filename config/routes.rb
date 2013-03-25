@@ -3,7 +3,7 @@ HawaiianAir::Application.routes.draw do
     root :to => 'fares#index'
   end
 
-  root :to => "fares#index"
+  root :to => "pages#home"
 
   devise_for :users
 
