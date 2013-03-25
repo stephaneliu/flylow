@@ -19,29 +19,31 @@ Display flights departing from:
       .accordion-heading
         -row_id = "fare_details_#{origin.code}_#{destination.code}"
 
-        %i{class: 'icon-chevron-right accordion-toggle', data: {target: "##{row_id}", toggle: 'collapse'}}
-          &nbsp;
-        ="#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(low_fare.total_price)} R/T)"
+        %span{class: 'accordion-toggle', data: {target: "##{row_id}", toggle: 'collapse'}}
+          %i.icon-chevron-right
+          %strong
+            ="#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(low_fare.total_price)} R/T)"
 
       .accordion-body.collapse{id: row_id}
         .accordion-inner
-          %strong
-            Depart $:
-          =number_to_currency(low_fare.low_outbound_price)
-          %strong
-            Return $:
-          =number_to_currency(low_fare.low_return_price)
-          %br
-          %strong
-            Depart Dates:
-          =low_fare.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
-          %br
-          %strong
-            Return Dates:
-          =low_fare.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
-          %br
-          %strong
-            Total: 
-          =number_to_currency(low_fare.total_price)
-          %br
-          Last checked: #{low_fare.checked_on.strftime("%-m/%-d/%y @ %l:%M %p")}
+          %p
+            %strong
+              Depart $:
+            =number_to_currency(low_fare.low_outbound_price)
+            %strong
+              Return $:
+            =number_to_currency(low_fare.low_return_price)
+          %p
+            %strong
+              Depart Dates:
+            =low_fare.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+          %p
+            %strong
+              Return Dates:
+            =low_fare.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+          %p
+            %strong
+              Total: 
+            =number_to_currency(low_fare.total_price)
+          %p.muted
+            Last checked: #{low_fare.checked_on.strftime("%-m/%-d/%y @ %l:%M %p")}

@@ -3,8 +3,10 @@ jQuery ->
 
   $('.accordion-body').on 'show', ->
     $(this).siblings().find('i').addClass('icon-chevron-down')
+    $(this).siblings().find('i').removeClass('icon-chevron-right')
   $('.accordion-body').on 'hide', ->
     $(this).siblings().find('i').removeClass('icon-chevron-down')
+    $(this).siblings().find('i').addClass('icon-chevron-right')
 
   $('#origin_filter').change ->
     selected = $(this).val()
