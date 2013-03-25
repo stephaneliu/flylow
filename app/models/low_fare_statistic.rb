@@ -45,6 +45,14 @@ class LowFareStatistic
     end
   end
 
+  def calendar_url(travelers=2, outbound=true)
+    ("https://fly.hawaiianairlines.com/Calendar/Default.aspx" +
+     "?qrys=qres&Trip=RT" +
+     "&adult_no=#{travelers}" +
+     "&departure=#{origin.code}" +
+     "&destination=#{destination.code}")
+  end
+
   private
 
   def self.roundtrip_low_fare_stat(origin, destination, updated_since)

@@ -26,7 +26,7 @@ end
 
 { "Oahu" => ["HNL", "Domestic"], 
   "Hawaii Island - Hilo, HI" => ["ITO", "Domestic"],
-  "Hawaiia Island - Kona, HI" => ["KOA", "Domestic"],
+  "Hawaii Island - Kona, HI" => ["KOA", "Domestic"],
   "Kauai - Lihue, HI" => ["LIH", "Domestic"],
   "Maui - Kahului, HI" => ["OGG", "Domestic"],
   "Maui - Kapalua, HI" => ["JHM", "Domestic"],
