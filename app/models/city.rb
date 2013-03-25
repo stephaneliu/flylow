@@ -23,7 +23,11 @@ class City < ActiveRecord::Base
   scope :international, where(region: 'International')
 
   def code
-    self.airport_code
+    airport_code
+  end
+
+  def self.oahu
+    where(airport_code: 'HNL').first
   end
 
 end
