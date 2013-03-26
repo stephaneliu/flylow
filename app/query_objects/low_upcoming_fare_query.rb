@@ -3,7 +3,7 @@ class LowUpcomingFareQuery
     @low_upcoming_fare = Fare.upcoming_for(origin, destination)
   end
 
-  def find_all
+  def find_all(updated_since, return_after)
     @low_upcoming_fare.
       where('updated_at > ?', updated_since).
       where('departure_date >= ?', return_after).
