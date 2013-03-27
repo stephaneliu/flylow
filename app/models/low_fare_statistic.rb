@@ -69,6 +69,7 @@ class LowFareStatistic
     return_after                    = attributes[:departure_dates].first
     return_attr                     = self.one_way_low_fare_stat(destination, origin, updated_since,
                                                                  return_after)
+
     attributes[:low_return_price]   = return_attr.delete(:price)
     attributes[:return_dates]       = return_attr.delete(:dates)
 

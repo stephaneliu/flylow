@@ -98,19 +98,20 @@ describe LowFareStatistic do
     context 'when no return fares' do
       before  { @origin = create :fare, origin: @cities.first, destination: @cities.last }
       subject { LowFareStatistic.low_upcoming_fares_for(@cities) }
-      specify { subject.map(&:low_return_price).map(&:to_s).should include("0") }
+      specify { subject.map(&:low_return_price).map(&:to_f).should include(0) }
     end
 
-    context 'since_last_updated_at parameter' do
+    context 'updated_since parameter' do
       context 'with default value' do
         context "lowest fares" do
           before do
             departure_date      = 2.week.from_now.to_date
-            @current_low_price  = 400.0
+            @current_low_price  = 400.0.to_f
 
             Timecop.freeze(2.hours.ago) do
               create_mirror_flights(200, @cities.first, @cities.last, departure_date)
             end
+
             Timecop.freeze(55.minutes.ago) do
               create_mirror_flights(@current_low_price, @cities.first, @cities.last, departure_date)
             end
@@ -118,10 +119,9 @@ describe LowFareStatistic do
 
           subject { LowFareStatistic.low_upcoming_fares_for(@cities) }
           specify { subject.size.should == 2}
-          specify { subject.first.low_outbound_price.to_s.should == @current_low_price.to_s }
-          specify { subject.first.low_return_price.to_s.should == @current_low_price.to_s }
+          specify { subject.first.low_outbound_price.to_f.should == @current_low_price }
+          specify { subject.first.low_return_price.to_f.should == @current_low_price }
         end
-
       end
 
       context "when set to 1 day ago" do
@@ -137,7 +137,7 @@ describe LowFareStatistic do
           end
         end
         subject { LowFareStatistic.low_upcoming_fares_for(@cities, 1.day.ago) }
-        specify { subject.first.low_outbound_price.to_s.should == @low_price.to_s }
+        specify { subject.first.low_outbound_price.to_f.should == @low_price.to_f }
       end
     end
 
@@ -180,7 +180,7 @@ describe LowFareStatistic do
     create(:fare, price: price, origin: origin,
            destination: destination, departure_date: departure_date)
     create(:fare, price: price, origin: destination,
-           destination: origin, departure_date: departure_date)
+           destination: origin, departure_date: departure_date + 1)
   end
 
 end
