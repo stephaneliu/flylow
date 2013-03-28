@@ -2,87 +2,29 @@ require 'spec_helper'
 
 describe LowFareStatistic do
 
-  describe '#return_dates' do
-    context 'when initialized as nil' do
-      before  { @fare_stat = build(:low_fare_statistic, return_dates: nil) }
-      subject { @fare_stat.return_dates }
-      it      { should == nil }
-    end
-
-    context 'when assigned' do
-      before  { @fare_stat = build(:low_fare_statistic, return_dates: [Time.now.to_date]) }
-      subject { @fare_stat.return_dates }
-      it      { should_not be_empty }
-    end
-  end
-
-  describe ".sort" do
-    context "without destinations" do
-      before do
-        @first  = build(:low_fare_statistic, origin: build(:city, name: "A I am first"))
-        @second = build(:low_fare_statistic, origin: build(:city, name: "B I am second"))
-        @third  = build(:low_fare_statistic, origin: build(:city, name: "C I am third"))
-        @low_fare_statistics = [@second, @third, @first]
-      end
-
-      subject { @low_fare_statistics.sort }
-      it      { should == [@first, @second, @third] }
-
-      context "when elements does not have origin" do
-        before  { @low_fare_statistics << (@fourth = build(:low_fare_statistic, origin: nil)) }
-        subject { @low_fareStatistics.sort }
-        it      { should = [@first, @second, @third, @fourth] }
-      end
-    end
-
-    context "when destinations exists" do
-      before do
-        @first  = build(:low_fare_statistic, origin: build(:city, name: "A"),
-                        destination: build(:city, name: "A"))
-        @second = build(:low_fare_statistic, origin: build(:city, name: "A"),
-                        destination: build(:city, name: "B"))
-        @third  = build(:low_fare_statistic, origin: build(:city, name: "A"),
-                        destination: build(:city, name: "C"))
-        @fare_stats = [@third, @first, @second]
-      end
-
-      subject { @fare_stats.sort }
-      it      { should == [@first, @second, @third] }
-    end
-  end
-
-  describe '#low_upcoming_fares_for' do
+  describe ".create_low_fare_for" do
     before do
-      @depart_city = create :city
-      @return_city = create :city
-      @cities      = [@depart_city, @return_city]
+      @origin              = create(:city)
+      @destination         = create(:city)
+      @low_fare_statistic = LowFareStatistic.new(@origin, @destination)
     end
 
-    context 'when there are no fares' do
-      subject { LowFareStatistic.low_upcoming_fares_for(@cities) }
-      specify { subject.should be_kind_of(Array) }
+    it "should create a LowFare object" do
+      round_trip_price = 200.0
+      @low_fare_statistic.should_receive(:round_trip_price).and_return(round_trip_price)
+      low_fare = mock(LowFare, :price= => true, :save => true)
+      LowFare.should_receive(:find_or_initialize_by_origin_id_and_destination_id).
+        with(origin: @origin, destination: @destination).and_return(low_fare)
+      
+      @low_fare_statistic.create_low_fare
     end
-    
-    context 'return collection' do
-      subject { LowFareStatistic.low_upcoming_fares_for(@cities) }
-      it      { should be_a Array }
 
-      context 'departure_dates sort order' do
-        before do
-          low_fare        = 200
-          depart_latest   = create(:fare, departure_date: 7.days.from_now.to_date,
-                                   origin: @depart_city, destination: @return_city, price: low_fare)
-          depart_earliest = create(:fare, departure_date: 2.days.from_now.to_date,
-                                   origin: @depart_city, destination: @return_city, price: low_fare)
-          depart_later    = create(:fare, departure_date: 5.days.from_now.to_date,
-                                   origin: @depart_city, destination: @return_city, price: low_fare)
-          @fares          = [depart_earliest.departure_date, depart_later.departure_date,
-                             depart_latest.departure_date]
-        end
+  end
 
-        subject { LowFareStatistic.low_upcoming_fares_for(@cities).first.departure_dates }
-        it      { should == @fares }
-      end
+  describe '.roundtrip_low_fare_statistics' do
+    before do
+      @origin       = create :city
+      @destination  = create :city
     end
 
     context 'return collection element' do

@@ -18,12 +18,11 @@ namespace :get_fares do
   task :for_cities => :environment do
 
     debug   = false
-    cities  = City.favorites
-    oahu    = City.find_by_airport_code('HNL')
+    cities  = [City.oahu, City.find_by_airport_code("PDX")] #City.favorites
+    oahu    = City.oahu
 
     cities.each do |origin|
-      months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month,
-                        2.months.from_now.beginning_of_month]
+      months        = [1.day.from_now.localtime]#, 1.month.from_now.beginning_of_month, 2.months.from_now.beginning_of_month]
       destinations  = cities.dup.reject {|city| city == origin}
       from_oahu     = origin == oahu
 
@@ -40,12 +39,12 @@ namespace :get_fares do
 
             fare = Fare.new(price: fare, departure_date: day, origin: origin, destination: destination)
 
-
             if fare.smart_save
               puts "Successfully added fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug
             else
               puts "Could not add fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug
             end
+            LowFareStatistic.new(origin, destination).create_low_fare
           end
         end
       end
