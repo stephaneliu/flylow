@@ -16,30 +16,26 @@ class LowFareStatistic
   end
 
   def total_price
-    low_outbound_price + low_return_price
+    (low_outbound_price + low_return_price).tap {|fare| puts "ttl: #{fare}"}
   end
 
   def create_low_fare(updated_since=2.hours.ago)
     roundtrip_low_fare_statistics(updated_since)
-    low_fare = LowFare.find_or_initialize_by_origin_id_and_destination_id(origin: origin,
-                                                                          destination: destination)
-    low_fare.price = round_trip_price
-    low_fare.save
+    low_fare = LowFare.find_or_initialize_by_origin_id_and_destination_id(origin.id, destination.id)
+    low_fare.price  = total_price
+    low_fare.save!
   end
 
   def roundtrip_low_fare_statistics(updated_since=2.hours.ago)
     outbound_attr       = one_way_low_fare_stat(origin, destination, updated_since)
-    low_outbound_price  = outbound_attr[:price]
-    departure_dates     = outbound_attr[:dates]
-    checked_on          = outbound_attr[:checked_on]
+    @low_outbound_price = outbound_attr[:price]
+    @departure_dates    = outbound_attr[:dates]
+    @checked_on         = outbound_attr[:checked_on]
+
     return_after        = departure_dates.first
     return_attr         = one_way_low_fare_stat(destination, origin, updated_since, return_after)
-    return_dates        = return_attr[:dates]
-    low_return_price    = return_attr[:price]
-  end
-
-  def round_trip_price
-    low_outbound_price + low_return_price
+    @return_dates       = return_attr[:dates]
+    @low_return_price   = return_attr[:price]
   end
 
   def calendar_url(travelers=2, outbound=true)
