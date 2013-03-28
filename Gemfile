@@ -46,9 +46,12 @@ group :development do
   gem 'rb-fsevent', '~>0.9'
   gem 'terminal-notifier-guard', require: os_platform_only('terminal-notifier-guard') # notify to darwin notification
   gem 'rb-inotify', require: os_platform_only('rb-inotify', :linux)
+  # ~/.irbrc files
   gem 'bullet'
-  #gem unicorm_notifier
-  #gem ruby-growl
+  gem 'awesome_print'
+  gem 'wirble'
+  gem 'what_methods'
+  gem 'hirb'
 end
 
 group :test do
