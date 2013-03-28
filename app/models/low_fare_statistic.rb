@@ -16,7 +16,7 @@ class LowFareStatistic
   end
 
   def total_price
-    (low_outbound_price + low_return_price).tap {|fare| puts "ttl: #{fare}"}
+    low_outbound_price + low_return_price
   end
 
   def create_low_fare(updated_since=2.hours.ago)
