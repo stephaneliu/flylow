@@ -22,7 +22,7 @@ namespace :get_fares do
     oahu    = City.oahu
 
     cities.each do |origin|
-      months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month, 2.months.from_now.beginning_of_month]
+      months        = [1.day.from_now.localtime, 1.month.from_now.beginning_of_month, 2.months.from_now.beginning_of_month, 3.months.from_now.beginning_of_month]
       destinations  = cities.dup.reject {|city| city == origin}
       from_oahu     = origin == oahu
 
