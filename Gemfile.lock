@@ -43,6 +43,8 @@ GEM
     bourne (1.4.0)
       mocha (~> 0.13.2)
     builder (3.0.4)
+    bullet (4.5.0)
+      uniform_notifier
     cancan (1.6.9)
     capybara (2.0.2)
       mime-types (>= 1.16)
@@ -295,6 +297,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uniform_notifier (1.2.0)
     warden (1.2.1)
       rack (>= 1.0)
     webrobots (0.1.0)
@@ -310,6 +313,7 @@ DEPENDENCIES
   better_errors (>= 0.6.0)
   binding_of_caller (>= 0.6.9)
   bootstrap-sass (>= 2.3.0.0)
+  bullet
   cancan (>= 1.6.8)
   capybara (>= 2.0.2)
   coffee-rails (~> 3.2.1)
