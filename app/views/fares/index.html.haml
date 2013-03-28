@@ -9,8 +9,9 @@
 
 Display flights departing from: 
 =select_tag "origin_filter", options_for_select([["All Cities", "all"], ["Oahu", "from_oahu"], ["Mainland", "from_mainland"]])
+
 #cheap_listing.accordion
-  -@low_fares.each do |low_fare|
+  -@low_fares.find_all.each do |low_fare|
     -origin       = low_fare.origin
     -destination  = low_fare.destination
     -row_class    = origin == City.oahu ? 'from_oahu' : 'from_mainland'
@@ -22,31 +23,8 @@ Display flights departing from:
         %span{class: 'accordion-toggle', data: {target: "##{row_id}", toggle: 'collapse'}}
           %i.icon-chevron-right
           %strong
-            ="#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(low_fare.total_price)} R/T)"
+            ="#{origin.name} (#{origin.code}) to #{destination.name} (#{destination.code}) - (#{number_to_currency(low_fare.price)} R/T)"
 
       .accordion-body.collapse{id: row_id}
         .accordion-inner
-          %p
-            %strong
-              Depart $:
-            =number_to_currency(low_fare.low_outbound_price)
-            %strong
-              Return $:
-            =number_to_currency(low_fare.low_return_price)
-          %p
-            %strong
-              Depart Dates:
-            =low_fare.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
-          %p
-            %strong
-              Return Dates:
-            =low_fare.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
-          %p
-            %strong
-              Total: 
-            =number_to_currency(low_fare.total_price)
-          %p
-            =link_to "Go to fare", low_fare.calendar_url, target: "_new_#{row_id}"
-            %i.icon-share-alt
-          %p.muted
-            Last checked: #{low_fare.checked_on.strftime("%-m/%-d/%y @ %l:%M %p")}
+          spinner here

@@ -5,7 +5,7 @@ class FaresController < ApplicationController
   # GET /fares
   # GET /fares.json
   def index
-    @low_fares = LowFareStatistic.low_upcoming_fares_for(City.favorites)
+    @low_fares = LowFareSortQuery.new
 
     respond_to do |format|
       format.html # index.html.erb
