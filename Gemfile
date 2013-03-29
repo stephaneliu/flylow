@@ -4,7 +4,7 @@ def os_platform_only(require_as, os=:darwin)
   RUBY_PLATFORM.include?(os.to_s) && require_as
 end
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -26,6 +26,7 @@ gem "mechanize", "~>2.5.1"
 gem 'high_voltage', '~>1.2.2'
 gem 'foreman', '~>0.62.0'
 gem 'unicorn', '~>4.6.2'
+gem 'gon'
 
 group :development do
   gem "quiet_assets", ">= 1.0.1"
@@ -52,6 +53,7 @@ group :development do
   gem 'wirble'
   gem 'what_methods'
   gem 'hirb'
+  gem 'looksee'
 end
 
 group :test do
