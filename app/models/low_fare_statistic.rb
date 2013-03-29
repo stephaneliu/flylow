@@ -53,23 +53,20 @@ class LowFareStatistic
   end
 
   def one_way_low_fare_stat(origin, destination, updated_since, return_after=Time.now.to_date)
-    attributes  = {price: 0, dates: [DateUnknown.new], checked_on: DateUnknown.new}
+    attributes    = {price: 0, dates: [DateUnknown.new], checked_on: DateUnknown.new}
+    related_fares = LowUpcomingFareQuery.new(origin, destination).
+                      find_all(updated_since, return_after)
 
     if related_fares.present?
       lowest_price            = related_fares.first.price
       attributes[:dates]      = related_fares.reject {|fare| fare.price != lowest_price}.
                                   map(&:departure_date).sort
+      puts "dates: #{attributes[:dates]}"
       attributes[:price]      = lowest_price
       attributes[:checked_on] = related_fares.order(:updated_at).last.updated_at
     end
 
     attributes
-  end
-
-  def related_fares
-    updated_since = 2.hours.ago
-    return_after  = Time.now.to_date
-    LowUpcomingFareQuery.new(origin, destination).find_all(updated_since, return_after)
   end
 end
 
