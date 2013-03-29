@@ -1,6 +1,7 @@
 class FaresController < ApplicationController
   authorize_resource
   caches_action :index, cache_path: :index_cache_path.to_proc
+  before_filter :assign_js_vars, only: :index
 
   # GET /fares
   # GET /fares.json
@@ -84,7 +85,17 @@ class FaresController < ApplicationController
     end
   end
 
+  def details
+    fare            = Fare.find(params[:id])
+    @low_fare_stat  = LowFareStatistic.new(fare.origin, fare.destination)
+    @low_fare_stat.low_fare_statistics
+  end
+
   protected
+
+  def assign_js_vars
+    gon.fare_details_path = fare_details_path(9999)
+  end
 
   def index_cache_path
     if current_user.has_role? :admin

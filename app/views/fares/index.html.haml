@@ -23,7 +23,7 @@ Display flights departing from:
           %strong
             ="#{low_fare.origin_name} (#{low_fare.origin_code}) to #{low_fare.destination_name} (#{low_fare.destination_code}) - (#{number_to_currency(low_fare.price)} R/T)"
 
-      .accordion-body.collapse{id: row_id}
+      .accordion-body.collapse{id: row_id, data: {id: low_fare.id}}
         .accordion-inner
           .center
             =image_tag 'large_ajax_loader.gif'

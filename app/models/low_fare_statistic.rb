@@ -26,7 +26,7 @@ class LowFareStatistic
     low_fare.save!
   end
 
-  def roundtrip_low_fare_statistics(updated_since=2.hours.ago)
+  def low_fare_statistics(updated_since=2.hours.ago)
     outbound_attr       = one_way_low_fare_stat(origin, destination, updated_since)
     @low_outbound_price = outbound_attr[:price]
     @departure_dates    = outbound_attr[:dates]

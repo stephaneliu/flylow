@@ -14,9 +14,9 @@ guard 'ctags-bundler', src_path: ["app", "lib", "spec/support"] do
 end
 
 # Runs rake db:test:clone on schema.rb change
-guard 'schema' do
-  watch('db/schema.rb')
-end
+#guard 'schema' do
+#  watch('db/schema.rb')
+#end
 
 # :cucumber => false
 # :rspec => false
@@ -51,7 +51,8 @@ end
 # all_after_pass: false    # don't run all specs after changed specs pass, default: true
 # all_on_start: false      # don't run all the specs at startup, default: true
 # keep_failed: false       # keep failed specs until them pass, default: true
-guard 'rspec', cli: '--drb --fail-fast' , keep_failed: true, all_on_start: true, all_after_pass: true do
+# guard 'rspec', cli: '--drb --fail-fast' , keep_failed: true, all_on_start: true, all_after_pass: true do
+guard 'rspec', cli: '--drb' , keep_failed: true, all_on_start: true, all_after_pass: true do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }

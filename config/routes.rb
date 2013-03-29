@@ -8,7 +8,9 @@ HawaiianAir::Application.routes.draw do
   devise_for :users
 
   resources :users
-  resources :fares
+  resources :fares do
+    get :details
+  end
 
   resources :pages, controller: 'pages', only: [:show]
 end

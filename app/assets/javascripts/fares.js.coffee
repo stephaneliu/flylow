@@ -12,7 +12,8 @@ filter_fares_by_location = (target) ->
     $('.from_mainland').show()
 
 fetch_fare_details = (target) ->
-  alert $(target).data('target')
+  if $(target).find('img').length > 0
+    $(target).html("<p>I have been replaced</p>")
 
 toggle_chevron = (target) ->
   $(target).siblings().find('i').toggleClass('icon-chevron-down')
