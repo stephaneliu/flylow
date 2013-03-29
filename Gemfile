@@ -4,7 +4,7 @@ def os_platform_only(require_as, os=:darwin)
   RUBY_PLATFORM.include?(os.to_s) && require_as
 end
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -26,6 +26,7 @@ gem "mechanize", "~>2.5.1"
 gem 'high_voltage', '~>1.2.2'
 gem 'foreman', '~>0.62.0'
 gem 'unicorn', '~>4.6.2'
+gem 'gon'
 
 group :development do
   gem "quiet_assets", ">= 1.0.1"
@@ -46,20 +47,29 @@ group :development do
   gem 'rb-fsevent', '~>0.9'
   gem 'terminal-notifier-guard', require: os_platform_only('terminal-notifier-guard') # notify to darwin notification
   gem 'rb-inotify', require: os_platform_only('rb-inotify', :linux)
+  # ~/.irbrc files
+  gem 'bullet'
+  gem 'awesome_print'
+  gem 'wirble'
+  gem 'what_methods'
+  gem 'hirb'
+  gem 'looksee'
 end
 
 group :test do
   gem "database_cleaner", ">= 0.9.1"
   gem "email_spec", ">= 1.4.0"
+  gem 'shoulda-matchers'
   gem "cucumber-rails", ">= 1.3.0", :require => false
   gem "launchy", ">= 2.2.0"
   gem "capybara", ">= 2.0.2"
   gem 'rspec-instafail'
+  gem "rspec-rails", ">= 2.12.2"
+  gem "rspec-fire"
   gem 'timecop', "~>0.5.9"
 end
 
 group :development, :test do
-  gem "rspec-rails", ">= 2.12.2"
   gem "factory_girl_rails", ">= 4.2.0"
 end
 

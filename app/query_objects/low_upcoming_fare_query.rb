@@ -6,7 +6,7 @@ class LowUpcomingFareQuery
   def find_all(updated_since, return_after)
     @low_upcoming_fare.
       where('updated_at > ?', updated_since).
-      where('departure_date >= ?', return_after).
+      where('departure_date > ?', return_after).
       order(:price)
   end
 end

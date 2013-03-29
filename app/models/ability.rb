@@ -7,7 +7,7 @@ class Ability
     can :use, :public_areas
 
     if user.has_role? :user
-      can :index, Fare
+      can [:index, :get_fare_details], Fare
       can [:read, :update], User, id: user.id
       cannot :index, User
       can :read, :static_pages 

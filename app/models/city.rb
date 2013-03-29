@@ -27,7 +27,7 @@ class City < ActiveRecord::Base
   end
 
   def self.oahu
-    where(airport_code: 'HNL').first
+    @oahu ||= where(airport_code: 'HNL').first
   end
 
 end

@@ -1,0 +1,24 @@
+%p
+  %strong
+    Depart $:
+  =number_to_currency(@low_fare_stat.low_outbound_price)
+  %strong
+    Return $:
+  =number_to_currency(@low_fare_stat.low_return_price)
+%p
+  %strong
+    Depart Dates:
+  =@low_fare_stat.departure_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+%p
+  %strong
+    Return Dates:
+  =@low_fare_stat.return_dates.map{|date| date.strftime("%-m/%d")}.join(", ")
+%p
+  %strong
+    Total: 
+  =number_to_currency(@low_fare_stat.total_price)
+%p
+  =link_to "Go to fare", @low_fare_stat.calendar_url, target: "_new_#{@target}"
+  %i.icon-share-alt
+%p.muted
+  Last checked: #{@low_fare_stat.checked_on.strftime("%-m/%-d/%y @ %l:%M %p")}
