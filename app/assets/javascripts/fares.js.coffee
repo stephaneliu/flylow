@@ -13,7 +13,8 @@ filter_fares_by_location = (target) ->
 
 fetch_fare_details = (target) ->
   if $(target).find('img').length > 0
-    $(target).html("<p>I have been replaced</p>")
+    fare_id = $(target).data('id')
+    $.get(gon.fare_details_path.replace('9999', fare_id), {target: $(target).attr('id')}, null, "script")
 
 toggle_chevron = (target) ->
   $(target).siblings().find('i').toggleClass('icon-chevron-down')

@@ -64,11 +64,12 @@ group :test do
   gem "launchy", ">= 2.2.0"
   gem "capybara", ">= 2.0.2"
   gem 'rspec-instafail'
+  gem "rspec-rails", ">= 2.12.2"
+  gem "rspec-fire"
   gem 'timecop', "~>0.5.9"
 end
 
 group :development, :test do
-  gem "rspec-rails", ">= 2.12.2"
   gem "factory_girl_rails", ">= 4.2.0"
 end
 

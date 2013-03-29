@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :low_fare do
-    origin_id 1
-    destination_id 1
+    association :origin, factory: :city
+    association :destination, factory: :city
     price "9.99"
   end
 end
