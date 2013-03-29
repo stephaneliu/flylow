@@ -1,6 +1,6 @@
 class LowUpcomingFareQuery
   def initialize(origin, destination)
-    @low_upcoming_fare = Fare.upcoming_for(origin, destination)
+    @low_upcoming_fare = Fare.where(origin_id: origin, destination_id: destination)
   end
 
   def find_all(updated_since, return_after)

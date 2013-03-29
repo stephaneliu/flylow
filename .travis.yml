@@ -7,3 +7,6 @@ script:
   - bundle exec rspec spec
 before_script:
   - psql -c 'create database hal_fare_test;' -U postgres
+branches:
+  except:
+    - develop
