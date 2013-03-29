@@ -57,11 +57,10 @@ class LowFareStatistic
     related_fares = LowUpcomingFareQuery.new(origin, destination).
                       find_all(updated_since, return_after)
 
-    if related_fares.present?
+    if related_fares.size > 0
       lowest_price            = related_fares.first.price
       attributes[:dates]      = related_fares.reject {|fare| fare.price != lowest_price}.
                                   map(&:departure_date).sort
-      puts "dates: #{attributes[:dates]}"
       attributes[:price]      = lowest_price
       attributes[:checked_on] = related_fares.order(:updated_at).last.updated_at
     end
