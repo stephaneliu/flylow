@@ -29,7 +29,7 @@ describe FaresController do
     before do
       @low_fare_statistic = create(:low_fare)
       create :favorite_city
-      LowFareSortQuery.should_receive(:new)
+      LowFareSortQuery.should_receive(:new).and_return([@low_fare_statistic])
     end
 
     it "assigns all fares as @fares" do
