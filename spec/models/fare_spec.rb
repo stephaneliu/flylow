@@ -51,23 +51,4 @@ describe Fare do
     end
   end
 
-  describe '#upcoming_for' do
-    before do
-      @fare   = create(:fare, price: 700.00)
-      @fare_2 = create(:fare, origin: @fare.origin, destination: @fare.destination)
-      other   = create(:fare)
-    end
-
-    subject { Fare.upcoming_for(@fare.origin, @fare.destination) }
-    it      { should include @fare }
-    it      { should include @fare_2 }
-
-    context "with depart_after parameter" do
-      before  { @far_fare = create(:fare, origin: @fare.origin, destination: @fare.destination, departure_date: 5.months.from_now) }
-      subject { Fare.upcoming_for(@fare.origin, @fare.destination, 2.months.from_now.localtime) }
-      specify { subject.count.should == 1 }
-      it      { should include @far_fare }
-    end
-  end
-
 end
