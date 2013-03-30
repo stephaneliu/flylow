@@ -9,7 +9,7 @@ namespace :deploy do
     env, app_name = value.first, value.last
     desc "Deploy to #{env}"
     task env do
-    current_branch = `git branch | grep \* | awk '{ print $2 }'`.strip
+    current_branch = `git branch | grep ^* | awk '{ print $2 }'`.strip
 
     Rake::Task['deploy:before_deploy'].invoke(env, app_name, current_branch)
     Rake::Task['deploy:update_code'].invoke(env, app_name, current_branch)
@@ -18,11 +18,14 @@ namespace :deploy do
 end
 
   task :before_deploy, :env, :app_name, :branch do |t, args|
-    puts "Deploying #{args[:branch]} to #{args[:env]}"
+    env     = args[:env]
+    branch  = args[:branch]
+
+    puts "Deploying #{branch} to #{env}"
 
     # Ensure the user wants to deploy a non-master branch to production
-    if args[:env] == :production && args[:branch] != 'master'
-      print "Are you sure you want to deploy '#{args[:branch]}' to production? (y/n) " and STDOUT.flush
+    if env == :production && branch != 'master'
+      print "Are you sure you want to deploy '#{branch}' to production? (y/n) " and STDOUT.flush
       char = $stdin.getc
       if char != ?y && char != ?Y
         puts "Deploy aborted"
@@ -36,9 +39,12 @@ end
   end
 
   task :update_code, :env, :app_name, :branch do |t, args|
+    env     = args[:env]
+    branch  = args[:branch]
+
     FileUtils.cd Rails.root do
-    puts "Updating #{ENVIRONMENTS[args[:env]]} with branch #{args[:branch]}"
-    `git push #{ENVIRONMENTS[args[:env]]} +#{args[:branch]}:master`
+      puts "Updating #{env} with branch #{branch}"
+      `git push #{env} +#{branch}:master`
     end
   end
 end
