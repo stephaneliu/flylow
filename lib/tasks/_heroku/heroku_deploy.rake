@@ -5,21 +5,25 @@ ENVIRONMENTS = {
 }
 
 namespace :deploy do
+
   ENVIRONMENTS.each do |key, value|
-    env, app_name = value.first, value.last
-    desc "Deploy to #{env}"
+    env           = key
+    remote_branch = value.first
+    app_name      = value.last
+
+    desc "Deploying to #{env}"
     task env do
-    current_branch = `git branch | grep ^* | awk '{ print $2 }'`.strip
+      local_branch = `git branch | grep ^* | awk '{ print $2 }'`.strip
 
-    Rake::Task['deploy:before_deploy'].invoke(env, app_name, current_branch)
-    Rake::Task['deploy:update_code'].invoke(env, app_name, current_branch)
-    Rake::Task['deploy:after_deploy'].invoke(env, app_name, current_branch)
+      Rake::Task['deploy:before_deploy'].invoke(env, app_name, local_branch, remote_branch)
+      Rake::Task['deploy:update_code'].invoke(env, app_name, local_branch, remote_branch)
+      Rake::Task['deploy:after_deploy'].invoke(env, app_name, local_branch, remote_branch)
+    end
   end
-end
 
-  task :before_deploy, :env, :app_name, :branch do |t, args|
+  task :before_deploy, :env, :app_name, :local_branch, :remote_branch do |t, args|
     env     = args[:env]
-    branch  = args[:branch]
+    branch  = args[:local_branch]
 
     puts "Deploying #{branch} to #{env}"
 
@@ -34,17 +38,18 @@ end
     end
   end
 
-  task :after_deploy, :env, :app_name, :branch do |t, args|
+  task :after_deploy, :env, :app_name, :local_branch, :remote_branch do |t, args|
     puts "Deployment Complete"
   end
 
-  task :update_code, :env, :app_name, :branch do |t, args|
-    env     = args[:env]
-    branch  = args[:branch]
+  task :update_code, :env, :app_name, :local_branch, :remote_branch do |t, args|
+    remote_branch = args[:env]
+    local_branch  = args[:local_branch]
 
     FileUtils.cd Rails.root do
-      puts "Updating #{env} with branch #{branch}"
-      `git push #{env} +#{branch}:master`
+      puts "Updating #{remote_branch} with branch #{local_branch}"
+      `git push #{remote_branch} +#{local_branch}:master`
     end
   end
+
 end
