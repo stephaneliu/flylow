@@ -5,7 +5,7 @@ namespace :deploy do
 
     FileUtils.cd Rails.root do
       puts "Putting #{app_name} into maintenance mode"
-      puts `heroku maintenance:on --app #{app}`
+      puts `heroku maintenance:on --app #{app_name}`
     end
   end
 
