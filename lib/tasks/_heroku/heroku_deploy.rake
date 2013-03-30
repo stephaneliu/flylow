@@ -1,12 +1,6 @@
-# list of environments and their heroku git remotes
-ENVIRONMENTS = {
-  staging: ['staging', 'flylow-staging'],
-  production: ['heroku', 'flylow']
-}
-
 namespace :deploy do
 
-  ENVIRONMENTS.each do |key, value|
+  {staging: ['staging', 'flylow-staging'], production: ['heroku', 'flylow']}.each do |key, value|
     env           = key
     remote_branch = value.first
     app_name      = value.last
@@ -27,12 +21,12 @@ namespace :deploy do
 
     puts "Deploying #{branch} to #{env}"
 
-    # Ensure the user wants to deploy a non-master branch to production
+    # Are you really sure you want to deploy to production from non-master branch?
     if env == :production && branch != 'master'
       print "Are you sure you want to deploy '#{branch}' to production? (y/n) " and STDOUT.flush
       char = $stdin.getc
       if char != ?y && char != ?Y
-        puts "Deploy aborted"
+        puts "Didn't think so - deploy aborted"
         exit 
       end
     end

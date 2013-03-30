@@ -2,7 +2,7 @@ namespace :deploy do
 
   task :after_deploy, :env, :app_name, :local_branch, :remote_branch do |t, args|
     env           = args[:env]
-    app           = args[:app_name]
+    app_name      = args[:app_name]
     local_branch  = args[:local_branch]
     remote_branch = args[:remote_branch]
     release_name  = "#{app_name}_release_#{Time.now.utc.strftime("%Y%m%d%H%M%S")}"
