@@ -72,11 +72,11 @@ HawaiianAir::Application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: "example.com",
+    domain: "simpletechawaii.com",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    user_name: ENV["SIMPLE_EMAIL_USERNAME"],
+    password: ENV["SIMPLE_EMAIL_PASSWORD"]
   }
 
   # Log the query plan for queries taking more than this (works
