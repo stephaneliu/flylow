@@ -19,7 +19,7 @@ Display flights departing from:
         -row_id = "fare_details_#{low_fare.origin_code}_#{low_fare.destination_code}"
 
         %span{class: 'accordion-toggle', data: {target: "##{row_id}", toggle: 'collapse'}}
-          %i.icon-chevron-right
+          %i.icon-chevron-right.rotate
           %strong
             ="#{low_fare.origin_name} (#{low_fare.origin_code}) to #{low_fare.destination_name} (#{low_fare.destination_code}) - (#{number_to_currency(low_fare.price)} R/T)"
 
