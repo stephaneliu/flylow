@@ -9,10 +9,6 @@ namespace :deploy do
     end
   end
 
-end
-
-namespace :deploy do
-
   task :after_deploy, :env, :app_name, :local_branch, :remote_branch do |t, args|
     app_name = args[:app_name]
 
