@@ -37,7 +37,7 @@ namespace :deploy do
   end
 
   task :update_code, :env, :app_name, :local_branch, :remote_branch do |t, args|
-    remote_branch = args[:env]
+    remote_branch = args[:remote_branch]
     local_branch  = args[:local_branch]
 
     FileUtils.cd Rails.root do
