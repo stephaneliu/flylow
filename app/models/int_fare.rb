@@ -1,6 +1,9 @@
 # 
 # fare = IntFare.new
 # page = fare.get_page
+# json = JSON.parse(page.body)
+#
+# departure_prices = json["Availabilities"][0]["PriceTabs"]
 #
 # Json has following structure: 
 # { Availabilities:
@@ -31,6 +34,14 @@ class IntFare
     # @debug          = options[:debug]
   end
 
+  def get_prices(departure=true)
+    page = get_page
+    json = JSON.parse(page.body)
+    price_tab_element = departure ? 0 : 1
+
+    json["Availabilities"][price_tab_element]["PriceTabs"].map {|el| [el["TabDate"], el["Price"]]}
+  end
+
   def get_page
     @agent.get('https://fly.hawaiianairlines.com/reservations/2/default.aspx?qrys=qres&source=&Trip=RT&departure=HNL&destination=HND&out_day=21&out_month=4&return_day=9&return_month=5&adult_no=4&lang=us')
 
@@ -50,7 +61,6 @@ class IntFare
     end
   end
 
-  # TODO - Need to obtain HALAPPS and ASP.NET_SessionId values from a valid form post???
   def raw_cookie
     { 
       "FlightSearch1.tripType" => 'RT',
