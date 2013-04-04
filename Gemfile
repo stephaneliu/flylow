@@ -27,6 +27,7 @@ gem 'high_voltage', '~>1.2.2'
 gem 'foreman', '~>0.62.0'
 gem 'unicorn', '~>4.6.2'
 gem 'gon'
+gem 'errplane'
 
 group :development do
   gem "quiet_assets", ">= 1.0.1"
@@ -74,7 +75,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'newrelic_rpm'
+  #gem 'newrelic_rpm'
   gem "pg", "~>0.14.1"
   gem 'memcachier', '~>0.0.2' # passes heroku ENV vars to dalli config
   gem 'dalli', '~>2.6.2'

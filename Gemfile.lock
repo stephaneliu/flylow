@@ -99,6 +99,8 @@ GEM
     email_spec (1.4.0)
       launchy (~> 2.1)
       mail (~> 2.2)
+    errplane (0.6.6)
+      json
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
@@ -189,7 +191,6 @@ GEM
     multi_json (1.7.2)
     net-http-digest_auth (1.2.1)
     net-http-persistent (2.8)
-    newrelic_rpm (3.5.8.72)
     nokogiri (1.5.6)
     ntlm-http (0.1.1)
     orm_adapter (0.4.0)
@@ -334,6 +335,7 @@ DEPENDENCIES
   debugger
   devise (>= 2.2.3)
   email_spec (>= 1.4.0)
+  errplane
   factory_girl_rails (>= 4.2.0)
   figaro (>= 0.5.3)
   foreman (~> 0.62.0)
@@ -352,7 +354,6 @@ DEPENDENCIES
   looksee
   mechanize (~> 2.5.1)
   memcachier (~> 0.0.2)
-  newrelic_rpm
   pg (~> 0.14.1)
   quiet_assets (>= 1.0.1)
   rails (= 3.2.13)
