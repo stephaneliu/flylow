@@ -1,3 +1,5 @@
+# Scrap obtains fare page for origin to destination
+#
 class Scrap
 
   attr_reader :origin, :destination, :travelers, :departure_date
