@@ -47,6 +47,10 @@ GEM
     bullet (4.5.0)
       uniform_notifier
     cancan (1.6.9)
+    capistrano (3.0.1)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 0.0.23)
     capybara (2.0.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -64,7 +68,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
-    columnize (0.3.6)
     cucumber (1.2.1)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.3)
@@ -74,17 +77,9 @@ GEM
       capybara (>= 1.1.2)
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
-    daemons (1.1.9)
     dalli (2.6.2)
     database_cleaner (0.9.1)
     debug_inspector (0.0.2)
-    debugger (1.3.3)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.1.1)
-      debugger-ruby_core_source (~> 1.2.0)
-    debugger-linecache (1.1.2)
-      debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.2.0)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -99,8 +94,6 @@ GEM
     email_spec (1.4.0)
       launchy (~> 2.1)
       mail (~> 2.2)
-    errplane (0.6.6)
-      json
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
@@ -182,7 +175,6 @@ GEM
       nokogiri (~> 1.4)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (~> 0.0, >= 0.0.9)
-    memcachier (0.0.2)
     metaclass (0.0.1)
     method_source (0.8.1)
     mime-types (1.21)
@@ -191,6 +183,9 @@ GEM
     multi_json (1.7.2)
     net-http-digest_auth (1.2.1)
     net-http-persistent (2.8)
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.7.0)
     nokogiri (1.5.6)
     ntlm-http (0.1.1)
     orm_adapter (0.4.0)
@@ -278,15 +273,18 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.7)
+    sshkit (1.1.0)
+      net-scp
+      net-ssh
+      term-ansicolor
+    term-ansicolor (1.2.2)
+      tins (~> 0.8)
     terminal-notifier-guard (1.5.3)
     terminal-table (1.4.5)
-    thin (1.5.0)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.18.0)
     tilt (1.3.6)
     timecop (0.5.9.2)
+    tins (0.13.1)
     travis-lint (1.6.0)
       hashr (~> 0.0.22)
     treetop (1.4.12)
@@ -327,15 +325,14 @@ DEPENDENCIES
   bootstrap-sass (>= 2.3.0.0)
   bullet
   cancan (>= 1.6.8)
+  capistrano
   capybara (>= 2.0.2)
   coffee-rails (~> 3.2.1)
   cucumber-rails (>= 1.3.0)
   dalli (~> 2.6.2)
   database_cleaner (>= 0.9.1)
-  debugger
   devise (>= 2.2.3)
   email_spec (>= 1.4.0)
-  errplane
   factory_girl_rails (>= 4.2.0)
   figaro (>= 0.5.3)
   foreman (~> 0.62.0)
@@ -353,7 +350,6 @@ DEPENDENCIES
   launchy (>= 2.2.0)
   looksee
   mechanize (~> 2.5.1)
-  memcachier (~> 0.0.2)
   pg (~> 0.14.1)
   quiet_assets (>= 1.0.1)
   rails (= 3.2.13)
@@ -369,11 +365,10 @@ DEPENDENCIES
   spork
   sqlite3
   terminal-notifier-guard
-  thin (~> 1.5.0)
   timecop (~> 0.5.9)
   travis-lint
   turbo-sprockets-rails3
   uglifier (>= 1.0.3)
-  unicorn (~> 4.6.2)
+  unicorn
   what_methods
   wirble
