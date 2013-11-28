@@ -76,6 +76,6 @@ end
 group :production do
   #gem 'newrelic_rpm'
   gem "pg", "~>0.14.1"
-  #gem 'memcachier', '~>0.0.2' # passes heroku ENV vars to dalli config
-  gem 'dalli', '~>2.6.2'
+  # gem 'memcachier', '~>0.0.2' # passes heroku ENV vars to dalli config
+  # gem 'dalli', '~>2.6.2'
 end
