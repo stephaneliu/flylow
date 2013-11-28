@@ -7,5 +7,6 @@ class HomeController < ApplicationController
   end
 
   def whats_new
+
   end
 end
