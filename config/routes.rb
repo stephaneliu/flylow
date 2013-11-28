@@ -1,9 +1,6 @@
 HawaiianAir::Application.routes.draw do
-  authenticated :user do
-    root :to => 'fares#index'
-  end
+  root :to => 'fares#index'
 
-  root :to => "home#index"
 
   devise_for :users
 

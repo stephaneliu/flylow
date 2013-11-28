@@ -1,5 +1,5 @@
 class FaresController < ApplicationController
-  authorize_resource
+  before_filter :authorize_public_area!
   caches_action :index, cache_path: :index_cache_path.to_proc
   before_filter :assign_js_vars, only: :index
 
