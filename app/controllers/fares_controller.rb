@@ -99,10 +99,10 @@ class FaresController < ApplicationController
   end
 
   def index_cache_path
-    if current_user.has_role? :admin
-      '/admin/fares'
-    else
+    # if current_user.has_role? :admin
+    #   '/admin/fares'
+    # else
       '/user/fares'
-    end
+    # end
   end
 end
