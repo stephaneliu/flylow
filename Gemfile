@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-def os_platform_only(require_as, os=:darwin)
+def for_platform(require_as, os=:darwin)
   RUBY_PLATFORM.include?(os.to_s) && require_as
 end
 
 gem 'rails', '3.2.13'
 gem "haml-rails", ">= 0.4"
 gem 'jquery-rails'
-gem 'capistrano'
 gem 'unicorn'
 gem "bootstrap-sass", ">= 2.3.0.0"
+gem 'mysql2'
 
 gem "devise", ">= 2.2.3"
 gem "cancan", ">= 1.6.8"
@@ -29,24 +29,27 @@ group :assets do
 end
 
 group :development do
-  gem "quiet_assets", ">= 1.0.1"
   gem "better_errors", ">= 0.6.0"
   gem "binding_of_caller", ">= 0.6.9"
-  #gem "debugger"
   gem "html2haml", ">= 1.0.0"
-  gem 'sqlite3'
+  gem "quiet_assets", ">= 1.0.1"
   gem 'annotate'
-  gem 'travis-lint'
-  gem 'spork'
-  gem 'guard-livereload'
-  gem 'guard-spork'
-  gem 'guard-rspec'
-  gem 'guard-livereload'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
   gem 'guard-ctags-bundler'
+  gem 'guard-livereload'
+  gem 'guard-livereload'
+  gem 'guard-rspec'
   gem 'guard-schema'
+  gem 'guard-spork'
   gem 'rb-fsevent', '~>0.9'
-  gem 'terminal-notifier-guard', require: os_platform_only('terminal-notifier-guard') # notify to darwin notification
-  gem 'rb-inotify', require: os_platform_only('rb-inotify', :linux)
+  gem 'rb-inotify', require: for_platform('rb-inotify', :linux)
+  gem 'spork'
+  gem 'sqlite3'
+  gem 'terminal-notifier-guard', require: for_platform('terminal-notifier-guard')
+  gem 'travis-lint'
+
   # ~/.irbrc files
   gem 'bullet'
   gem 'awesome_print'
@@ -70,12 +73,5 @@ group :test do
 end
 
 group :development, :test do
-  gem "factory_girl_rails", ">= 4.2.0"
-end
-
-group :production do
-  #gem 'newrelic_rpm'
-  gem "pg", "~>0.14.1"
-  # gem 'memcachier', '~>0.0.2' # passes heroku ENV vars to dalli config
-  # gem 'dalli', '~>2.6.2'
+  gem "factory_girl_rails"
 end

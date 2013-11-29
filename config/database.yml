@@ -19,26 +19,21 @@ sqlite: &sqlite
   adapter: sqlite3
   pool: 5
   timeout: 5000
+  # specify
+  # database: db/development.sqlite3
 
 postgres: &postgres  
   adapter: postgresql
   encoding: utf8
 
 development: 
-  <<: *sqlite
-  database: db/development.sqlite3
+  <<: *mysql
 
 test: &test
-  <% if ENV['TEST_LOCAL'] %>
-    <<: *sqlite
-    database: db/test.sqlite3
-  <% else %>
-    <<: *postgres
-    database: hal_fare_test
-  <% end %>
+  <<: *mysql
 
 production:
-  <<: *postgres
+  <<: *mysql
   database: ENV['DATABASE_URL']
 
 cucumber:
