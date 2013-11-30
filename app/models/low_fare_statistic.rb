@@ -5,7 +5,7 @@ class LowFareStatistic
   attr_reader :origin, :destination, :departure_dates, :return_dates,
     :low_outbound_price, :low_return_price, :checked_on
 
-  def initialize(origin, destination, updated_since=2.hours.ago) 
+  def initialize(origin, destination, updated_since=2.days.ago) 
     @origin             = origin
     @destination        = destination
     @low_outbound_price = 0
