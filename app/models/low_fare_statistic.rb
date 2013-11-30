@@ -5,7 +5,7 @@ class LowFareStatistic
   attr_reader :origin, :destination, :departure_dates, :return_dates,
     :low_outbound_price, :low_return_price, :checked_on
 
-  def initialize(origin, destination, updated_since=2.days.ago) 
+  def initialize(origin, destination, updated_since=2.hours.ago) 
     @origin             = origin
     @destination        = destination
     @low_outbound_price = 0
@@ -54,8 +54,7 @@ class LowFareStatistic
 
   def one_way_low_fare_stat(origin, destination, updated_since, return_after=Time.now.to_date)
     attributes    = {price: 0, dates: [DateUnknown.new], checked_on: DateUnknown.new}
-    related_fares = LowUpcomingFareQuery.new(origin, destination).
-                      find_all(updated_since, return_after)
+    related_fares = LowUpcomingFareQuery.new(origin, destination).find_all(updated_since, return_after)
 
     if related_fares.size > 0
       lowest_price            = related_fares.first.price

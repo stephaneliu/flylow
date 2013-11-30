@@ -40,12 +40,7 @@ namespace :get_fares do
             end
 
             fare = Fare.new(price: fare, departure_date: day, origin: origin, destination: destination)
-
-            if fare.smart_save
-              puts "Successfully added fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug
-            else
-              puts "Could not add fare from #{origin.name} -> #{destination.name} on #{month.month}-#{day}" if debug
-            end
+            fare.smart_save
           end
           puts "#{month.month}: #{origin.name} to #{destination.name}" if debug
         end

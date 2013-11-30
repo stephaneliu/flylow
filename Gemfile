@@ -44,7 +44,6 @@ group :development do
   gem 'guard-schema'
   gem 'guard-spork'
   gem 'rb-fsevent', '~>0.9'
-  gem 'rb-inotify'
   gem 'spork'
   gem 'sqlite3'
   gem 'terminal-notifier-guard', require: for_platform('terminal-notifier-guard')
