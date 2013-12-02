@@ -3,7 +3,6 @@ common: &dev
   encoding: utf8
   reconnect: false
   pool: 5
-  username: root
   password:
 <% if RUBY_PLATFORM =~ /darwin/i %>
   socket: /tmp/mysql.sock
@@ -27,14 +26,16 @@ postgres: &postgres
   encoding: utf8
 
 development: 
-  <<: *mysql
+  <<: *dev
+  username: root
 
 test: &test
-  <<: *mysql
+  <<: *dev
+  username: travis
 
 production:
-  <<: *mysql
-  database: ENV['DATABASE_URL']
+  <<: *dev
+  username: root
 
 cucumber:
   <<: *test
