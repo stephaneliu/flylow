@@ -54,8 +54,7 @@ class LowFareStatistic
 
   def one_way_low_fare_stat(origin, destination, updated_since, return_after=Time.now.to_date)
     attributes    = {price: 0, dates: [DateUnknown.new], checked_on: DateUnknown.new}
-    related_fares = LowUpcomingFareQuery.new(origin, destination).
-                      find_all(updated_since, return_after)
+    related_fares = LowUpcomingFareQuery.new(origin, destination).find_all(updated_since, return_after)
 
     if related_fares.size > 0
       lowest_price            = related_fares.first.price
