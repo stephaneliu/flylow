@@ -1,9 +1,11 @@
-common: &dev
+mysql: &mysql
   adapter: mysql2
   encoding: utf8
   reconnect: false
   pool: 5
+  username: root
   password:
+  encoding: utf8
 <% if RUBY_PLATFORM =~ /darwin/i %>
   socket: /tmp/mysql.sock
 <% elsif RUBY_PLATFORM =~ /linux/i %>
@@ -18,7 +20,6 @@ sqlite: &sqlite
   adapter: sqlite3
   pool: 5
   timeout: 5000
-  # specify
   # database: db/development.sqlite3
 
 postgres: &postgres  
@@ -26,16 +27,17 @@ postgres: &postgres
   encoding: utf8
 
 development: 
-  <<: *dev
-  username: root
+  <<: *mysql
+  database: flylow_development
 
 test: &test
-  <<: *dev
-  username: travis
+  <<: *mysql
+  database: flylow_test
+  <% if ENV["TRAVIS"] %>
+    username: travis
+  <% end %>
 
 production:
-  <<: *dev
+  <<: *mysql
+  database: flylow_production
   username: root
-
-cucumber:
-  <<: *test

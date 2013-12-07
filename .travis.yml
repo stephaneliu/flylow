@@ -6,7 +6,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rspec spec
 before_script:
-  - mysql -e 'create database hal_fare_test;'
+  - mysql -e 'create database flylow_test;'
 branches:
   except:
     - develop

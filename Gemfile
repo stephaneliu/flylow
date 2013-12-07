@@ -56,6 +56,7 @@ group :development do
   gem 'what_methods'
   gem 'hirb'
   gem 'looksee'
+  gem 'thin'
 end
 
 group :test do
