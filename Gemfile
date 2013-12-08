@@ -34,6 +34,7 @@ group :development do
   gem "html2haml", ">= 1.0.0"
   gem "quiet_assets", ">= 1.0.1"
   gem 'annotate'
+  gem 'capistrano'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
