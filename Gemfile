@@ -20,7 +20,7 @@ gem 'mysql2'
 group :assets do
   gem 'sass-rails',   '4.0.3'
   gem 'coffee-rails', '4.0.1' 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '>= 1.3.0'
   gem 'turbo-sprockets-rails3'
 end
 

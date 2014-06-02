@@ -349,7 +349,7 @@ DEPENDENCIES
   thin
   timecop
   turbo-sprockets-rails3
-  uglifier (>= 1.0.3)
+  uglifier (>= 1.3.0)
   unicorn
   what_methods
   wirble
