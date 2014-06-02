@@ -4,7 +4,7 @@ gem 'rails', '4.1.1'
 
 gem "bootstrap-sass", ">= 2.3.0.0"
 gem "cancan", "1.6.10"
-gem "devise", "3.0.2"
+gem "devise", "3.2.0"
 gem "figaro", "0.7.0"
 gem "haml-rails", "0.5.3"
 gem "mechanize", "~>2.6.0"   # pin to 2.6 due to mime-type conflict with rails 4.1.1
@@ -21,7 +21,6 @@ group :assets do
   gem 'sass-rails',   '4.0.3'
   gem 'coffee-rails', '4.0.1' 
   gem 'uglifier', '>= 1.3.0'
-  gem 'turbo-sprockets-rails3'
 end
 
 group :development do
