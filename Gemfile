@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.1'
 
-gem "bootstrap-sass", ">= 2.3.0.0"
+gem "bootstrap-sass", "3.1.1.1"
 gem "cancan", "1.6.10"
 gem "devise", "3.2.0"
 gem "figaro", "0.7.0"
@@ -24,42 +24,41 @@ group :assets do
 end
 
 group :development do
-  gem 'foreman'
   gem "better_errors"
   gem "binding_of_caller"
   gem "html2haml"
   gem "quiet_assets"
   gem 'annotate'
-  gem 'mina'
+  gem 'foreman'
   gem 'guard-ctags-bundler'
   gem 'guard-livereload', require: false
-  gem 'rack-livereload' 
   gem 'guard-rspec'
   gem 'guard-schema'
   gem 'guard-spork'
+  gem 'mina'
+  gem 'rack-livereload' 
   gem 'rb-fsevent'
-  gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
+  gem 'spring'
   gem 'sqlite3'
+  gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
+  gem 'thin'
 
   # ~/.irbrc files
-  gem 'bullet'
   gem 'awesome_print'
-  gem 'wirble'
-  gem 'what_methods'
+  gem 'bullet'
   gem 'hirb'
   gem 'looksee'
-  gem 'thin'
+  gem 'what_methods'
+  gem 'wirble'
 end
 
 group :test do
+  gem "capybara"
   gem "database_cleaner"
   gem "email_spec"
-  gem 'shoulda-matchers'
   gem "launchy"
-  gem "capybara"
-  gem 'rspec-instafail'
   gem "rspec-rails"
-  gem "rspec-fire"
+  gem 'shoulda-matchers'
   gem 'timecop'
 end
 
