@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.1'
 
+gem 'sass-rails',   '4.0.3'
 gem "bootstrap-sass", "3.1.1.1"
+
 gem "cancan", "1.6.10"
 gem "devise", "3.2.0"
 gem "figaro", "0.7.0"
@@ -18,7 +20,6 @@ gem 'mysql2'
 # TODO upgrade
 
 group :assets do
-  gem 'sass-rails',   '4.0.3'
   gem 'coffee-rails', '4.0.1' 
   gem 'uglifier', '>= 1.3.0'
 end
