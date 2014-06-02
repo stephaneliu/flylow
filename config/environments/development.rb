@@ -1,5 +1,16 @@
 HawaiianAir::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  
+  config.middleware.use(Rack::LiveReload,
+                        min_delay: 500,           # default 1000
+                        max_delay: 60_000,        # default 60_000
+                        live_reload_port: 35729,  # default 35729
+                        # host:,
+                        ignore:  [ %r{something\.html} ]
+  )
+
+
+          
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
