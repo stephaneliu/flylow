@@ -27,7 +27,7 @@ postgres: &postgres
   encoding: utf8
 
 development: 
-  <<: *sqlite3
+  <<: *sqlite
   # database: flylow_development
   database: db/development.sqlite3
 
@@ -37,7 +37,7 @@ test: &test
     database: flylow_test
     username: travis
   <% else %>
-    <<: *sqlite3
+    <<: *sqlite
     database: db/test.sqlite3
   <% end %>
 
