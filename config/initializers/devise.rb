@@ -240,5 +240,5 @@ Devise.setup do |config|
   #
 
   # added since 3.1
-  config.secret_key 'ijsksjie233ijssjes0sjsdfjsa8ewrjdkskwetu89dfsasjsdfjwiewfwjciwo89sdf894859wiruiownvmxv'
+  config.secret_key = 'ijsksjie233ijssjes0sjsdfjsa8ewrjdkskwetu89dfsasjsdfjwiewfwjciwo89sdf894859wiruiownvmxv'
 end
