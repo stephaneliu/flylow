@@ -2,20 +2,30 @@
 %html
   %head
     =include_gon
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-      %title= content_for?(:title) ? yield(:title) : "Fly Low"
-      %meta{:content => content_for?(:description) ? yield(:description) : "Fly Low", :name => "description"}
-        = stylesheet_link_tag "application", :media => "all"
-        = javascript_include_tag "application"
-        /[if lt IE 9]
-          %script{src: "https://html5shim.googlecode.com/svn/trunk/html5.js", type: "text/javascript"}
-        = csrf_meta_tags
-        = yield(:head)
-  %body{:class => "#{controller_name} #{action_name}"}
-    .navbar.navbar-fixed-top.navbar-inverse
-      %nav.navbar-inner
-        .container
-          = render 'layouts/navigation'
+    %meta{charset: 'utf-8'}
+    %meta{http: {equiv: 'X-UA-Compatible'}, content: 'IE=edge'}
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %title= content_for?(:title) ? yield(:title) : "Fly Low"
+    %meta{:content => content_for?(:description) ? yield(:description) : "Fly Low", :name => "description"}
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    /[if lt IE 9]
+      %script{src: "https://html5shim.googlecode.com/svn/trunk/html5.js", type: "text/javascript"}
+    = csrf_meta_tags
+    = yield(:head)
+  %body{class: "#{controller_name} #{action_name}"}
+    .navbar.navbar-fixed-top.navbar-inverse{role: 'navigation'}
+      .container
+        .navbar-header
+          %button{class: 'navbar-toggle', data: {target: '.navbar-collapse', toggle: 'collapse', type: 'button'}}
+            %span.sr-only
+              Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          =link_to "Fly Low", root_path, :class => 'navbar-brand'
+        .collapse.navbar-collapse
+          =render 'layouts/navigation'
     #main{:role => "main"}
       .container
         .content
