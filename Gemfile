@@ -39,6 +39,7 @@ group :development do
   gem 'guard-spork'
   gem 'rb-fsevent'
   gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
+  gem 'sqlite3'
 
   # ~/.irbrc files
   gem 'bullet'
