@@ -35,7 +35,6 @@ group :development do
   gem 'guard-livereload', require: false
   gem 'guard-rspec'
   gem 'guard-schema'
-  gem 'guard-spork'
   gem 'mina'
   gem 'rack-livereload' 
   gem 'rb-fsevent'
