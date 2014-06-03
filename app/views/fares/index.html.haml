@@ -10,20 +10,20 @@
 Display flights departing from: 
 =select_tag "origin_filter", options_for_select([["All Cities", "all"], ["Oahu", "from_oahu"], ["Mainland", "from_mainland"]])
 
-#cheap_listing.accordion
+#cheap_listing#accordion.panel-group
   -@low_fares.find_all.each do |low_fare|
     -row_class    = low_fare.origin == City.oahu ? 'from_oahu' : 'from_mainland'
 
-    .accordion-group{class: row_class}
-      .accordion-heading
-        -row_id = "fare_details_#{low_fare.origin_code}_#{low_fare.destination_code}"
+    .panel.panel-default{class: row_class}
+      .panel-heading
+        .panel-title
+          -row_id = "fare_details_#{low_fare.origin_code}_#{low_fare.destination_code}"
+          %a{data: {toggle: 'collapse', parent: '#accordion'}, href: "##{row_id}"}
+            %i.glyphicon.glyphicon-chevron-right.rotate
+            %strong
+              ="#{low_fare.origin_name} (#{low_fare.origin_code}) to #{low_fare.destination_name} (#{low_fare.destination_code}) - (#{number_to_currency(low_fare.price)} R/T)"
 
-        %span{class: 'accordion-toggle', data: {target: "##{row_id}", toggle: 'collapse'}}
-          %i.glyphicon.glyphicon-chevron-right.rotate
-          %strong
-            ="#{low_fare.origin_name} (#{low_fare.origin_code}) to #{low_fare.destination_name} (#{low_fare.destination_code}) - (#{number_to_currency(low_fare.price)} R/T)"
-
-      .accordion-body.collapse{id: row_id, data: {id: low_fare.id}}
-        .accordion-inner
+      .panel-collapse.collapse{id: row_id, data: {id: low_fare.id}}
+        .panel-body
           .center
             =image_tag 'large_ajax_loader.gif'
