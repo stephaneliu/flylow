@@ -105,4 +105,11 @@ class FaresController < ApplicationController
       '/user/fares'
     # end
   end
+
+  private
+
+  def fare_params
+    params.require(:fare).permit(:price, :departure_date, :origin_id, :destination_id,
+                                 :origin, :destination, :comments)
+  end
 end

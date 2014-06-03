@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params[:user], :as => :admin)
+    if @user.update_attributes(user_params(:admin))
       redirect_to users_path, :notice => "User updated."
     else
       redirect_to users_path, :alert => "Unable to update user."
@@ -24,5 +24,11 @@ class UsersController < ApplicationController
     else
       redirect_to users_path, :notice => "Can't delete yourself."
     end
+  end
+
+  private
+
+  def user_params(admin=false)
+    params.require(:user).require(:name, :email, :password, :password_confirmation, :remember_me, :role_ids)
   end
 end

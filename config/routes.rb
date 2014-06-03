@@ -9,5 +9,5 @@ HawaiianAir::Application.routes.draw do
     get :details
   end
 
-  resources :pages, controller: 'pages', only: [:show]
+  # resources :pages, controller: 'pages', only: [:show]
 end
