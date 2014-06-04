@@ -8,6 +8,7 @@ gem "bootstrap-sass", "3.1.1.1"
 gem "cancan", "1.6.10"
 gem "devise", "3.2.0"
 gem "figaro", "0.7.0"
+gem 'skylight'
 gem "haml-rails", "0.5.3"
 gem "mechanize", "~>2.6.0"   # pin to 2.6 due to mime-type conflict with rails 4.1.1
 gem "rolify", "3.4.0"

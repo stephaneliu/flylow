@@ -243,6 +243,8 @@ GEM
     simple_form (3.0.2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
+    skylight (0.3.14)
+      activesupport (>= 3.0.0)
     slop (3.5.0)
     spring (1.1.2)
     sprockets (2.11.0)
@@ -332,6 +334,7 @@ DEPENDENCIES
   sass-rails (= 4.0.3)
   shoulda-matchers
   simple_form (= 3.0.2)
+  skylight
   spring
   sqlite3
   terminal-notifier-guard
