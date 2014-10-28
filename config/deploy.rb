@@ -43,8 +43,8 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  # queue! %[source "/usr/local/share/chruby/chruby.sh"]
-  # queue! %[chruby "#{ruby_version}"]
+  queue! %[source "/usr/local/share/chruby/chruby.sh"]
+  queue! %[chruby "#{ruby_version}"]
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -85,7 +85,7 @@ task :deploy => :environment do
 
     to :launch do
 			invoke :start_async_services
-      queue "service unicorn_hicrane restart"
+      queue "service unicorn restart"
     end
   end
 end

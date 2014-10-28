@@ -86,7 +86,6 @@ class FaresController < ApplicationController
   end
 
   def details
-    puts params
     low_fare        = LowFare.find(params[:fare_id])
     @low_fare_stat  = LowFareStatistic.new(low_fare.origin, low_fare.destination)
     @target         = params[:target]
