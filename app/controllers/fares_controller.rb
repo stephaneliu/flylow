@@ -17,12 +17,16 @@ class FaresController < ApplicationController
   # GET /fares/1
   # GET /fares/1.json
   def show
-    @fare = Fare.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @fare }
-    end
+    destination = City.find(15)
+    @fares    = Fare.where(origin_id: City.oahu, destination_id: destination)
+    @low_fare = @fares.order(:price).first
+    # @upcoming = @fares.where('departure_date > ?', 1.day.from_now).where('departure_date < ?', 31.days.from_now)
+    # @upcoming = @fares.where('departure_date > ?', Time.now.beginning_of_year).where('departure_date < ?', Time.now.end_of_year)
+    @upcoming = @fares.where('departure_date > ?', Time.now).where('departure_date < ?', 3.weeks.from_now)
+    min       = @upcoming.group(:departure_date).minimum(:price)
+    max       = @upcoming.group(:departure_date).maximum(:price)
+    @report   = {min: min, max: max}
   end
 
   # GET /fares/new

@@ -1,18 +1,14 @@
-%p#notice= notice
+= javascript_include_tag "//www.google.com/jsapi", "chartkick"
 
-%p
-  %b Price:
-  = @fare.price
-%p
-  %b Origin:
-  = @fare.origin_id
-%p
-  %b Destination:
-  = @fare.destination_id
-%p
-  %b Comments:
-  = @fare.comments
+Departing Oahu, arriving Portland
+%br
+Lowest observed price:
+=@low_fare.price
+Departing on:
+=@low_fare.departure_date
+Observed first
+=@low_fare.created_at
+Observed last:
+=@low_fare.updated_at
 
-= link_to 'Edit', edit_fare_path(@farfe)
-\|
-= link_to 'Back', fares_path
+=line_chart([ { name: "Highest", data: @report[:max] }, { name: "Lowest", data: @report[:min] } ])

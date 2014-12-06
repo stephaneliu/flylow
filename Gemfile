@@ -2,10 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.1'
 
-gem 'sass-rails',   '4.0.3'
 gem "bootstrap-sass", "3.1.1.1"
-
 gem "cancan", "1.6.10"
+gem 'chartkick', '~>1.3.2'
+gem 'descriptive_statistics', '~>2.4.0'
+gem 'groupdate', '~>2.3.0'
 gem "devise", "3.2.0"
 gem "figaro", "0.7.0"
 gem "haml-rails", "0.5.3"
@@ -16,6 +17,7 @@ gem 'gon', '5.0.4'
 gem 'high_voltage', '2.1.0'
 gem 'jquery-rails', '3.1.0'
 gem 'mysql2'
+gem 'sass-rails',   '4.0.3'
 
 # TODO upgrade
 

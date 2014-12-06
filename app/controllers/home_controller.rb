@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     #@favorites = City.favorites
   end
 
+
   def whats_new
   end
 end
