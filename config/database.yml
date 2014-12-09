@@ -27,19 +27,14 @@ postgres: &postgres
   encoding: utf8
 
 development: 
-  <<: *sqlite
-  # database: flylow_development
-  database: db/development.sqlite3
+  <<: *mysql
+  database: flylow_development
+  # database: db/development.sqlite3
 
 test: &test
-  <% if ENV["TRAVIS"] %>
-    <<: *mysql
-    database: flylow_test
-    username: travis
-  <% else %>
-    <<: *sqlite
-    database: db/test.sqlite3
-  <% end %>
+  <<: *mysql
+  database: flylow_test
+  # database: db/test.sqlite3
 
 production:
   <<: *mysql

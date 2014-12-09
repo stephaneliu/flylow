@@ -27,10 +27,10 @@
         .collapse.navbar-collapse
           =render 'layouts/navigation'
     #main{:role => "main"}
-      .container
+      .container-fluid
         .content
           .row
-            .span12
+            .col-lg-12
               = render 'layouts/messages'
               = yield
           %footer

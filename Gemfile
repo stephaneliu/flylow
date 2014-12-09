@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.1'
 
-gem "bootstrap-sass", "3.1.1.1"
+gem "bootstrap-sass", "~>3.3.1.0"
+gem 'autoprefixer-rails', '~>4.0.2'
+gem 'descriptive-statistics', '~>2.1.2'
 gem "cancan", "1.6.10"
 gem 'chartkick', '~>1.3.2'
 gem 'descriptive_statistics', '~>2.4.0'
@@ -44,6 +46,7 @@ group :development do
   gem 'sqlite3'
   gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
   gem 'thin'
+  gem 'tracer_bullets'
 
   # ~/.irbrc files
   gem 'awesome_print'

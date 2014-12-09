@@ -18,15 +18,41 @@ class FaresController < ApplicationController
   # GET /fares/1.json
   def show
 
-    destination = City.find(15)
-    @fares    = Fare.where(origin_id: City.oahu, destination_id: destination)
-    @low_fare = @fares.order(:price).first
-    # @upcoming = @fares.where('departure_date > ?', 1.day.from_now).where('departure_date < ?', 31.days.from_now)
-    # @upcoming = @fares.where('departure_date > ?', Time.now.beginning_of_year).where('departure_date < ?', Time.now.end_of_year)
-    @upcoming = @fares.where('departure_date > ?', Time.now).where('departure_date < ?', 3.weeks.from_now)
-    min       = @upcoming.group(:departure_date).minimum(:price)
-    max       = @upcoming.group(:departure_date).maximum(:price)
-    @report   = {min: min, max: max}
+    from_date         = Time.now
+    to_date           = 4.weeks.from_now
+    origin            = City.oahu
+    uniq_destinations = Fare.select(:destination_id).includes(:destination).where.not(destination_id: origin).uniq
+    @reports          = uniq_destinations.each_with_object([]) do |fare, reports|
+      report            = {}
+      fares             = Fare.where(destination_id: fare.destination_id, origin_id: origin)
+      upcoming          = fares.where('departure_date > ?', from_date).where('departure_date < ?', to_date)
+      grouped           = upcoming.group_by(&:departure_date)
+
+      report[:low_fare] = fares.order(:price).first
+      min      = upcoming.group(:departure_date).minimum(:price)
+      max      = upcoming.group(:departure_date).maximum(:price)
+      latest   = Hash[*grouped.map {|depart_date, fares| [depart_date, fares.sort_by(&:updated_at).last.price]}.flatten]
+      median   = Hash[*grouped.map {|depart_date, fares|
+        [depart_date, DescriptiveStatistics::Stats.new(fares.map(&:price)).median]
+      }.flatten]
+
+      # mean = DescriptiveStatistics::Stats.new(median.values).mean
+      #
+      tracer_bullet
+      mean = DescriptiveStatistics::Stats.new(fares.pluck(:price)).mean
+      tracer_bullet
+      # median_mean = Hash[*grouped.map {|depart_date, fares| [depart_date, mean] }.flatten]
+      median_mean = Hash[*grouped.map {|depart_date, fares| [depart_date, mean] }.flatten]
+
+      report[:chart] = [
+        # { name: "Highest", data: max },
+        # { name: "Lowest", data: min },
+        { name: "Latest", data: latest },
+        # { name:'Median', data: median },
+        { name:'Mean', data: median_mean}
+      ]
+      reports << report
+    end
   end
 
   # GET /fares/new

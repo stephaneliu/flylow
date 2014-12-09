@@ -1,14 +1,25 @@
-= javascript_include_tag "//www.google.com/jsapi", "chartkick"
+=javascript_include_tag "//www.google.com/jsapi", "chartkick"
 
-Departing Oahu, arriving Portland
-%br
-Lowest observed price:
-=@low_fare.price
-Departing on:
-=@low_fare.departure_date
-Observed first
-=@low_fare.created_at
-Observed last:
-=@low_fare.updated_at
+-@reports.each do |report|
+  .row
+    .col-lg-5
+      Departing Oahu, arriving
+      =report[:low_fare].destination.name
+  .row
+    .col-lg-5
+      Lowest observed price:
+      =report[:low_fare].price
+  .row
+    .col-lg-5
+      Departing on:
+      =report[:low_fare].departure_date
+  .row
+    .col-lg-5
+      First Observed:
+      =report[:low_fare].created_at
+  .row
+    .col-lg-5
+      Last Observed:
+      =report[:low_fare].updated_at
 
-=line_chart([ { name: "Highest", data: @report[:max] }, { name: "Lowest", data: @report[:min] } ])
+  =line_chart(report[:chart])
