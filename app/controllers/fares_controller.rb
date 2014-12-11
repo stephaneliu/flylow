@@ -32,24 +32,20 @@ class FaresController < ApplicationController
       min      = upcoming.group(:departure_date).minimum(:price)
       max      = upcoming.group(:departure_date).maximum(:price)
       latest   = Hash[*grouped.map {|depart_date, fares| [depart_date, fares.sort_by(&:updated_at).last.price]}.flatten]
-      median   = Hash[*grouped.map {|depart_date, fares|
-        [depart_date, DescriptiveStatistics::Stats.new(fares.map(&:price)).median]
-      }.flatten]
+      # median   = Hash[*grouped.map {|depart_date, fares|
+      #   [depart_date, DescriptiveStatistics::Stats.new(fares.map(&:price)).median]}
+      #   .flatten]
 
       # mean = DescriptiveStatistics::Stats.new(median.values).mean
       #
-      tracer_bullet
-      mean = DescriptiveStatistics::Stats.new(fares.pluck(:price)).mean
-      tracer_bullet
-      # median_mean = Hash[*grouped.map {|depart_date, fares| [depart_date, mean] }.flatten]
-      median_mean = Hash[*grouped.map {|depart_date, fares| [depart_date, mean] }.flatten]
+      median = DescriptiveStatistics::Stats.new(fares.pluck(:price)).median
+      mean_median = Hash[*grouped.map {|depart_date, fares| [depart_date, median] }.flatten]
 
       report[:chart] = [
-        # { name: "Highest", data: max },
-        # { name: "Lowest", data: min },
+        { name: "Highest", data: max },
+        { name: "Lowest", data: min },
         { name: "Latest", data: latest },
-        # { name:'Median', data: median },
-        { name:'Mean', data: median_mean}
+        { name:'Average', data: mean_median},
       ]
       reports << report
     end
