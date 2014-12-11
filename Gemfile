@@ -40,7 +40,7 @@ group :development do
   gem 'rb-fsevent'
   gem 'spring'
   gem 'sqlite3'
-  gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
+  gem 'terminal-notifier-guard' # if `uname` =~ /Darwin/
   gem 'thin'
 
   # ~/.irbrc files
