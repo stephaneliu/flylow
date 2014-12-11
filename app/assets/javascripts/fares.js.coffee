@@ -22,11 +22,11 @@ toggle_chevron = (target) ->
 jQuery ->
   # reset origin dropdown
   $('#origin_filter').val('all')
+  $('#origin_filter').change -> filter_fares_by_location(this)
 
-  $('.accordion-body').on 'show', -> 
+  $('.panel-collapse').on 'show.bs.collapse', -> 
     toggle_chevron(this)
     fetch_fare_details(this)
 
-  $('.accordion-body').on 'hide', -> toggle_chevron(this)
-  $('#origin_filter').change -> filter_fares_by_location(this)
+  $('.panel-collapse').on 'hide.bs.collapse', -> toggle_chevron(this)
   

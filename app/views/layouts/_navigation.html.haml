@@ -1,5 +1,4 @@
-= link_to "Fly Low", root_path, :class => 'brand'
-%ul.nav
+%ul.nav.navbar-nav
 
   -if user_signed_in?
     %li
@@ -10,7 +9,7 @@
     %li
       =link_to "What's New", page_path("whats_new")
 
-%ul.nav.pull-right
+%ul.nav.navbar-nav.pull-right
   - if user_signed_in?
     %li
       =link_to 'My Profile', edit_user_registration_path

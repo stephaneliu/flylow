@@ -8,5 +8,6 @@ script:
 before_script:
   - mysql -e 'create database flylow_test;'
 branches:
-  except:
+  only:
     - develop
+    - master

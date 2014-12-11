@@ -1,6 +1,6 @@
 class LowFareSortQuery
   
-  def initialize(scoped=LowFare.scoped)
+  def initialize(scoped=LowFare.all)
     @scoped = scoped
   end
 

@@ -1,78 +1,71 @@
 source 'https://rubygems.org'
 
-def for_platform(require_as, os=:darwin)
-  RUBY_PLATFORM.include?(os.to_s) && require_as
-end
+gem 'rails', '4.1.1'
 
-gem 'rails', '3.2.13'
-gem "haml-rails", ">= 0.4"
-gem 'jquery-rails'
-gem 'unicorn'
-gem "bootstrap-sass", ">= 2.3.0.0"
+gem 'sass-rails',   '4.0.3'
+gem "bootstrap-sass", "3.1.1.1"
+
+gem "cancan", "1.6.10"
+gem "devise", "3.2.0"
+gem "figaro", "0.7.0"
+gem "haml-rails", "0.5.3"
+gem "mechanize", "~>2.6.0"   # pin to 2.6 due to mime-type conflict with rails 4.1.1
+gem "rolify", "3.4.0"
+gem "simple_form", "3.0.2"
+gem 'gon', '5.0.4'
+gem 'high_voltage', '2.1.0'
+gem 'jquery-rails', '3.1.0'
 gem 'mysql2'
 
-gem "devise", ">= 2.2.3"
-gem "cancan", ">= 1.6.8"
-gem "rolify", ">= 3.2.0"
-gem "simple_form", ">= 2.0.4"
-gem "figaro", ">= 0.5.3"
-gem "mechanize", "~>2.5.1"
-gem 'high_voltage', '~>1.2.2'
-gem 'foreman', '~>0.62.0'
-gem 'gon'
+# TODO upgrade
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'turbo-sprockets-rails3'
+  gem 'coffee-rails', '4.0.1' 
+  gem 'uglifier', '>= 1.3.0'
 end
 
 group :development do
-  gem "better_errors", ">= 0.6.0"
-  gem "binding_of_caller", ">= 0.6.9"
-  gem "html2haml", ">= 1.0.0"
-  gem "quiet_assets", ">= 1.0.1"
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "html2haml"
+  gem "quiet_assets"
   gem 'annotate'
-  gem 'capistrano'
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
+  gem 'foreman'
   gem 'guard-ctags-bundler'
-  gem 'guard-livereload'
-  gem 'guard-livereload'
+  gem 'guard-livereload', require: false
   gem 'guard-rspec'
   gem 'guard-schema'
-  gem 'guard-spork'
-  gem 'rb-fsevent', '~>0.9'
-  gem 'spork'
+  gem 'mina'
+  gem 'rack-livereload' 
+  gem 'rb-fsevent'
+  gem 'spring'
   gem 'sqlite3'
-  gem 'terminal-notifier-guard', require: for_platform('terminal-notifier-guard')
-  gem 'travis-lint'
+  gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
+  gem 'thin'
 
   # ~/.irbrc files
-  gem 'bullet'
   gem 'awesome_print'
-  gem 'wirble'
-  gem 'what_methods'
+  gem 'bullet'
   gem 'hirb'
   gem 'looksee'
-  gem 'thin'
+  gem 'what_methods'
+  gem 'wirble'
 end
 
 group :test do
-  gem "database_cleaner", ">= 0.9.1"
-  gem "email_spec", ">= 1.4.0"
+  gem "capybara"
+  gem "database_cleaner"
+  gem "email_spec"
+  gem "launchy"
+  gem "rspec-rails"
   gem 'shoulda-matchers'
-  gem "cucumber-rails", ">= 1.3.0", :require => false
-  gem "launchy", ">= 2.2.0"
-  gem "capybara", ">= 2.0.2"
-  gem 'rspec-instafail'
-  gem "rspec-rails", ">= 2.12.2"
-  gem "rspec-fire"
-  gem 'timecop', "~>0.5.9"
+  gem 'timecop'
 end
 
 group :development, :test do
   gem "factory_girl_rails"
+end
+
+group :production do 
+  gem 'unicorn'
 end
