@@ -78,3 +78,5 @@ tags
 
 # Ignore application configuration
 /config/application.yml
+fly.sql
+bin/rspec

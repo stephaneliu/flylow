@@ -4,7 +4,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rubygems'
 require 'rspec/rails'
 require 'email_spec'
-require 'rspec/fire'
 #require 'capybara/poltergeist'
 
 FactoryGirl.definition_file_paths = [File.join(Rails.root, 'spec', 'factories')]
@@ -15,12 +14,12 @@ RSpec.configure do |config|
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
 
+  config.mock_with :rspec
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.include(RSpec::Fire)
 
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run focus: true
