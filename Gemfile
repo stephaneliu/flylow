@@ -2,26 +2,28 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.1'
 
-gem 'sass-rails',   '4.0.3'
-gem "bootstrap-sass", "3.1.1.1"
-
+gem "bootstrap-sass", "~>3.3.1.0"
+gem 'autoprefixer-rails', '~>4.0.2'
+gem 'descriptive-statistics', '~>2.1.2'
 gem "cancan", "1.6.10"
-gem "devise", "3.2.0"
+gem 'chartkick', '~>1.3.2'
+gem 'descriptive_statistics', '~>2.4.0'
+gem 'groupdate', '~>2.3.0'
+gem "devise", '3.4.1'
 gem "figaro", "0.7.0"
-gem "haml-rails", "0.5.3"
+gem "haml-rails", '0.6.0'
 gem "mechanize", "~>2.6.0"   # pin to 2.6 due to mime-type conflict with rails 4.1.1
 gem "rolify", "3.4.0"
 gem "simple_form", "3.0.2"
-gem 'gon', '5.0.4'
+gem 'gon', '5.2.3'
 gem 'high_voltage', '2.1.0'
-gem 'jquery-rails', '3.1.0'
+gem 'jquery-rails', '3.1.2'
 gem 'mysql2'
-
-# TODO upgrade
+gem 'sass-rails',   '4.0.3'
 
 group :assets do
-  gem 'coffee-rails', '4.0.1' 
-  gem 'uglifier', '>= 1.3.0'
+  gem 'coffee-rails', '4.1.0' 
+  gem 'uglifier', '>=2.6.0'
 end
 
 group :development do
@@ -33,15 +35,17 @@ group :development do
   gem 'foreman'
   gem 'guard-ctags-bundler'
   gem 'guard-livereload', require: false
-  gem 'guard-rspec'
+  gem 'guard-rspec', require: false
   gem 'guard-schema'
   gem 'mina'
   gem 'rack-livereload' 
   gem 'rb-fsevent'
   gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'sqlite3'
-  gem 'terminal-notifier-guard' # if `uname` =~ /Darwin/
+  gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
   gem 'thin'
+  gem 'tracer_bullets'
 
   # ~/.irbrc files
   gem 'awesome_print'

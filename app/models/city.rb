@@ -16,8 +16,8 @@ class City < ActiveRecord::Base
 
   include Comparable
 
-  scope :favorites, where(favorite: true)
-  scope :domestic, where(region: 'Domestic')
+  scope :favorites, -> { where(favorite: true) }
+  scope :domestic, -> { where(region: 'Domestic') }
   scope :international, where(region: 'International')
 
   def code
