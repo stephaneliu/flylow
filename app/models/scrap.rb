@@ -22,7 +22,8 @@ class Scrap
     parse_page(page, find_cheap=true).merge(parse_page(page, find_cheap=false))
   end
 
-  private 
+  # TODO - private this 
+  # private 
 
   def create_secure_agent
     Mechanize.new.tap {|mech| mech.ssl_version  = 'SSLv3'}
@@ -56,6 +57,7 @@ class Scrap
   end
 
   def calendar_url(outbound=true)
+    # orig and dest are "super" case sensitive
     ("https://fly.hawaiianairlines.com/Calendar/Calendar.aspx" +
       "?orig=#{origin}" +
       "&dest=#{destination}" +

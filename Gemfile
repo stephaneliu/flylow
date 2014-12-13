@@ -35,7 +35,7 @@ group :development do
   gem 'foreman'
   gem 'guard-ctags-bundler'
   gem 'guard-livereload', require: false
-  gem 'guard-rspec'
+  gem 'guard-rspec', require: false
   gem 'guard-schema'
   gem 'mina'
   gem 'rack-livereload' 
