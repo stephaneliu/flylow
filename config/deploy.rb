@@ -1,49 +1,108 @@
-set :application,     'flylow'
-set :repo_url,        'git@github.com:stephaneliu/hal_fare.git'
-set :rvm_ruby_string, "ruby-2.0.0-p247@#{fetch(:application)}"
-set :format,          :pretty
+require 'mina/bundler'
+require 'mina/rails'
+require 'mina/git'
 
-# set :log_level, :debug
-set :linked_files, %w{config/database.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
-# set :keep_releases, 5
+# Basic settings:
+#   domain       - The hostname to SSH to.
+#   deploy_to    - Path to deploy into.
+#   repository   - Git repo to clone from. (needed by mina/git)
+#   branch       - Branch name to deploy. (needed by mina/git)
 
-set :user,        'fly'
-set :port,        "8383"
-set :deploy_to,   "/home/#{fetch(:user)}/"
-set :use_sudo,    false
-set :scm,         "git"
-set :deploy_via,  :remote_cache # git pull vs. full clone
+if RUBY_PLATFORM =~ /darwin/
+  id = "/Volumes/4T_home/sliu/.ssh/id_rsa"
+else
+  id = "/home/sliu/.ssh/id_rsa"
+end
+
+set :term_mode,    :pretty
+set :application,  "flylow"
+set :user,         'fly'
+set :ruby_version, "ruby-2.1.2"
+
+# Optional settings:
+set :identity_file,  id
+set :ssh_options,    '-A' # key passthrough for git repo
+set :port,           "3838"
+
+set :domain,      "flylow.pixelatedpath.com"
+set :deploy_to,   "/home/#{user}/#{application}"
+set :app_path,    "#{deploy_to}/#{current_path}"
+set :repository,  "git@github.com:stephaneliu/hal_fare.git"
 set :branch,      "master"
 
-set :maintenance_template_path, File.expand_path("../../lib/capistrano/tasks/templates/maintenance.html.erb", __FILE__)
+# Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
+# They will be linked in the 'deploy:link_shared_paths' step.
+set :shared_paths, ['config/database.yml', 'config/application.yml', 'log', 'tmp']
 
-set :pty, true
-set :ssh_options, { forward_agent: true } # key passthrough for git repo
 
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
+# This task is the environment that is loaded for most commands, such as
+# `mina deploy` or `mina rake`.
+task :environment do
+  # If you're using rbenv, use this to load the rbenv environment.
+  # Be sure to commit your .rbenv-version to your repository.
+  # invoke :'rbenv:load'
 
-namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
-      execute "service unicorn restart"
-    end
-  end
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-
-  after :finishing, 'deploy:cleanup'
-
+  # For those using RVM, use this to load an RVM version@gemset.
+  queue! %[source "/usr/local/share/chruby/chruby.sh"]
+  queue! %[chruby "#{ruby_version}"]
 end
+
+# Put any custom mkdir's in here for when `mina setup` is ran.
+# For Rails apps, we'll make some of the shared paths that are shared between
+# all releases.
+task :setup => :environment do
+  queue! %[mkdir -p "#{deploy_to}/shared/log"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/config"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/pids"]
+  queue! %[touch "#{deploy_to}/shared/tmp/pids/unicorn.pid"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/sockets"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/sockets"]
+
+  queue! %[touch "#{deploy_to}/shared/config/database.yml"]
+  queue  %[echo "-----> ###### Be sure to edit 'shared/config/database.yml'. ######"]
+end
+
+desc "Deploys the current version to the server."
+task :deploy => :environment do
+  deploy do
+
+		to :prepare do
+			invoke :stop_async_services
+		end
+
+    # Put things that will set up an empty directory into a fully set-up instance of your project.
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+    invoke :'bundle:install'
+    invoke :'rails:db_migrate'
+    invoke :'rails:assets_precompile'
+
+    to :launch do
+			invoke :start_async_services
+      queue "service unicorn restart"
+    end
+  end
+end
+
+task start_async_services: :environment  do
+  # queue %[echo "--------> Starting delayed_job"]
+	# queue %[cd "#{deploy_to}/current" ; RAILS_ENV=production bin/delayed_job start]
+end
+
+task stop_async_services: :environment  do
+  # queue %[echo "--------> Stopping delayed_job"]
+	# queue %[cd "#{deploy_to}/current" ; RAILS_ENV=production bin/delayed_job stop]
+end
+
+# For help in making your deploy script, see the Mina documentation:
+#
+#  - http://nadarei.co/mina
+#  - http://nadarei.co/mina/tasks
+#  - http://nadarei.co/mina/settings
+#  - http://nadarei.co/mina/helpers
