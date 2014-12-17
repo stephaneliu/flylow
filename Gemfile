@@ -43,7 +43,6 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'sqlite3'
-  gem 'terminal-notifier-guard' if `uname` =~ /Darwin/
   gem 'thin'
   gem 'tracer_bullets'
 
