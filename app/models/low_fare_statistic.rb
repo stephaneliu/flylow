@@ -21,7 +21,7 @@ class LowFareStatistic
   end
 
   def create_low_fare
-    low_fare = LowFare.find_or_initialize_by_origin_id_and_destination_id(origin.id, destination.id)
+    low_fare = LowFare.where(origin_id: origin, destination_id: destination).first_or_initialize
     low_fare.price = total_price
     low_fare.save!
   end
