@@ -1,0 +1,5 @@
+#!/bin/bash
+source /usr/local/share/chruby/chruby.sh && \
+chruby ruby-2.1.3 && \
+cd /home/fly/current && \
+bundle exec unicorn -D -c /home/unicorn/unicorn.conf -E production
