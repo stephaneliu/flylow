@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.1.3'
 gem 'rails', '4.1.1'
 
 gem "bootstrap-sass", "~>3.3.1.0"
@@ -19,6 +20,7 @@ gem 'gon', '5.2.3'
 gem 'high_voltage', '2.1.0'
 gem 'jquery-rails', '3.1.2'
 gem 'mysql2'
+gem 'pg'
 gem 'sass-rails',   '4.0.3'
 
 group :assets do
@@ -71,5 +73,4 @@ end
 
 group :production do 
   gem 'unicorn'
-  gem 'pg'
 end
