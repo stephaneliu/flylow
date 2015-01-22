@@ -22,6 +22,7 @@ gem 'jquery-rails', '3.1.2'
 gem 'mysql2'
 gem 'pg'
 gem 'sass-rails',   '4.0.3'
+gem 'whenever', require: false
 
 group :assets do
   gem 'coffee-rails', '4.1.0' 
