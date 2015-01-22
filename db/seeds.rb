@@ -7,7 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # Environment variables (ENV['...']) are set in the file config/application.yml.
 # See http://railsapps.github.com/rails-environment-variables.html
-puts 'ROLES'
 
 # if Rails.env == "production"
 #   %w(admin, user, VIP).each do |role|
@@ -81,12 +80,12 @@ puts 'ROLES'
   "Taipei, Taiwan" => ["TPE", "International"],
   "Tokyo-Haneda, Japan" => ["HND", "International"]}.each do |city, code_region|
   code, region = code_region
-  City.find_or_create_by_name(name: city, airport_code: code, region: region)
+  City.new(name: city, airport_code: code, region: region).create!
 end
 
 # Favorites
 ["HNL", "KOA", "LIH", "OGG", "JHM", "BOS", "ORD", "FLL", "LAS", "LAX", "MRY", "JFK", "EWR", "OAK", "PDX", "SAN", "SFO", "SJC", "SEA", "IAD", "PHX"].each do |code|
-  City.find_by_airport_code(code).update_attribute(:favorite, true)
+  City.where(airport_code: code).first.update_attribute(:favorite, true)
   end
 
 ["ITO", "KOA", "LIH", "JHM", "BOS", "ORD", "FLL", "MRY", "EWR", "OAK", "SJC"].each do |code|
