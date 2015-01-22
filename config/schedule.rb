@@ -19,6 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
+set :output, '/var/www/apps/12603/current/log/custom_deploy_after_migrate.log'
 every 30.minutes do
   rake "get_fares:for_cities"
 end
