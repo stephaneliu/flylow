@@ -80,7 +80,7 @@
   "Taipei, Taiwan" => ["TPE", "International"],
   "Tokyo-Haneda, Japan" => ["HND", "International"]}.each do |city, code_region|
   code, region = code_region
-  City.find_or_create_by_name(name: city, airport_code: code, region: region)
+  City.where(name: city, airport_code: code, region: region).first_or_create
 end
 
 # Favorites
@@ -89,5 +89,5 @@ end
   end
 
 ["ITO", "KOA", "LIH", "JHM", "BOS", "ORD", "FLL", "MRY", "EWR", "OAK", "SJC"].each do |code|
-  City.find_by_airport_code(code).update_attribute(:favorite, false)
+  City.(airport_code: code).update_attribute(:favorite, false)
 end
