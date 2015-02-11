@@ -89,5 +89,5 @@ end
   end
 
 ["ITO", "KOA", "LIH", "JHM", "BOS", "ORD", "FLL", "MRY", "EWR", "OAK", "SJC"].each do |code|
-  City.(airport_code: code).update_attribute(:favorite, false)
+  City.where(airport_code: code).update_attribute(:favorite, false)
 end
