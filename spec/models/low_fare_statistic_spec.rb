@@ -1,44 +1,37 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe LowFareStatistic do
+  let(:origin)      { create :city }
+  let(:destination) { create :city }
 
   describe 'in general' do
-    before do
-      @origin       = create :city
-      @destination  = create :city
-    end
+
     context 'cities without fares' do
-      subject { LowFareStatistic.new(@origin, @destination) }
+      subject(:low_fare_statistic) { LowFareStatistic.new(origin, destination) }
 
       specify do
-        subject.low_outbound_price.should == 0
-        subject.low_return_price.should == 0
-        subject.checked_on.class.should == DateUnknown
-        subject.departure_dates.size.should == 1 
-        subject.departure_dates.first.class.should == DateUnknown
+        expect(low_fare_statistic.low_outbound_price).to eq(0)
+        expect(low_fare_statistic.low_return_price).to eq(0)
+        expect(low_fare_statistic.checked_on.class).to eq(DateUnknown)
+        expect(low_fare_statistic.departure_dates.size).to eq(1)
+        expect(low_fare_statistic.departure_dates.first.class).to eq(DateUnknown)
       end
 
       specify do
-        subject.return_dates.size.should == 1
-        subject.return_dates.first.class.should == DateUnknown
+        expect(low_fare_statistic.return_dates.size).to eq(1)
+        expect(low_fare_statistic.return_dates.first.class).to eq(DateUnknown)
       end
     end
   end
 
   describe ".create_low_fare_for" do
-    before do
-      @origin              = create(:city)
-      @destination         = create(:city)
-      @low_fare_statistic = LowFareStatistic.new(@origin, @destination)
-    end
+    let(:low_fare_statistic) { LowFareStatistic.new(origin, destination) }
 
     it "should create a LowFare object" do
-      round_trip_price = 200.0
-
-      mock_model(LowFare, find_or_initialize_by_origin_id_and_destination_id: true,
-           :price => true, :save! => true) 
-
-      @low_fare_statistic.create_low_fare
+      double('LowFare',
+             find_or_initialize_by_origin_id_and_destination_id: true,
+             price: true, save!: true) 
+      expect { low_fare_statistic.create_low_fare }.to change { LowFare.count }.by(1)
     end
   end
 
@@ -48,6 +41,7 @@ describe LowFareStatistic do
       @return_price   = 300
       @fare_stat      = LowFareStatistic.new(build(:city), build(:city))
     end
+
     subject { @fare_stat.total_price }
     it      { should == 0 }
   end

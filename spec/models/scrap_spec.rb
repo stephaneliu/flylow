@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Scrap do
   describe ".initialize" do
     context "defaults" do
-      subject { Scrap.new("HNL", "PDX") }
-      specify { subject.travelers.should == 2 }
+      # subject(:fare) { Scrap.new("HNL", "PDX") }
+      # specify        { expect(fare).to eq(2) }
     end
   end
 end

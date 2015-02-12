@@ -18,7 +18,7 @@ class City < ActiveRecord::Base
 
   scope :favorites, -> { where(favorite: true) }
   scope :domestic, -> { where(region: 'Domestic') }
-  scope :international, where(region: 'International')
+  scope :international, -> { where(region: 'International') }
 
   def code
     airport_code

@@ -12,29 +12,26 @@
 #  favorite     :boolean
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe City do
   before { create(:city) }
 
   describe '#favorites' do
-    before  { @favorite = create(:favorite_city) }
-    subject { City.favorites }
-    specify { subject.size.should == 1 }
-    it      { should include @favorite  }
+    let(:favorite) { create(:favorite_city) }
+    subject        { City.favorites }
+    it             { is_expected.to include(favorite) }
   end
 
   describe '#domestic' do
-    before  { @domestic = create :domestic_city }
-    subject { City.domestic }
-    specify { subject.size.should == 2}
-    it      { should include @domestic }
+    let(:domestic) { create :domestic_city }
+    subject        { City.domestic }
+    it             { is_expected.to include(domestic) }
   end
 
   describe '#international' do
-    before  { @intl = create :international_city }
-    subject { City.international }
-    specify { subject.size.should == 1}
-    it      { should include @intl }
+    let(:international) { create :international_city }
+    subject             { City.international }
+    it                  { is_expected.to include international }
   end
 end

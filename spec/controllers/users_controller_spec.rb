@@ -1,22 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe UsersController do
-
-  before do
-    @user = create :plain_user
-    sign_in @user
-  end
-
-  describe "GET 'show'" do
-    it "should be successful" do
-      get :show, id: @user.id
-      response.should be_success
-    end
-    
-    it "should find the right user" do
-      get :show, id: @user.id
-      assigns(:user).should == @user
-    end
-  end
-
 end
