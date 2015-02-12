@@ -1,0 +1,68 @@
+# PostgreSQL. Versions 8.2 and up are supported.
+#
+# Install the pg driver:
+#   gem install pg
+# On OS X with Homebrew:
+#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
+# On OS X with MacPorts:
+#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
+# On Windows:
+#   gem install pg
+#       Choose the win32 build.
+#       Install PostgreSQL and put its /bin directory on your path.
+#
+# Configure Using Gemfile
+# gem 'pg'
+#
+
+mysql: &mysql
+  adapter:    mysql2
+  encoding:   utf8
+  reconnect:  false
+  pool:       5
+  username:   root
+  password:
+  encoding:   utf8
+
+<% if RUBY_PLATFORM =~ /darwin/i %>
+  socket: /tmp/mysql.sock
+<% elsif RUBY_PLATFORM =~ /linux/i %>
+  socket: /var/run/mysqld/mysqld.sock 
+<% 
+  else
+    raise "OS platform not yet configured. Please configure database.yml" 
+  end
+%>
+
+sqlite: &sqlite
+  adapter:  sqlite3
+  pool:     5
+  timeout:  5000
+  # database: db/development.sqlite3
+
+# postgres -D /usr/local/var/postgres
+postgres: &postgres  
+  adapter:   postgresql
+  encoding:  unicode
+  pool:      5
+
+development: 
+  # <<: *postgres
+  # database: flylow_development
+  <<: *sqlite
+  database: db/development.sqlite3
+
+test: &test
+  <% if ENV["TRAVIS"] %>
+    <<: *mysql
+    database: flylow_test
+    username: travis
+  <% else %>
+    <<: *sqlite
+    database: db/test.sqlite3
+  <% end %>
+
+production:
+  <<: *mysql
+  database: flylow_production
+  username: root
