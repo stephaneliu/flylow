@@ -46,8 +46,7 @@ class LowFareStatistic
     @departure_dates    = outbound_attr[:dates]
     @checked_on         = outbound_attr[:checked_on]
 
-    return_after        = departure_dates.first
-    return_attr         = one_way_low_fare_stat(destination, origin, updated_since, return_after)
+    return_attr         = one_way_low_fare_stat(destination, origin, updated_since)
     @return_dates       = return_attr[:dates]
     @low_return_price   = return_attr[:price]
   end
