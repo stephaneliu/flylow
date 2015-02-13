@@ -20,7 +20,7 @@ namespace :get_fares do
   end
 
   task obtain_fares: :environment do 
-    debug   = false
+    debug   = ENV['DEBUG'] == 'true'
     cities  = City.favorites
     oahu    = City.oahu
 
