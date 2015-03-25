@@ -24,6 +24,7 @@ gem 'pg'
 gem 'sass-rails',   '4.0.3'
 gem 'whenever', require: false
 gem 'newrelic_rpm'
+gem 'tunemygc'
 
 group :assets do
   gem 'coffee-rails', '4.1.0' 

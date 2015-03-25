@@ -16,3 +16,4 @@ ROLES: [admin, user, VIP]
 TEST_LOCAL: true
 SKYLIGHT_APPLICATION_NAME: application name
 SKYLIGHT_AUTHENTICATION: skylight auth
+RUBY_GC_TOKEN: ruby_gc_token
