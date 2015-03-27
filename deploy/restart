@@ -1,2 +1,2 @@
 #!/bin/sh
-bundle exec rails s -d
+bundle exec unicorn -D -E production
