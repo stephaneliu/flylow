@@ -66,5 +66,3 @@ production:
   <<: *mysql
   database: flylow_production
   username: root
-
-  password: ENV["FLY_DB_PASSWORD"]
