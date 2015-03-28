@@ -39,5 +39,5 @@ run "git clean -x -f -- public/stylesheets public/javascripts"
 run "git clean -d -f -- vendor/plugins"
 
 puts "Coppying database configuration from shared"
-run "cp /home/gitdeploy/shared/config/database.yml config/"
+run "cp ../shared/config/database.yml config/"
 
