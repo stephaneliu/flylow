@@ -17,7 +17,7 @@ fetch_fare_details = (target) ->
     $.get(gon.fare_details_path.replace('9999', fare_id), {target: $(target).attr('id')}, null, "script")
 
 toggle_chevron = (target) ->
-  $(target).siblings().find('i').toggleClass('rotated')
+  $(target).siblings().find('span').toggleClass('rotated')
 
 jQuery ->
   # reset origin dropdown
