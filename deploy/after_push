@@ -13,8 +13,10 @@ umask 002
 
 git submodule sync && git submodule update --init --recursive
 
+
 puts "Coppying database configuration from shared"
 run "cp ../shared/config/database.yml config/"
+
 
 run deploy/before_restart
 run deploy/restart && run deploy/after_restart
