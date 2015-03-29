@@ -18,6 +18,10 @@ if use_bundler
   run "bundle install #{bundler_args.join(' ')}"
 end
 
+puts "Coppying database configuration from shared"
+run "cp ../shared/config/database.yml config/"
+
+
 if File.file? 'Rakefile'
   tasks = []
 
