@@ -19,6 +19,6 @@
   =number_to_currency(@low_fare_stat.total_price)
 %p
   =link_to "Go to fare", @low_fare_stat.calendar_url, target: "_new_#{@target}"
-  %i.icon-share-alt
+  %span.glyphicon.glyphicon-share-alt
 %p.muted
   Last checked: #{@low_fare_stat.checked_on.strftime("%-m/%-d/%y @ %l:%M %p")} HST
