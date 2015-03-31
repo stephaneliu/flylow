@@ -26,7 +26,7 @@
 
 require 'rails_helper'
 
-describe User do
+RSpec.describe User do
 
   describe 'email validity' do
     it do

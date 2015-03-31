@@ -24,10 +24,12 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
+# Application User representation
 class User < ActiveRecord::Base
   rolify
 
   # :token_authenticatable, :confirmable, lockable,
   # :timeoutable and :omniauthable, :registerable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+         :trackable, :validatable
 end

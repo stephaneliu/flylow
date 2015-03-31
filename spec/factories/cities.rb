@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :city do
     sequence(:name) { |f| "city_name_#{f}" }
     region "Domestic"
-    airport_code "HNL"
+    airport_code "PDX"
 
     trait :favorite do
       favorite true

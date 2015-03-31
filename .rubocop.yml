@@ -10,4 +10,5 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
+    - 'spec/factories/*'
     - !ruby/regexp /old_and_unused\.rb$/

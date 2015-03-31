@@ -5,7 +5,7 @@ class FareFetcherService
     @logger = logger
   end
 
-  def holding
+  def get_fares 
     debug      = false
     cities     = City.favorites
     oahu       = City.oahu

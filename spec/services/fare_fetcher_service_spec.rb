@@ -5,16 +5,17 @@ RSpec.describe FareFetcherService do
 
   describe '.initialize' do
     subject { described_class.new(logger) }
-
-    it 'accepts logger paramter' do
-      expect { subject }.to_not raise_error
-    end
+    it      { expect { subject }.to_not raise_error }
   end
 
   describe 'attributes' do
     subject { described_class.new(logger) }
+    it      { expect(subject.logger).to_not be_nil }
+  end
 
-    it 'has attribute readers' do
-    end
+  describe '.get_fares' do
+    before  { create(:favorite_city, airport_code: 'PDX') }
+    subject { described_class.new(logger).get_fares }
+    it      { expect { subject }.to change { LowFare.count }.by 1 }
   end
 end

@@ -64,7 +64,7 @@ group :test do
   gem "database_cleaner"
   gem "email_spec"
   gem "launchy"
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'timecop'
 end
 

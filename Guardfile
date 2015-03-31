@@ -1,4 +1,3 @@
- 
 guard 'livereload' do
   watch(%r{app/views/.+\.(erb|haml|slim)})
   watch(%r{app/helpers/.+\.rb})
@@ -23,8 +22,10 @@ group :red_green_refactor, halt_on_fail: true do
   #   - :focus (default) - Focus on the first 10 failed specs, rerun it until they pass
   #   - :keep - keep failed specs until they pass (add new failing specs when discovered)
   #   - :none - just report
-  # guard :rspec, cmd: 'spring rspec --fail-fast -f doc', failed_mode: :focus, all_on_start: false, all_after_pass: true do
-  guard :rspec, cmd: 'bin/rspec -f doc', failed_mode: :keep, all_on_start: false, all_after_pass: false do
+  # -f (format):
+  #   - doc
+  #   - progress
+  guard :rspec, cmd: 'bin/rspec -f progress', failed_mode: :keep, all_on_start: false, all_after_pass: false do
     watch('config/routes.rb')                           { "spec/routing" }
     watch('app/controllers/application_controller.rb')  { "spec/controllers" }
     watch(%r{^spec/.+_spec\.rb$})
