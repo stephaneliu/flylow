@@ -30,6 +30,7 @@ latest.*
 .redcar/
 .sass-cache
 /config/config.yml
+/config/application.yml
 /coverage.data
 /coverage/
 /db/*.javadb/
@@ -78,4 +79,3 @@ tags
 
 # Ignore application configuration
 fly.sql
-bin/rspec
