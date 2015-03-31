@@ -36,6 +36,7 @@ group :development do
   gem "quiet_assets"
   gem 'annotate'
   gem 'foreman'
+  gem "guard"
   gem 'guard-ctags-bundler'
   gem 'guard-livereload', require: false
   gem 'guard-rspec', require: false
