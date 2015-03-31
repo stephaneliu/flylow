@@ -14,7 +14,11 @@ RSpec.describe FareFetcherService do
   end
 
   describe '.get_fares' do
-    before  { create(:favorite_city, airport_code: 'PDX') }
+    before do
+      create(:oahu)
+      create(:favorite_city, airport_code: 'PDX')
+    end
+
     subject { described_class.new(logger).get_fares }
     it      { expect { subject }.to change { LowFare.count }.by 1 }
   end
