@@ -39,6 +39,7 @@ group :development do
   gem 'guard-ctags-bundler'
   gem 'guard-livereload', require: false
   gem 'guard-rspec', require: false
+  gem 'guard-rubocop'
   gem 'guard-schema'
   gem 'mina'
   gem 'rack-livereload' 
@@ -70,6 +71,8 @@ end
 group :development, :test do
   gem "factory_girl_rails"
   gem "rspec-rails"
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec'
 end
 
 group :production do 
