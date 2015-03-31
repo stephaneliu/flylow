@@ -1,5 +1,8 @@
 class FareFetcherService
-  def initialize
+  attr_reader :logger
+
+  def initialize(logger)
+    @logger = logger
   end
 
   def holding
