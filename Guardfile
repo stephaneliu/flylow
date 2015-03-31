@@ -1,17 +1,17 @@
+ 
+guard 'livereload' do
+  watch(%r{app/views/.+\.(erb|haml|slim)})
+  watch(%r{app/helpers/.+\.rb})
+  watch(%r{public/.+\.(css|js|html)})
+  watch(%r{config/locales/.+\.yml})
+  # Rails Assets Pipeline
+  watch(%r{(app|vendor)/assets/\w+/(.+\.(css|js|html)).*})  { |m| "/assets/#{m[2]}" }
+end
 
-# guard 'livereload' do
-#   watch(%r{app/views/.+\.(erb|haml|slim)})
-#   watch(%r{app/helpers/.+\.rb})
-#   watch(%r{public/.+\.(css|js|html)})
-#   watch(%r{config/locales/.+\.yml})
-#   # Rails Assets Pipeline
-#   watch(%r{(app|vendor)/assets/\w+/(.+\.(css|js|html)).*})  { |m| "/assets/#{m[2]}" }
-# end
-
-# guard 'ctags-bundler', src_path: ["app", "lib", "spec/support"] do
-#   watch(/^(app|lib|spec\/support)\/.*\.rb$/)
-#   watch('Gemfile.lock')
-# end
+guard 'ctags-bundler', src_path: ["app", "lib", "spec/support"] do
+  watch(/^(app|lib|spec\/support)\/.*\.rb$/)
+  watch('Gemfile.lock')
+end
 
 # Runs rake db:test:clone on schema.rb change
 #guard 'schema' do
@@ -28,7 +28,7 @@
 # all_after_pass: false    # don't run all specs after changed specs pass, default: true
 # all_on_start: false      # don't run all the specs at startup, default: true
 # keep_failed: false       # keep failed specs until them pass, default: true
-guard 'rspec', cmd: 'bin/rspec -f doc', bundle: false, failed_mode: :keep, all_on_start: false, all_after_pass: true do
+guard 'rspec', cmd: 'bin/rspec -f doc', bundle: false, failed_mode: :keep, all_on_start: false, all_after_pass: false do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
