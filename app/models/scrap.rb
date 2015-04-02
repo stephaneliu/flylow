@@ -22,12 +22,7 @@ class Scrap
     parse_page(page, find_cheap=true).merge(parse_page(page, find_cheap=false))
   end
 
-  # TODO - private this 
-  # private 
-
-  def create_secure_agent
-    Mechanize.new.tap {|mech| mech.ssl_version  = 'SSLv3'}
-  end
+  private
 
   def parse_page(page, find_cheap_fares=true)
     element_class = find_cheap_fares ? 'td.CalendarDayCheapest' : 'td.CalendarDayDefault'
@@ -50,28 +45,6 @@ class Scrap
 
   def parse_day_from_element(element)
     element.css('.Text').first.content
-  end
-
-  def get_page(outbound=true)
-    Nokogiri::HTML.parse "<html>#{@agent.get(calendar_url(outbound)).content}</html>".tap {|page| puts page if @debug}
-  end
-
-  def calendar_url(outbound=true)
-    # orig and dest are "super" case sensitive
-    ("https://fly.hawaiianairlines.com/Calendar/Calendar.aspx" +
-      "?orig=#{origin}" +
-      "&dest=#{destination}" +
-      "&traveler=#{travelers}" +
-      "&depDate=#{format_departure(@departure_date)}" +
-      "&owORob=#{outbound}" +
-      "&isDM=false&isRoundTrip=true&isEAward=false").tap { |url| puts url if @debug }
-  end
-
-  def format_departure(date_or_time)
-    unless [ActiveSupport::TimeWithZone, Time, Date].include? date_or_time.class
-      raise ArgumentError, "Expected departure_date to be a Date or Time"
-    end
-    date_or_time.strftime('%m/%d/%y')
   end
 
 end
