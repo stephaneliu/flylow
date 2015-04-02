@@ -70,6 +70,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     daemons (1.1.9)
     database_cleaner (1.4.0)
     debug_inspector (0.0.2)
@@ -274,6 +276,7 @@ GEM
     ruby-progressbar (1.7.5)
     ruby_parser (3.1.3)
       sexp_processor (~> 4.1)
+    safe_yaml (1.0.4)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -328,8 +331,12 @@ GEM
       rack
       raindrops (~> 0.7)
     uniform_notifier (1.6.2)
+    vcr (2.9.3)
     warden (1.2.3)
       rack (>= 1.0)
+    webmock (1.21.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
     webrobots (0.1.1)
     what_methods (1.0.1)
     whenever (0.9.4)
@@ -400,6 +407,8 @@ DEPENDENCIES
   tracer_bullets
   uglifier (>= 2.6.0)
   unicorn
+  vcr
+  webmock
   what_methods
   whenever
   wirble

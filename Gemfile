@@ -67,6 +67,8 @@ group :test do
   gem "launchy"
   gem 'shoulda-matchers', require: false
   gem 'timecop'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development, :test do
