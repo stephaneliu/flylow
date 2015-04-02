@@ -1,0 +1,314 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://fly.hawaiianairlines.com/Calendar/Calendar.aspx?depDate=04/02/15&dest=PDX&isDM=false&isEAward=false&isRoundTrip=true&orig=HNL&owORob=true&traveler=4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip,deflate,identity
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Mechanize/2.6.0 Ruby/2.2.0p0 (http://github.com/sparklemotion/mechanize/)
+      Accept-Charset:
+      - ISO-8859-1,utf-8;q=0.7,*;q=0.7
+      Accept-Language:
+      - en-us,en;q=0.5
+      Host:
+      - fly.hawaiianairlines.com
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - 300
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache,no-cache,no-cache
+      Content-Length:
+      - '24358'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/7.0
+      X-Aspnet-Version:
+      - 4.0.30319
+      Set-Cookie:
+      - ".lang=us; domain=.hawaiianairlines.com; expires=Fri, 31-Dec-9999 23:59:59
+        GMT; path=/"
+      - ASP.NET_SessionId=vxbejf0wqdmkz5busdoxchko; domain=.hawaiianairlines.com;
+        path=/; HttpOnly
+      - HALAPPS=apps2;path=/;domain=hawaiianairlines.com;
+      X-Powered-By:
+      - ASP.NET
+      Date:
+      - Thu, 02 Apr 2015 08:38:40 GMT
+      X-Apps-Server:
+      - apps2
+    body:
+      encoding: UTF-8
+      string: "<ITACal><table border='0' cellpadding='0' cellspacing='0'>\r\n  <tr><td
+        style='height:2px'></td></tr>\r\n  <tr><td style='text-align:left'><div class='CalendarTitle'
+        style='margin-left:5px'>Depart:  Honolulu to Portland</div></td></tr>\r\n
+        \ <tr>\r\n    <td style='text-align:left'>\r\n      <div style='padding-left:5px;display:none'
+        name='DMToggleGroup'>\r\n        <img src='https://assets.hawaiianairlines.com/images/spacer.gif'
+        alt='' width='1px' height='15px' /><br>\r\n        <span class='DMToggleText'>View
+        prices by:&nbsp;&nbsp;</span>\r\n        <span id='OB_DToggle' class='DMToggleSel'
+        onclick=\"if(_isOBEA==1){setDolMile(0,_isRTEA,$get('OB_DToggle'),$get('OB_MToggle'));}\">Dollars</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span
+        id='OB_MToggle' class='DMToggleOther' onclick=\"if(_isOBEA==0){setDolMile(1,_isRTEA,$get('OB_DToggle'),$get('OB_MToggle'));}\">Miles</span>\r\n
+        \       <img style='vertical-align: top; cursor: pointer' onclick='showHelp(this);'
+        alt='' src='https://assets.hawaiianairlines.com/images/IconHelp.gif' width='17'>\r\n
+        \     </div>\r\n    </td>\r\n  </tr>\r\n  <tr style='vertical-align:bottom;'>\r\n
+        \   <td class='ModuleTopRowCell'>\r\n      <table style='vertical-align:bottom;'
+        border='0' cellpadding='0' cellspacing='0' class='ModuleTopRowTable' width='350px'>\r\n
+        \       <tr>\r\n          <td class='CalModTL'><img src='https://assets.hawaiianairlines.com/images/CalModule_tl.gif'
+        alt='' /></td>\r\n          <td class='CalModT'><img src='https://assets.hawaiianairlines.com/images/spacer.gif'
+        alt='' /></td>\r\n          <td class='CalModTR'><img src='https://assets.hawaiianairlines.com/images/CalModule_tr.gif'
+        alt='' /></td>\r\n        </tr>\r\n      </table>\r\n    </td>\r\n  </tr>\r\n
+        \ <tr>\r\n    <td align='center' class='CalMain'>\r\n      <div class='ModuleContent'
+        style='padding:4px; background-color:White'>\r\n        <table cellpadding='1'
+        cellspacing='0' border='0' style='width: 308px'>\r\n          <tr>\r\n            <td>\r\n
+        \             <div id='OB_Month1' class='CalendarMonthSelected' =''>APR</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month2'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=05/01/2015&retDate=06/01/2015&owORob=true&isEAward=False&isRoundTrip=true');\"=''>MAY</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month3'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=06/01/2015&retDate=07/01/2015&owORob=true&isEAward=False&isRoundTrip=true');\"=''>JUN</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month4'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=07/01/2015&retDate=08/01/2015&owORob=true&isEAward=False&isRoundTrip=true');\"=''>JUL</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month5'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=08/01/2015&retDate=09/01/2015&owORob=true&isEAward=False&isRoundTrip=true');\"=''>AUG</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month6'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=09/01/2015&retDate=10/01/2015&owORob=true&isEAward=False&isRoundTrip=true');\"=''>SEP</div>\r\n
+        \           </td>\r\n          </tr>\r\n          <tr>\r\n            <td
+        colspan='7' height='1px' align='center'>\r\n              <div class='CalendarMonthDivider'>\r\n
+        \               <img height='1px' src='https://assets.hawaiianairlines.com/images/spacer.gif'
+        alt='' />\r\n              </div>\r\n            </td>\r\n          </tr>\r\n
+        \         <tr>\r\n            <td>\r\n              <div id='OB_Month7' class='CalendarMonth'
+        onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=10/01/2015&retDate=11/01/2015&owORob=true&isEAward=False&isRoundTrip=true');\"=''>OCT</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month8'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=11/01/2015&retDate=12/01/2015&owORob=true&isEAward=False&isRoundTrip=true');\"=''>NOV</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month9'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=12/01/2015&retDate=01/01/2016&owORob=true&isEAward=False&isRoundTrip=true');\"=''>DEC</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month10'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=01/01/2016&retDate=02/01/2016&owORob=true&isEAward=False&isRoundTrip=true');\"=''>JAN</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month11'
+        class='CalendarMonth' onclick=\"calSrch('OB','Calendar.aspx?orig=HNL&dest=PDX&traveler=4&depDate=02/01/2016&retDate=03/01/2016&owORob=true&isEAward=False&isRoundTrip=true');\"=''>FEB</div>\r\n
+        \           </td>\r\n            <td>\r\n              <div id='OB_Month12'
+        class='CalendarMonthDisabled'  onmouseover=\"mouseOverCellPop(event,this,'');\"
+        onmouseout=\"mouseOutCellPop(event,this,'');\"=''>MAR</div><div id=\"OB_Month12Balloon\"
+        getavailpopup=\"\" targetElement=\"OB_Month12\" direction=\"right\" width=\"150\"
+        style=\"position:absolute;display:none;margin: 0px 0px 0px 0px;\">Month outside
+        of<br>330 days</div>\r\n            </td>\r\n          </tr>\r\n          <tr>\r\n
+        \           <tr height='1px'>\r\n              <td colspan='7' align='center'
+        >\r\n                <div class='CalendarMonthDivider'>\r\n                  <img
+        height='1px' src='https://assets.hawaiianairlines.com/images/spacer.gif' alt=''
+        />\r\n                </div>\r\n              </td>\r\n            </tr>\r\n
+        \         </tr>\r\n        </table>\r\n      </div>\r\n    </td>\r\n  </tr>\r\n
+        \ <tr>\r\n    <td align='center' class='CalMain' style='background-color:White'>\r\n
+        \     <div style='height: 16px; background-color: #E7E0F2; width:308px;'>\r\n
+        \       <div align='center' class='CalendarMonthBanner'>APRIL 2015</div>\r\n
+        \     </div>\r\n    </td>\r\n  </tr>\r\n  <tr>\r\n    <td align='center' class='CalMain'>\r\n
+        \     <div class='ModuleContent' style='padding:3px; background-color:White'>\r\n
+        \       <table cellpadding='1' cellspacing='0' class='CalendarTable' style='width:
+        308px'>\r\n          <tr>\r\n            <td class='CalendarDayOfWeek'>S</td>\r\n
+        \           <td class='CalendarDayOfWeek'>M</td>\r\n            <td class='CalendarDayOfWeek'>T</td>\r\n
+        \           <td class='CalendarDayOfWeek'>W</td>\r\n            <td class='CalendarDayOfWeek'>T</td>\r\n
+        \           <td class='CalendarDayOfWeek'>F</td>\r\n            <td class='CalendarDayOfWeek'>S</td>\r\n
+        \         </tr>\r\n          <tr>\r\n            <td style='border-style:none'
+        colspan='7' align='center' class='CalMain'>\r\n              <div style='height:2px;width:308px;background-color:#D3B7F4;overflow:hidden'></div>\r\n
+        \           </td>\r\n          </tr>\r\n          <tr>\r\n            <td
+        colspan='7'>\r\n              <div class='CalMain'><img height='1' width='10px'
+        src='https://assets.hawaiianairlines.com/images/spacer.gif' alt='' /></div>\r\n
+        \           </td>\r\n          </tr>\r\n          <tr>\r\n            <td
+        id='OB_W1SUN' class='CalendarDayEmpty' =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"19\" alt=\"\" /></td>\r\n            <td id='OB_W1MON' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n            <td id='OB_W1TUE' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n            <td id='OB_W1WED' class='CalendarDayNA' onmouseover=\"mouseOverCellPop(event,this,'');\"
+        onmouseout=\"mouseOutCellPop(event,this,'');\"=''><div class=\"Text\">1</div><img
+        src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"5\"
+        alt=\"\" /><div class=\"Fare\">N/A</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div id=\"OB_W1WEDBalloon\" getavailpopup=\"\" targetElement=\"OB_W1WED\"
+        direction=\"right\" width=\"150\" style=\"position:absolute;display:none;margin:
+        0px 0px 0px 0px;\">No seats available<br>for this date.</div></td>\r\n            <td
+        id='OB_W1THU' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/2/2015','674','CalendarDayDefault','OB_W1THU','24.43');\"=''><div
+        class=\"Text\">2</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$674</div></td>\r\n            <td
+        id='OB_W1FRI' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/3/2015','500','CalendarDayDefault','OB_W1FRI','24.04');\"=''><div
+        class=\"Text\">3</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$500</div></td>\r\n            <td
+        id='OB_W1SAT' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/4/2015','500','CalendarDayDefault','OB_W1SAT','24.04');\"=''><div
+        class=\"Text\">4</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$500</div></td>\r\n          </tr>\r\n
+        \         <tr>\r\n            <td id='OB_W2SUN' class='CalendarDayDefault'
+        onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\" onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\"
+        onclick=\"setTrip('OB','HNL','PDX','4/5/2015','384','CalendarDayDefault','OB_W2SUN','23.79');\"=''><div
+        class=\"Text\">5</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$384</div></td>\r\n            <td
+        id='OB_W2MON' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/6/2015','359','CalendarDayDefault','OB_W2MON','23.73');\"=''><div
+        class=\"Text\">6</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$359</div></td>\r\n            <td
+        id='OB_W2TUE' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/7/2015','319','CalendarDayDefault','OB_W2TUE','23.65');\"=''><div
+        class=\"Text\">7</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$319</div></td>\r\n            <td
+        id='OB_W2WED' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/8/2015','674','CalendarDayDefault','OB_W2WED','24.43');\"=''><div
+        class=\"Text\">8</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$674</div></td>\r\n            <td
+        id='OB_W2THU' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/9/2015','674','CalendarDayDefault','OB_W2THU','24.43');\"=''><div
+        class=\"Text\">9</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$674</div></td>\r\n            <td
+        id='OB_W2FRI' class='CalendarDayNA' onmouseover=\"mouseOverCellPop(event,this,'');\"
+        onmouseout=\"mouseOutCellPop(event,this,'');\"=''><div class=\"Text\">10</div><img
+        src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"5\"
+        alt=\"\" /><div class=\"Fare\">N/A</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div id=\"OB_W2FRIBalloon\" getavailpopup=\"\" targetElement=\"OB_W2FRI\"
+        direction=\"right\" width=\"150\" style=\"position:absolute;display:none;margin:
+        0px 0px 0px 0px;\">No seats available<br>for this date.</div></td>\r\n            <td
+        id='OB_W2SAT' class='CalendarDayNA' onmouseover=\"mouseOverCellPop(event,this,'');\"
+        onmouseout=\"mouseOutCellPop(event,this,'');\"=''><div class=\"Text\">11</div><img
+        src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"5\"
+        alt=\"\" /><div class=\"Fare\">N/A</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div id=\"OB_W2SATBalloon\" getavailpopup=\"\" targetElement=\"OB_W2SAT\"
+        direction=\"right\" width=\"150\" style=\"position:absolute;display:none;margin:
+        0px 0px 0px 0px;\">No seats available<br>for this date.</div></td>\r\n          </tr>\r\n
+        \         <tr>\r\n            <td id='OB_W3SUN' class='CalendarDayNA' onmouseover=\"mouseOverCellPop(event,this,'');\"
+        onmouseout=\"mouseOutCellPop(event,this,'');\"=''><div class=\"Text\">12</div><img
+        src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"5\"
+        alt=\"\" /><div class=\"Fare\">N/A</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div id=\"OB_W3SUNBalloon\" getavailpopup=\"\" targetElement=\"OB_W3SUN\"
+        direction=\"right\" width=\"150\" style=\"position:absolute;display:none;margin:
+        0px 0px 0px 0px;\">No seats available<br>for this date.</div></td>\r\n            <td
+        id='OB_W3MON' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/13/2015','791','CalendarDayDefault','OB_W3MON','24.68');\"=''><div
+        class=\"Text\">13</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$791</div></td>\r\n            <td
+        id='OB_W3TUE' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/14/2015','475','CalendarDayDefault','OB_W3TUE','23.99');\"=''><div
+        class=\"Text\">14</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$475</div></td>\r\n            <td
+        id='OB_W3WED' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/15/2015','475','CalendarDayDefault','OB_W3WED','23.99');\"=''><div
+        class=\"Text\">15</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$475</div></td>\r\n            <td
+        id='OB_W3THU' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/16/2015','319','CalendarDayDefault','OB_W3THU','23.65');\"=''><div
+        class=\"Text\">16</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$319</div></td>\r\n            <td
+        id='OB_W3FRI' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/17/2015','344','CalendarDayDefault','OB_W3FRI','23.70');\"=''><div
+        class=\"Text\">17</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$344</div></td>\r\n            <td
+        id='OB_W3SAT' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/18/2015','434','CalendarDayDefault','OB_W3SAT','23.90');\"=''><div
+        class=\"Text\">18</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$434</div></td>\r\n          </tr>\r\n
+        \         <tr>\r\n            <td id='OB_W4SUN' class='CalendarDayDefault'
+        onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\" onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\"
+        onclick=\"setTrip('OB','HNL','PDX','4/19/2015','384','CalendarDayDefault','OB_W4SUN','23.79');\"=''><div
+        class=\"Text\">19</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$384</div></td>\r\n            <td
+        id='OB_W4MON' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/20/2015','409','CalendarDayDefault','OB_W4MON','23.84');\"=''><div
+        class=\"Text\">20</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$409</div></td>\r\n            <td
+        id='OB_W4TUE' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/21/2015','409','CalendarDayDefault','OB_W4TUE','23.84');\"=''><div
+        class=\"Text\">21</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$409</div></td>\r\n            <td
+        id='OB_W4WED' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/22/2015','359','CalendarDayDefault','OB_W4WED','23.73');\"=''><div
+        class=\"Text\">22</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$359</div></td>\r\n            <td
+        id='OB_W4THU' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/23/2015','674','CalendarDayDefault','OB_W4THU','24.43');\"=''><div
+        class=\"Text\">23</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$674</div></td>\r\n            <td
+        id='OB_W4FRI' class='CalendarDayCheapest' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHoverCheapest');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayCheapest');\" onclick=\"setTrip('OB','HNL','PDX','4/24/2015','286','CalendarDayCheapest','OB_W4FRI','23.57');\"=''><div
+        class=\"Text\">24</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$286</div></td>\r\n            <td
+        id='OB_W4SAT' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/25/2015','434','CalendarDayDefault','OB_W4SAT','23.90');\"=''><div
+        class=\"Text\">25</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$434</div></td>\r\n          </tr>\r\n
+        \         <tr>\r\n            <td id='OB_W5SUN' class='CalendarDayDefault'
+        onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\" onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\"
+        onclick=\"setTrip('OB','HNL','PDX','4/26/2015','384','CalendarDayDefault','OB_W5SUN','23.79');\"=''><div
+        class=\"Text\">26</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$384</div></td>\r\n            <td
+        id='OB_W5MON' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/27/2015','674','CalendarDayDefault','OB_W5MON','24.43');\"=''><div
+        class=\"Text\">27</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$674</div></td>\r\n            <td
+        id='OB_W5TUE' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/28/2015','674','CalendarDayDefault','OB_W5TUE','24.43');\"=''><div
+        class=\"Text\">28</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$674</div></td>\r\n            <td
+        id='OB_W5WED' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/29/2015','359','CalendarDayDefault','OB_W5WED','23.73');\"=''><div
+        class=\"Text\">29</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$359</div></td>\r\n            <td
+        id='OB_W5THU' class='CalendarDayDefault' onmouseover=\"mouseOverCellPop(event,this,'CalendarDayHover');\"
+        onmouseout=\"mouseOutCellPop(event,this,'CalendarDayDefault');\" onclick=\"setTrip('OB','HNL','PDX','4/30/2015','475','CalendarDayDefault','OB_W5THU','23.99');\"=''><div
+        class=\"Text\">30</div><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"5\" alt=\"\" /><div class=\"Fare\">$475</div></td>\r\n            <td
+        id='OB_W5FRI' class='CalendarDayEmpty' =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"19\" alt=\"\" /></td>\r\n            <td id='OB_W5SAT' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n          </tr>\r\n          <tr style='display:none'>\r\n
+        \           <td id='OB_W6SUN' class='CalendarDayEmpty' =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\"
+        height=\"19\" alt=\"\" /></td>\r\n            <td id='OB_W6MON' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n            <td id='OB_W6TUE' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n            <td id='OB_W6WED' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n            <td id='OB_W6THU' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n            <td id='OB_W6FRI' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n            <td id='OB_W6SAT' class='CalendarDayEmpty'
+        =''><img src=\"https://assets.hawaiianairlines.com/images/spacer.gif\" height=\"19\"
+        alt=\"\" /></td>\r\n          </tr>\r\n        </table>\r\n      </div>\r\n
+        \   </td>\r\n  </tr>\r\n  <tr style='vertical-align:top'>\r\n    <td class='ModuleBottomRowCell'
+        width='350px' >\r\n      <table border='0' cellpadding='0' cellspacing='0'
+        class='ModuleBottomRowTable' >\r\n        <tr style='vertical-align:top;'>\r\n
+        \         <td class='CalModBL'><img src='https://assets.hawaiianairlines.com/images/CalModule_bl.gif'
+        alt='' /></td>\r\n          <td class='CalModB'><img src='https://assets.hawaiianairlines.com/images/spacer.gif'
+        alt='' /></td>\r\n          <td class='CalModBR'><img src='https://assets.hawaiianairlines.com/images/CalModule_br.gif'
+        alt='' /></td>\r\n        </tr>\r\n      </table>\r\n    </td>\r\n  </tr>\r\n</table>\r\n\r\n\r\n</ITACal><CalSel></CalSel><Disclaimer><div
+        class=\"baggageTextHeader\">\r\n      For North America itineraries:\r\n        </div>\r\n
+        \     \r\n        <p  class=\"baggagePoints\">\r\n      - 1 <sup>st</sup>
+        checked bag will be charged $25, 2<sup>nd</sup> checked bag will be charged
+        $35.\r\n        </p>       \r\n             \r\n        <p  class=\"baggagePoints\">\r\n
+        \     \r\n      - Additional fees may apply for excess and oversized baggage.
+        <a href=\"http://www.hawaiianairlines.com/bag-fees/\" target=\"_blank\">View
+        all bag fees</a>.\r\n    \r\n        </p>\r\n      \r\n        <div class=\"baggageTerms\">\r\n
+        \     \r\n    HawaiianMiles Pualani Platinum, Gold, First Class, and Premier
+        Club members are exempt from 1<sup>st</sup> & 2<sup>nd</sup> checked bag fee
+        when departing on flights operated by Hawaiian Airlines. Waiver may not be
+        offered when departing on flights operated by partner airlines. Customers
+        booked on flights operated by partner airlines may be subject to the partner
+        airlines' baggage fees. <a href=\"http://www.hawaiianairlines.com/bag-fees/\"
+        target=\"_blank\">View all bag fees</a>.</br>Amounts in USD, unless indicated
+        otherwise.\r\n  \r\n        </div></Disclaimer>"
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 08:38:41 GMT
+recorded_with: VCR 2.9.3

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FareFetcherService do
+  before { create :oahu }
   let(:logger) { Logger.new(STDOUT) }
 
   describe '.initialize' do
@@ -13,10 +14,10 @@ RSpec.describe FareFetcherService do
     it      { expect(subject.logger).to_not be_nil }
   end
 
-  describe '.get_fares' do
+  describe '.get_fares', :vcr do
     before do
       create(:oahu)
-      create(:favorite_city, airport_code: 'PDX')
+      create(:favorite_city)
     end
 
     subject { described_class.new(logger).get_fares }
