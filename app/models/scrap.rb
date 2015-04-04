@@ -1,50 +1,56 @@
 # Scrap obtains fare page for origin to destination
 #
 class Scrap
+  attr_reader :connection, :origin, :destination, :travelers, :departure_date
 
-  attr_reader :origin, :destination, :travelers, :departure_date
-
-  # origin / destintaion - airport.code
-  def initialize(origin, destination, options={})
-    options         = {} unless options.is_a? Hash # ignore unless options
-    @agent          = create_secure_agent
-    @origin         = origin
-    @destination    = destination
-    @travelers      = options[:travelers] || 2
-    @departure_date = options[:departure_date] || 1.day.from_now.localtime
-    @debug          = options[:debug]
+  def initialize(connection)
+    @connection     = connection
+    @origin         = connection.origin
+    @destination    = connection.destination
+    @travelers      = connection.travelers
+    @departure_date = connection.departure_date
   end
 
   # Endpoint distinguishes between origin -> destination from reverse
-  def get_days_with_fare(outbound=true)
-    page = get_page(outbound)
+  def get_days_with_fare(outbound = true)
+    page = connection.get_content(outbound)
 
-    parse_page(page, find_cheap=true).merge(parse_page(page, find_cheap=false))
+    parse_page(page, :find_cheap).merge(parse_page(page, !:find_cheap))
   end
 
   private
 
-  def parse_page(page, find_cheap_fares=true)
-    element_class = find_cheap_fares ? 'td.CalendarDayCheapest' : 'td.CalendarDayDefault'
-    page.css(element_class).each_with_object({}) do |day_fare, day_with_fare| 
+  def parse_page(page, cheap_fares = true)
+    element_to_find = element_class(cheap_fares)
+
+    page.css(element_to_find).each_with_object({}) do |day_fare, day_with_fare|
       date                = parse_date_from_element(day_fare)
       fare                = parse_fare_from_element(day_fare)
       day_with_fare[date] = fare
+    end
+  end
 
-      puts "day: #{date} / fare: #{fare}" if @debug
+  def element_class(cheap_fares)
+    if cheap_fares
+      'td.CalendarDayCheapest'
+    else
+      'td.CalendarDayDefault'
     end
   end
 
   def parse_date_from_element(element)
-    Date.parse("#{departure_date.year}/#{departure_date.month}/#{parse_day_from_element(element)}")
+    year  = departure_date.year
+    month = departure_date.month
+    day   = parse_day_from_element(element)
+
+    Date.parse("#{year}/#{month}/#{day}")
   end
 
   def parse_fare_from_element(element)
-   (element.css('.Fare').first.content[1..-1]).to_f
+    element.css('.Fare').first.content[1..-1].to_f
   end
 
   def parse_day_from_element(element)
     element.css('.Text').first.content
   end
-
 end
