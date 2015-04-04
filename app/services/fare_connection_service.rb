@@ -12,6 +12,7 @@ class FareConnectionService
     @travelers      = travelers
   end
 
+  # outbound - origin to destination
   def get_content(outbound = true)
     agent = create_secure_agent
 
