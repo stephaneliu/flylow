@@ -21,12 +21,11 @@ class FareFetcherService
       destinations.each do |destination|
         next unless (destination == oahu) or from_oahu
         months.each do |month|
-
           Scrap.new(origin.code, destination.code, departure_date: month, debug: debug).get_days_with_fare.each do |day, fare|
             fare = Fare.new(price: fare, departure_date: day, origin: origin, destination: destination)
             fare.smart_save
           end
-          puts "#{month.month}: #{origin.name} to #{destination.name}" if debug
+          puts "### #{month.month}: #{origin.name} to #{destination.name}"
         end
         LowFareStatistic.new(origin, destination).create_low_fare
       end

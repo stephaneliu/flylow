@@ -11,7 +11,6 @@ describe Scrap do
     subject { described_class.new(connection) }
 
     it do
-      expect(subject.connection).to eq(connection)
       expect(subject.origin).to eq(connection.origin)
       expect(subject.destination).to eq(connection.destination)
       expect(subject.travelers).to eq(connection.travelers)

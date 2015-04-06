@@ -1,14 +1,13 @@
 # Scrap obtains fare page for origin to destination
 #
 class Scrap
-  attr_reader :connection, :origin, :destination, :travelers, :departure_date
+  extend Forwardable
+
+  def_delegators :@connection,
+                 :origin, :destination, :travelers, :departure_date
 
   def initialize(connection)
-    @connection     = connection
-    @origin         = connection.origin
-    @destination    = connection.destination
-    @travelers      = connection.travelers
-    @departure_date = connection.departure_date
+    @connection = connection
   end
 
   # Endpoint distinguishes between origin -> destination from reverse

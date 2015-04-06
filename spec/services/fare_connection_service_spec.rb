@@ -29,9 +29,11 @@ RSpec.describe FareConnectionService do
   describe '.get_page', :vcr do
     subject { described_class.new(origin, destination).get_content }
 
-    it 'returns parsable nokogiri html document object' do
-      expect(subject.class).to eq(Nokogiri::HTML::Document)
-      expect(subject.css('td.CalendarDayCheapest')).to be_present
+    context 'with origin HNL and destination PDX (vcr cassettes)' do
+      it 'returns parsable nokogiri html document object' do
+        expect(subject.class).to eq(Nokogiri::HTML::Document)
+        expect(subject.css('td.CalendarDayCheapest')).to be_present
+      end
     end
   end
 end
