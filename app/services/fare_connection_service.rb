@@ -8,15 +8,13 @@ class FareConnectionService
     @mechanize      = Mechanize.new
     @origin         = origin.upcase
     @destination    = destination.upcase
-    @departure_date = departure_date.strftime('%m/%d/%y')
+    @departure_date = departure_date
     @travelers      = travelers
   end
 
   # outbound - origin to destination
   def get_content(outbound = true)
-    agent = create_secure_agent
-
-    Nokogiri::HTML.parse agent.get(calendar_url(outbound)).content
+    Nokogiri::HTML.parse create_secure_agent.get(calendar_url(outbound)).content
   end
 
   private

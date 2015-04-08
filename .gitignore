@@ -47,6 +47,7 @@ latest.*
 /capybara*
 /capybara-*.html
 /gems
+/spec/support/vcr_cassettes/*
 /specifications
 rerun.txt
 pickle-email-*.html

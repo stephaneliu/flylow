@@ -5,18 +5,16 @@ RSpec.describe FareConnectionService do
   let(:destination) { 'PDX' }
 
   describe '.initialize' do
-    it do
-      expect(described_class.new(origin, destination))
-    end
+    it { expect(described_class.new(origin, destination)) }
 
     context 'lowercase parameters' do
       let(:connection) do
         described_class.new(origin.downcase, destination.downcase)
       end
+      let(:num_of_travelers) { 4 }
+      let(:departure_date)   { 1.day.from_now.strftime('%m/%d/%y') }
 
       it do
-        num_of_travelers = 4
-        departure_date = 1.day.from_now.strftime('%m/%d/%y')
         expect(connection.mechanize).to_not be_nil
         expect(connection.origin).to eq(origin)
         expect(connection.destination).to eq(destination)
@@ -31,7 +29,6 @@ RSpec.describe FareConnectionService do
 
     context 'with origin HNL and destination PDX (vcr cassettes)' do
       it 'returns parsable nokogiri html document object' do
-        expect(subject.class).to eq(Nokogiri::HTML::Document)
         expect(subject.css('td.CalendarDayCheapest')).to be_present
       end
     end

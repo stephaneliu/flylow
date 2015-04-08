@@ -12,7 +12,7 @@ class Scrap
 
   # Endpoint distinguishes between origin -> destination from reverse
   def get_days_with_fare(outbound = true)
-    page = connection.get_content(outbound)
+    page = @connection.get_content(outbound)
 
     parse_page(page, :find_cheap).merge(parse_page(page, !:find_cheap))
   end
@@ -20,6 +20,7 @@ class Scrap
   private
 
   def parse_page(page, cheap_fares = true)
+    return {} unless page.present?
     element_to_find = element_class(cheap_fares)
 
     page.css(element_to_find).each_with_object({}) do |day_fare, day_with_fare|
