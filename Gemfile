@@ -7,6 +7,7 @@ gem 'autoprefixer-rails', '~>4.0.2'
 gem 'descriptive-statistics', '~>2.1.2'
 gem "cancan", "1.6.10"
 gem 'chartkick', '~>1.3.2'
+gem 'coveralls', require: false
 gem 'descriptive_statistics', '~>2.4.0'
 gem 'groupdate', '~>2.3.0'
 gem "devise", '3.4.1'
