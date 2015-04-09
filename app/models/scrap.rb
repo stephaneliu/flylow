@@ -14,43 +14,45 @@ class Scrap
   def get_days_with_fare(outbound = true)
     page = @connection.get_content(outbound)
 
-    parse_page(page, :find_cheap).merge(parse_page(page, !:find_cheap))
+    parse_page(page)
   end
 
   private
 
-  def parse_page(page, cheap_fares = true)
+  def parse_page(page)
     return {} unless page.present?
-    element_to_find = element_class(cheap_fares)
 
-    page.css(element_to_find).each_with_object({}) do |day_fare, day_with_fare|
-      date                = parse_date_from_element(day_fare)
-      fare                = parse_fare_from_element(day_fare)
-      day_with_fare[date] = fare
-    end
+    find_elements = ['td.CalendarDayDefault', 'td.CalendarDayCheapest']
+
+    find_elements.each_with_object({}) do |find_element, day_with_fare|
+      page.css(find_element).each do |day_fare|
+        date, fare          = parse_date_and_fare_from(day_fare)
+        day_with_fare[date] = fare
+      end
+    end.compact
   end
 
-  def element_class(cheap_fares)
-    if cheap_fares
-      'td.CalendarDayCheapest'
-    else
-      'td.CalendarDayDefault'
-    end
+  def parse_date_and_fare_from(element)
+    [parse_date_from(element), parse_fare_from(element)]
   end
 
-  def parse_date_from_element(element)
+  def parse_date_from(element)
+    return unless (day = find_content_with_identity(element, '.Text'))
+
     year  = departure_date.year
     month = departure_date.month
-    day   = parse_day_from_element(element)
 
     Date.parse("#{year}/#{month}/#{day}")
   end
 
-  def parse_fare_from_element(element)
-    element.css('.Fare').first.content[1..-1].to_f
+  def parse_fare_from(element)
+    return unless (price = find_content_with_identity(element, '.Fare'))
+
+    price[1..-1].to_f
   end
 
-  def parse_day_from_element(element)
-    element.css('.Text').first.content
+  def find_content_with_identity(element, identifier)
+    return unless (el = element.css(identifier).first)
+    el.content
   end
 end
