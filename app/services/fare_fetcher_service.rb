@@ -18,7 +18,7 @@ class FareFetcherService
       destinations.each do |destination|
         @destination = destination
 
-        next unless to_or_from_oahu?
+        next unless origin_or_destination_oahu?
         obtain_fare
         update_low_fare_cache
       end
@@ -31,7 +31,7 @@ class FareFetcherService
     cities.reject { |city| city == origin }
   end
 
-  def to_or_from_oahu?
+  def origin_or_destination_oahu?
     origin == oahu || destination == oahu
   end
 
