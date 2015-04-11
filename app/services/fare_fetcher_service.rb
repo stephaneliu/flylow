@@ -1,37 +1,53 @@
+# Class obtains fares from website for persistence
 class FareFetcherService
-  attr_reader :logger
+  attr_reader :logger, :months, :cities, :oahu, :origin, :destination
 
-  def initialize(logger)
+  def initialize(logger, months = [1.day.from_now.localtime, 1.month.from_now,
+                                   2.months.from_now, 3.months.from_now,
+                                   4.months.from_now])
+    @months = months
     @logger = logger
+    @cities = City.favorites
+    @oahu   = City.oahu
   end
 
-  def get_fares 
-    cities     = City.favorites
-    oahu       = City.oahu
-    start_time = Time.now
-
-    Rails.logger.info "LowFare - start: #{start_time}"
-
+  def fares
     cities.each do |origin|
-      months       = [1.day.from_now.localtime, 1.month.from_now,
-                      2.months.from_now, 3.months.from_now, 4.months.from_now]
-      destinations = cities.dup.reject {|city| city == origin}
-      from_oahu    = origin == oahu
+      @origin = origin
 
       destinations.each do |destination|
-        next unless (destination == oahu) or from_oahu
-        months.each do |month|
-          Scrap.new(origin.code, destination.code, departure_date: month, debug: debug).get_days_with_fare.each do |day, fare|
-            fare = Fare.new(price: fare, departure_date: day, origin: origin, destination: destination)
-            fare.smart_save
-          end
-          puts "### #{month.month}: #{origin.name} to #{destination.name}"
-        end
-        LowFareStatistic.new(origin, destination).create_low_fare
+        @destination = destination
+
+        next unless to_or_from_oahu?
+        obtain_fare
+        update_low_fare_cache
       end
     end
+  end
 
-    end_time = Time.now
-    Rails.logger.info "LowFare - end: #{Time.now.to_s(:long)}"
+  private
+
+  def destinations
+    cities.reject { |city| city == origin }
+  end
+
+  def to_or_from_oahu?
+    origin == oahu || destination == oahu
+  end
+
+  def obtain_fare
+    months.each do |month|
+      connection = FareConnectionService.new(origin.code,
+                                             destination.code, month)
+      Scrap.new(connection).get_days_with_fare.each do |day, fare|
+        fare = Fare.new(price: fare, departure_date: day, origin: origin,
+                        destination: destination)
+        fare.smart_save
+      end
+    end
+  end
+
+  def update_low_fare_cache
+    LowFareStatistic.new(origin, destination).create_low_fare
   end
 end
