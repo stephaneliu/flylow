@@ -1,7 +1,8 @@
 # Class gets fares from external site given origin and destination
 # airport code of origin and destination on new
 class FareConnectionService
-  attr_reader :mechanize, :origin, :destination, :departure_date, :travelers
+  attr_reader :mechanize, :origin, :destination, :travelers
+  attr_writer :departure_date
 
   def initialize(origin, destination,
                  departure_date = 1.day.from_now.to_date, travelers = 4)
@@ -10,6 +11,10 @@ class FareConnectionService
     @destination    = destination.upcase
     @departure_date = departure_date
     @travelers      = travelers
+  end
+
+  def departure_date
+    format_date(@departure_date)
   end
 
   # outbound - origin to destination
@@ -21,6 +26,10 @@ class FareConnectionService
 
   def create_secure_agent
     mechanize.tap { |mech| mech.ssl_version = 'SSLv3' }
+  end
+
+  def format_date(date)
+    date.strftime('%m/%d/%y')
   end
 
   # rubocop:disable all

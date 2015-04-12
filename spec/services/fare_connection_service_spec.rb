@@ -5,21 +5,33 @@ RSpec.describe FareConnectionService do
   let(:destination) { 'PDX' }
 
   describe '.initialize' do
+    let(:connection) do
+      described_class.new(origin.downcase, destination.downcase)
+    end
+    let(:num_of_travelers) { 4 }
+    let(:departure_date)   { 1.day.from_now }
+
     it { expect(described_class.new(origin, destination)) }
 
-    context 'lowercase parameters' do
-      let(:connection) do
-        described_class.new(origin.downcase, destination.downcase)
-      end
-      let(:num_of_travelers) { 4 }
-      let(:departure_date)   { 1.day.from_now.strftime('%m/%d/%y') }
-
+    context 'readers' do
       it do
         expect(connection.mechanize).to_not be_nil
         expect(connection.origin).to eq(origin)
         expect(connection.destination).to eq(destination)
-        expect(connection.departure_date).to eq(departure_date)
         expect(connection.travelers).to eq(num_of_travelers)
+      end
+    end
+
+    context 'accessor' do
+      it do
+        expect(connection.departure_date)
+          .to eq(departure_date.strftime('%m/%d/%y'))
+
+        three_months              = 3.months.from_now
+        connection.departure_date = three_months
+
+        expect(connection.departure_date)
+          .to eq(three_months.strftime('%m/%d/%y'))
       end
     end
   end
