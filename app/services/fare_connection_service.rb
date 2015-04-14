@@ -2,19 +2,15 @@
 # airport code of origin and destination on new
 class FareConnectionService
   attr_reader :mechanize, :origin, :destination, :travelers
-  attr_writer :departure_date
+  attr_accessor :departure_date
 
   def initialize(origin, destination,
                  departure_date = 1.day.from_now.to_date, travelers = 4)
     @mechanize      = Mechanize.new
     @origin         = origin.upcase
     @destination    = destination.upcase
-    @departure_date = departure_date
+    @departure_date = departure_date.to_date
     @travelers      = travelers
-  end
-
-  def departure_date
-    format_date(@departure_date)
   end
 
   # outbound - origin to destination
@@ -39,7 +35,7 @@ class FareConnectionService
       "?orig=#{origin}" +
       "&dest=#{destination}" +
       "&traveler=#{travelers}" +
-      "&depDate=#{departure_date}" +
+      "&depDate=#{format_date(departure_date)}" +
       "&owORob=#{outbound}" +
       "&isDM=false" +
       "&isRoundTrip=true" +

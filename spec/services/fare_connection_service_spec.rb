@@ -25,13 +25,13 @@ RSpec.describe FareConnectionService do
     context 'accessor' do
       it do
         expect(connection.departure_date)
-          .to eq(departure_date.strftime('%m/%d/%y'))
+          .to eq(departure_date.to_date)
 
         three_months              = 3.months.from_now
         connection.departure_date = three_months
 
         expect(connection.departure_date)
-          .to eq(three_months.strftime('%m/%d/%y'))
+          .to eq(three_months)
       end
     end
   end
