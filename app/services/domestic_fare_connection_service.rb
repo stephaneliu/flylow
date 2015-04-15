@@ -1,6 +1,6 @@
 # Class gets fares from external site given origin and destination
 # airport code of origin and destination on new
-class FareConnectionService
+class DomesticFareConnectionService
   attr_reader :mechanize, :origin, :destination, :travelers
   attr_accessor :departure_date
 

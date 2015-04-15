@@ -1,13 +1,29 @@
 require 'rails_helper'
 
-describe Scrap do
+describe DomesticFareParserService do
   let(:departure_date) { 1.day.from_now.to_date }
 
   describe '.initialize' do
-    subject { described_class.new(departure_date) }
+    context 'without paramters' do
+      subject { described_class.new }
+      it      { expect(subject.departure_date).to eq(1.day.from_now.to_date) }
+    end
 
-    it 'delegates attributes' do
-      expect(subject.departure_date).to eq(departure_date)
+    context 'with departure_date' do
+      subject { described_class.new(departure_date) }
+    end
+
+    context 'with departure_date' do
+      subject { described_class.new(departure_date) }
+
+      it 'attributes' do
+        expect(subject.departure_date).to eq(departure_date)
+
+        two_months             = 2.months.from_now
+        subject.departure_date = two_months
+
+        expect(subject.departure_date).to eq(two_months)
+      end
     end
   end
 
@@ -31,7 +47,7 @@ describe Scrap do
     let(:day_class)  { 'Text' }
     let(:fare_class) { 'Fare' }
 
-    context 'when content is as expected', :focus do
+    context 'when content is as expected' do
       subject { described_class.new(departure_date).parse(content) }
 
       it 'obtains days and fare' do
@@ -41,18 +57,13 @@ describe Scrap do
       end
     end
 
-    context 'when day is not parseable' do
+    context 'when content is not parseable' do
       let(:day_class) { 'text' }
-
-      subject { described_class.new(connection).get_days_with_fare.keys }
-      it      { is_expected.to all be_blank }
-    end
-
-    context 'when fare is not parseable' do
       let(:fare_class) { 'fare' }
 
-      subject { described_class.new(connection).get_days_with_fare.values }
-      it      { is_expected.to all be_blank }
+      subject { described_class.new(departure_date).parse(content) }
+      it      { is_expected.to all(be_blank) }
+      it      { is_expected.to all(be_blank) }
     end
   end
 end

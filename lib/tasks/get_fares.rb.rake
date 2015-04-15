@@ -20,8 +20,12 @@ namespace :get_fares do
   end
 
   task obtain_fares: :setup_logger do 
-    fetcher = FareFetcher.new(Rails.logger)
-
+    connection = DomesticFareConnection.new
+    parser     = DomesticFareParser.new
+    routes     = RouteBuilderService.generate(City.favorites)
+    fetcher    = FareFetcherService.new(connection, parser, routes,
+                                        Rails.logger)
+    fetcher.fares
   end
 
   task setup_logger: :environment do

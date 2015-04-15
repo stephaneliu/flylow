@@ -1,9 +1,8 @@
-# Scrap parses content with fare info
-#
-class Scrap
-  attr_reader :departure_date
+# Object parses content with fare info
+class DomesticFareParserService
+  attr_accessor :departure_date
 
-  def initialize(departure_date)
+  def initialize(departure_date = 1.day.from_now.to_date)
     @departure_date = departure_date
   end
 

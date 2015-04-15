@@ -22,6 +22,7 @@ FactoryGirl.define do
   end 
 
   factory :oahu, class: City do
+    name 'Honolulu'
     airport_code 'HNL'
     region 'Domestic'
     favorite true

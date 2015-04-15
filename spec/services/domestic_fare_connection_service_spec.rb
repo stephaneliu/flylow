@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe FareConnectionService do
+RSpec.describe DomesticFareConnectionService do
   let(:origin)      { 'HNL' }
   let(:destination) { 'PDX' }
 

@@ -1,34 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe FareFetcherService do
-  before           { create :oahu }
+  let(:hnl)        { create :oahu }
+  let(:pdx)        { create :city, airport_code: 'PDX' }
   let(:logger)     { Logger.new(STDOUT) }
   let(:connection) { double('connection') }
+  let(:parser)     { double('parser') }
+  let(:routes)     { [[hnl, pdx], [pdx, hnl]] }
 
   describe '.initialize' do
-    subject { described_class.new(connection, logger) }
+    subject { described_class.new(connection, parser, logger) }
     it      { expect { subject }.to_not raise_error }
   end
 
   describe 'attributes' do
-    subject { described_class.new(connection, logger) }
+    subject { described_class.new(connection, parser, logger) }
 
     it do
       expect(subject.logger).to_not be_nil
+      expect(subject.parser).to eq(parser)
       expect(subject.connection).to eq(connection)
-      expect(subject.cities).to_not be_nil
-      expect(subject.oahu).to_not be_nil
+      expect(subject.routes).to_not be_nil
     end
   end
 
   describe '.fares', :vcr do
-    before do
-      create(:oahu)
-      create(:favorite_city, airport_code: 'PDX')
-    end
+    let(:connection) { DomesticFareConnectionService.new }
 
-    let(:connection) { FareConnectionService.new }
-    subject { described_class.new(connection, logger, [1.day.from_now]).fares }
+    subject do
+      described_class.new(connection, parser, routes, logger,
+                          [1.day.from_now]).fares
+    end
 
     it 'create lowfare record' do
       expect { subject }.to change { LowFare.count }
