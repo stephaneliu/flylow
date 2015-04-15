@@ -1,14 +1,17 @@
 # Class obtains fares from website for persistence
 class FareFetcherService
-  attr_reader :logger, :months, :cities, :oahu, :origin, :destination
+  attr_reader :cities, :connection, :destination,
+              :logger, :months, :oahu, :origin
 
-  def initialize(logger, months = [1.day.from_now.localtime, 1.month.from_now,
-                                   2.months.from_now, 3.months.from_now,
-                                   4.months.from_now])
-    @months = months
-    @logger = logger
-    @cities = City.favorites
-    @oahu   = City.oahu
+  def initialize(connection, logger = Logger.new(STDOUT),
+                 months = [1.day.from_now.localtime,
+                           1.month.from_now, 2.months.from_now,
+                           3.months.from_now, 4.months.from_now])
+    @connection = connection
+    @months     = months
+    @cities     = City.favorites
+    @oahu       = City.oahu
+    @logger     = logger
   end
 
   def fares
@@ -37,12 +40,12 @@ class FareFetcherService
 
   def obtain_fare
     months.each do |month|
-      connection = FareConnectionService.new(origin.code,
-                                             destination.code, month)
-      Scrap.new(connection).get_days_with_fare.each do |day, fare|
-        fare = Fare.new(price: fare, departure_date: day, origin: origin,
-                        destination: destination)
-        fare.smart_save
+      parser  = Scrap.new(month)
+      content = connection.get_content(origin.code, destination.code, month)
+
+      parser.parse(content).each do |day, content_fare|
+        Fare.new(price: content_fare, departure_date: day,
+                 origin: origin, destination: destination).smart_save
       end
     end
   end

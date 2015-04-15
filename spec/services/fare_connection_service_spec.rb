@@ -1,43 +1,28 @@
 require 'rails_helper'
-
 RSpec.describe FareConnectionService do
   let(:origin)      { 'HNL' }
   let(:destination) { 'PDX' }
 
   describe '.initialize' do
-    let(:connection) do
-      described_class.new(origin.downcase, destination.downcase)
-    end
+    let(:connection)       { described_class.new }
     let(:num_of_travelers) { 4 }
     let(:departure_date)   { 1.day.from_now }
 
-    it { expect(described_class.new(origin, destination)) }
+    it { expect(described_class.new) }
 
     context 'readers' do
       it do
         expect(connection.mechanize).to_not be_nil
-        expect(connection.origin).to eq(origin)
-        expect(connection.destination).to eq(destination)
         expect(connection.travelers).to eq(num_of_travelers)
-      end
-    end
-
-    context 'accessor' do
-      it do
-        expect(connection.departure_date)
-          .to eq(departure_date.to_date)
-
-        three_months              = 3.months.from_now
-        connection.departure_date = three_months
-
-        expect(connection.departure_date)
-          .to eq(three_months)
       end
     end
   end
 
-  describe '.get_page', :vcr do
-    subject { described_class.new(origin, destination).get_content }
+  describe '.get_content', :vcr do
+    subject do
+      described_class.new.get_content(origin, destination,
+                                      1.day.from_now)
+    end
 
     context 'with origin HNL and destination PDX (vcr cassettes)' do
       it 'returns parsable nokogiri html document object' do

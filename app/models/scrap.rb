@@ -1,36 +1,26 @@
-# Scrap obtains fare page for origin to destination
+# Scrap parses content with fare info
 #
 class Scrap
-  extend Forwardable
+  attr_reader :departure_date
 
-  def_delegators :@connection,
-                 :origin, :destination, :travelers, :departure_date
-
-  def initialize(connection)
-    @connection = connection
+  def initialize(departure_date)
+    @departure_date = departure_date
   end
 
-  # Endpoint distinguishes between origin -> destination from reverse
-  def get_days_with_fare(outbound = true)
-    page = @connection.get_content(outbound)
-
-    parse_page(page)
-  end
-
-  private
-
-  def parse_page(page)
-    return {} unless page.present?
+  def parse(content)
+    return {} unless content.present?
 
     find_elements = ['td.CalendarDayDefault', 'td.CalendarDayCheapest']
 
     find_elements.each_with_object({}) do |find_element, day_with_fare|
-      page.css(find_element).each do |day_fare|
+      content.css(find_element).each do |day_fare|
         date, fare          = parse_date_and_fare_from(day_fare)
         day_with_fare[date] = fare
       end
     end.compact
   end
+
+  private
 
   def parse_date_and_fare_from(element)
     [parse_date_from(element), parse_fare_from(element)]
