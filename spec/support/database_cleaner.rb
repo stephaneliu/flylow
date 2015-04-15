@@ -5,7 +5,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
-    FactoryGirl.lint
   end
 
   # When testing multiple db connections transaction doesn't because it isolate
