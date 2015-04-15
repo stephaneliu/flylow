@@ -33,6 +33,7 @@ RSpec.describe FareFetcherService do
     end
 
     it 'create lowfare record' do
+      expect(subject.first.class).to eq(Fare)
       expect { subject }.to change { LowFare.count }
     end
   end

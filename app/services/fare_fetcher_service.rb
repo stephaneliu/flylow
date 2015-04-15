@@ -15,12 +15,17 @@ class FareFetcherService
   end
 
   def fares
-    routes.each do |origin, destination|
-      @origin      = origin
-      @destination = destination
+    routes.each_with_object([]) do |route, fares|
+      @origin, @destination = route
 
-      obtain_fare
+      obtain_fare do |fare|
+        fare.smart_save
+        fares << fare
+      end
+
       update_low_fare_cache
+
+      fares
     end
   end
 
@@ -33,8 +38,8 @@ class FareFetcherService
       parser.month = month
 
       parser.parse(content).each do |day, content_fare|
-        Fare.new(price: content_fare, departure_date: day,
-                 origin: origin, destination: destination).smart_save
+        yield Fare.new(price: content_fare, departure_date: day,
+                       origin: origin, destination: destination)
       end
     end
   end
