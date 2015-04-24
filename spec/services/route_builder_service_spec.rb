@@ -8,7 +8,7 @@ RSpec.describe RouteBuilderService do
 
   let(:route_builder) { described_class.new(destinations) }
 
-  describe 'initialize', :focus do
+  describe 'initialize' do
     let(:destinations)  { [pdx, sfo, lax] }
 
     it do
