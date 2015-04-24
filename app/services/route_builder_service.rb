@@ -23,6 +23,6 @@ class RouteBuilderService
   private
 
   def remove_destination_hnl
-    destinations.reject! { |city| city == 'HNL' }
+    destinations.reject! { |city| city.code.downcase == 'hnl' }
   end
 end

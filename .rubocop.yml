@@ -12,3 +12,5 @@ AllCops:
     - 'script/**/*'
     - 'spec/factories/*'
     - !ruby/regexp /old_and_unused\.rb$/
+Metrics/LineLength:
+  Max: 99

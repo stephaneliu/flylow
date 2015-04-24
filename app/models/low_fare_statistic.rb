@@ -26,18 +26,6 @@ class LowFareStatistic
     low_fare.save!
   end
 
-  def calendar_url(travelers=2, outbound=true)
-    ("https://fly.hawaiianairlines.com/Calendar/Default.aspx" +
-     "?qrys=qres&Trip=RT" +
-     "&adult_no=#{travelers}" +
-     "&departure=#{origin.code}" +
-     "&out_day=#{departure_dates.first.strftime('%d')}" +
-     "&out_month=#{departure_dates.first.strftime('%m')}" +
-     "&return_day=#{return_dates.first.strftime('%d')}" +
-     "&return_month=#{return_dates.first.strftime('%m')}" +
-     "&destination=#{destination.code}")
-  end
-
   private
 
   def statistics(updated_since)

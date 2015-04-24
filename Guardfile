@@ -25,7 +25,7 @@ group :red_green_refactor, halt_on_fail: true do
   # -f (format):
   #   - doc
   #   - progress
-  guard :rspec, cmd: 'bin/rspec -f progress', failed_mode: :keep, all_on_start: false, all_after_pass: false do
+  guard :rspec, cmd: 'bin/rspec -f progress', failed_mode: :keep, all_on_start: true, all_after_pass: true do
     watch('config/routes.rb')                           { "spec/routing" }
     watch('app/controllers/application_controller.rb')  { "spec/controllers" }
     watch(%r{^spec/.+_spec\.rb$})
@@ -41,7 +41,7 @@ group :red_green_refactor, halt_on_fail: true do
     watch('tmp/test_models')                            { "spec/models" }
   end
 
-  guard :rubocop, all_on_start: false do
+  guard :rubocop, all_on_start: false, cli: ['--rails', '--display-cop-names'] do
     watch(%r{.+\.rb$})
     watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
   end

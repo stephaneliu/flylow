@@ -4,13 +4,9 @@ describe DomesticFareParserService do
   let(:departure_date) { 1.day.from_now.to_date }
 
   describe '.initialize' do
-    context 'without paramters' do
+    context 'without parameters' do
       subject { described_class.new }
-      it      { expect(subject.departure_date).to eq(1.day.from_now.to_date) }
-    end
-
-    context 'with departure_date' do
-      subject { described_class.new(departure_date) }
+      specify { expect(subject.departure_date).to eq(1.day.from_now.to_date) }
     end
 
     context 'with departure_date' do
