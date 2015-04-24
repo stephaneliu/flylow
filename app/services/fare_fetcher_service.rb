@@ -43,13 +43,19 @@ class FareFetcherService
       end
     end.tap do
       Rails.logger.info(
-        "#{Time.now.to_s(:db)} - (elapsed: #{Time.now - start_time}) Obtaining fare for \
-#{origin.code}/#{destination.code}"
+        "#{Time.now.to_s(:db)} - Obtaining fare for #{origin.code}/#{destination.code} \
+(elapsed: #{Time.now - start_time})"
       )
     end
   end
 
   def update_low_fare_cache
+    start_time = Time.now
+
     LowFareStatistic.new(origin, destination).create_low_fare
+
+    end_time = Time.now
+    Rails.logger.info("#{end_time.to_s(:db)} - Caching low fare for \
+#{origin.code}/#{destination.code} (elapsed: #{end_time - start_time})")
   end
 end

@@ -20,7 +20,7 @@ namespace :get_fares do
   end
 
   task obtain_fares: :setup_logger do 
-    Rails.logger.info "Start: #{Time.now.to_s(:db)}"
+    Rails.logger.info "####### Start: #{Time.now.to_s(:db)} #######"
     connection = DomesticFareConnectionService.new
     parser     = DomesticFareParserService.new
     routes     = RouteBuilderService.generate(City.favorites)
