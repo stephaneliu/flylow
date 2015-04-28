@@ -3,7 +3,7 @@ class LowFareStatistic
   include Comparable
 
   attr_reader :origin, :destination, :departure_dates, :return_dates,
-              :low_outbound_price, :low_return_price, :checked_on
+              :low_outbound_price, :low_return_price, :checked_on, :updated_since
 
   def initialize(origin, destination, updated_since = 2.hours.ago)
     @origin             = origin
@@ -13,7 +13,7 @@ class LowFareStatistic
     @departure_dates    = [DateUnknown.new]
     @return_dates       = [DateUnknown.new]
     @checked_on         = DateUnknown.new
-    statistics(updated_since)
+    @updated_since      = updated_since
   end
 
   def total_price
@@ -21,6 +21,7 @@ class LowFareStatistic
   end
 
   def create_low_fare
+    statistics
     low_fare = LowFare.where(origin_id: origin, destination_id: destination).first_or_initialize
     low_fare.price = total_price
     low_fare.save!
@@ -38,9 +39,7 @@ class LowFareStatistic
 &destination=#{destination.code}")
   end
 
-  private
-
-  def statistics(updated_since)
+  def statistics
     outbound_attr       = one_way_low_fare_stat(origin, destination, updated_since)
     @low_outbound_price = outbound_attr[:price]
     @departure_dates    = outbound_attr[:dates]
@@ -50,6 +49,8 @@ class LowFareStatistic
     @return_dates       = return_attr[:dates]
     @low_return_price   = return_attr[:price]
   end
+
+  private
 
   def one_way_low_fare_stat(origin, destination, updated_since, return_after = Time.now.to_date)
     attributes    = { price: 0, dates: [DateUnknown.new], checked_on: DateUnknown.new }

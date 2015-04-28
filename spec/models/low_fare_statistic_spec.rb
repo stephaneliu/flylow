@@ -4,6 +4,13 @@ describe LowFareStatistic do
   let(:origin)      { create :city }
   let(:destination) { create :city }
 
+  describe '#initialize' do
+    subject { described_class.new(origin, destination) }
+
+    specify do
+      expect(subject.updated_since).to_not be_nil
+    end
+  end
   describe 'in general' do
 
     context 'cities without fares' do

@@ -1,6 +1,6 @@
 class FaresController < ApplicationController
-  before_filter :authorize_public_area!
-  before_filter :assign_js_vars, only: :index
+  before_action :authorize_public_area!
+  before_action :assign_js_vars, only: :index
 
   # GET /fares
   # GET /fares.json
@@ -17,6 +17,8 @@ class FaresController < ApplicationController
     low_fare        = LowFare.find(params[:fare_id])
     @low_fare_stat  = LowFareStatistic.new(low_fare.origin, low_fare.destination)
     @target         = params[:target]
+
+    @low_fare_stat.statistics
   end
 
   protected
