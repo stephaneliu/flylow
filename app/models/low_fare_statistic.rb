@@ -25,6 +25,18 @@ class LowFareStatistic
     low_fare.save!
   end
 
+  def calendar_url(travelers=2, outbound=true)
+    ("https://fly.hawaiianairlines.com/Calendar/Default.aspx" +
+     "?qrys=qres&Trip=RT" +
+     "&adult_no=#{travelers}" +
+     "&departure=#{origin.code}" +
+     "&out_day=#{departure_dates.first.strftime('%d')}" +
+     "&out_month=#{departure_dates.first.strftime('%m')}" +
+     "&return_day=#{return_dates.first.strftime('%d')}" +
+     "&return_month=#{return_dates.first.strftime('%m')}" +
+     "&destination=#{destination.code}")
+  end
+
   private
 
   def statistics(updated_since)
@@ -45,13 +57,16 @@ class LowFareStatistic
 
     if related_fares.size > 0
       lowest_price            = related_fares.first.price
-      attributes[:dates]      = related_fares.reject { |fare| fare.price != lowest_price }
-                                .map(&:departure_date).sort
+      attributes[:dates]      = valid_dates(related_fares, lowest_price)
       attributes[:price]      = lowest_price
       attributes[:checked_on] = related_fares.order(:updated_at).last.updated_at
     end
 
     attributes
+  end
+
+  def valid_dates(fares, price)
+    fares.reject { |fare| fare.price != price }.map(&:departure_date).sort
   end
 end
 
