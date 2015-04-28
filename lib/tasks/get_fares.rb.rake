@@ -15,11 +15,7 @@ namespace :get_fares do
   end
 
   desc "Obtain fares for cities"
-  task for_cities: :obtain_fares do
-    Rake::Task['cache:fragments:delete'].invoke
-  end
-
-  task obtain_fares: :setup_logger do 
+  task for_cities: :setup_logger do 
     start_time = Time.now
     Rails.logger.info "####### Start: #{start_time.to_s(:db)} #######"
     connection = DomesticFareConnectionService.new
