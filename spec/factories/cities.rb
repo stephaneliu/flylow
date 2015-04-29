@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: cities
+#
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  region       :string(255)
+#  airport_code :string(255)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  favorite     :boolean
+#
+
 FactoryGirl.define do
   factory :city do
     sequence(:name) { |f| "city_name_#{f}" }

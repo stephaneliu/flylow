@@ -1,5 +1,4 @@
 # == Schema Information
-# Schema version: 20130302222428
 #
 # Table name: roles
 #
@@ -9,11 +8,6 @@
 #  resource_type :string(255)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#
-# Indexes
-#
-#  index_roles_on_name                                    (name)
-#  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
 #
 
 class Role < ActiveRecord::Base
