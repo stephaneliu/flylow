@@ -8,12 +8,13 @@
 #  price           :decimal(8, 2)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  url_reference   :string(255)
 #  departure_dates :text
 #  departure_price :decimal(8, 2)
 #  return_dates    :text
 #  return_price    :decimal(8, 2)
-#  url_reference   :string(255)
-#  last_checked    :string(255)
+#  url             :text
+#  last_checked    :datetime
 #
 
 # ORM for LowFare record
@@ -24,4 +25,7 @@ class LowFare < ActiveRecord::Base
   validates :origin, presence: true
   validates :destination, presence: true
   validates :price, presence: true
+
+  serialize :departure_dates
+  serialize :return_dates
 end
