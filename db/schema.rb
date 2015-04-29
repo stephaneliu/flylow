@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130327043541) do
+ActiveRecord::Schema.define(version: 20150428073114) do
 
   create_table "cities", force: true do |t|
     t.string   "name"
@@ -35,9 +35,16 @@ ActiveRecord::Schema.define(version: 20130327043541) do
   create_table "low_fares", force: true do |t|
     t.integer  "origin_id"
     t.integer  "destination_id"
-    t.decimal  "price",          precision: 8, scale: 2
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.decimal  "price",           precision: 8, scale: 2
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "url_reference"
+    t.text     "departure_dates"
+    t.decimal  "departure_price", precision: 8, scale: 2
+    t.text     "return_dates"
+    t.decimal  "return_price",    precision: 8, scale: 2
+    t.text     "url"
+    t.datetime "last_checked"
   end
 
   create_table "roles", force: true do |t|
