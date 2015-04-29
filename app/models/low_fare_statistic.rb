@@ -23,8 +23,15 @@ class LowFareStatistic
   def create_low_fare
     statistics
     low_fare = LowFare.where(origin_id: origin, destination_id: destination).first_or_initialize
-    low_fare.price = total_price
+    low_fare.price           = total_price
+    low_fare.departure_dates = departure_dates
+    low_fare.departure_price = low_outbound_price
+    low_fare.return_price    = low_return_price
+    low_fare.return_dates    = return_dates
+    low_fare.url_reference   = calendar_url
+    low_fare.last_checked    = checked_on
     low_fare.save!
+    low_fare
   end
 
   def calendar_url(travelers = 2)
@@ -61,7 +68,7 @@ class LowFareStatistic
       lowest_price            = related_fares.first.price
       attributes[:dates]      = valid_dates(related_fares, lowest_price)
       attributes[:price]      = lowest_price
-      attributes[:checked_on] = related_fares.order(:updated_at).last.updated_at
+      attributes[:checked_on] = related_fares.order(:updated_at).last.updated_at.tap {|check| puts "checked: #{check}"}
     end
 
     attributes
