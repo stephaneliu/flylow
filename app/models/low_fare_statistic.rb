@@ -56,21 +56,21 @@ class LowFareStatistic
     related_fares = LowUpcomingFareQuery.new(low_fare.origin, low_fare.destination, departure_flight)
       .find_all(updated_since, return_after)
 
-    if related_fares.count> 0
-      lowest_price = related_fares.first.price
+    return unless related_fares.count > 0
 
-      if departure_flight
-        low_fare.departure_dates = valid_dates(related_fares, lowest_price)
-        low_fare.departure_price = lowest_price
-      else
-        low_fare.return_dates = valid_dates(related_fares, lowest_price)
-        low_fare.return_price = lowest_price
-      end
+    lowest_price = related_fares.first.price
 
-      low_fare.last_checked  = related_fares.order(:updated_at).last.updated_at
-
-      low_fare
+    if departure_flight
+      low_fare.departure_dates = valid_dates(related_fares, lowest_price)
+      low_fare.departure_price = lowest_price
+    else
+      low_fare.return_dates = valid_dates(related_fares, lowest_price)
+      low_fare.return_price = lowest_price
     end
+
+    low_fare.last_checked  = related_fares.order(:updated_at).last.updated_at
+
+    low_fare
   end
 
   def valid_dates(fares, price)
