@@ -29,7 +29,8 @@ describe LowFare do
 
       is_expected.to validate_presence_of :origin
       is_expected.to validate_presence_of :destination
-      is_expected.to validate_presence_of :price
+      is_expected.to validate_presence_of :departure_price
+      is_expected.to validate_presence_of :return_price
 
       is_expected.to serialize :departure_dates
       is_expected.to serialize :return_dates

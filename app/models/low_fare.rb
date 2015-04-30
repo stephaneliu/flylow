@@ -24,7 +24,8 @@ class LowFare < ActiveRecord::Base
 
   validates :origin, presence: true
   validates :destination, presence: true
-  validates :price, presence: true
+  validates :departure_price, presence: true
+  validates :return_price, presence: true
 
   serialize :departure_dates
   serialize :return_dates
