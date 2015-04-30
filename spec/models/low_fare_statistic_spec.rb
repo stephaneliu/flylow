@@ -30,6 +30,8 @@ describe LowFareStatistic do
         create(:fare, origin: destination, destination: origin,
                       price: return_price, departure_date: return_date,
                       updated_at: checked_on)
+        create(:fare, origin: destination, destination: origin,
+                      price: return_price, departure_date: departure_date)
       end
 
       let(:departure_price) { 200.0 }
@@ -45,7 +47,11 @@ describe LowFareStatistic do
         expect(low_fare.return_price).to eq(return_price)
         expect(low_fare.return_dates).to include(return_date)
         expect(low_fare.url_reference).to start_with('https://fly.hawaiianairlines.com')
-        expect(low_fare.last_checked).to eq(checked_on)
+        expect(low_fare.last_checked).to be_within(1.second).of checked_on
+      end
+
+      it 'has return dates after departure dates' do
+        expect(low_fare.return_dates).to_not include(departure_date)
       end
     end
   end

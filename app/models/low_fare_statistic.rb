@@ -17,7 +17,7 @@ class LowFareStatistic
 
   def create_low_fare
     one_way_low_fare_stat(:outbound)
-    one_way_low_fare_stat(!:outbound)
+    one_way_low_fare_stat(!:outbound, low_fare.departure_dates.first)
 
     if low_fare.departure_dates && low_fare.return_dates
       low_fare.url_reference = calendar_url
@@ -30,7 +30,7 @@ class LowFareStatistic
   private
 
   def calendar_url(travelers = 2)
-    ("https://fly.hawaiianairlines.com/Calendar/Default.aspx\
+    "https://fly.hawaiianairlines.com/Calendar/Default.aspx\
 ?qrys=qres&Trip=RT\
 &adult_no=#{travelers}\
 &departure=#{low_fare.origin.code}\
@@ -38,7 +38,7 @@ class LowFareStatistic
 &out_month=#{get_date_element(:month, low_fare.departure_dates.first)}\
 &return_day=#{get_date_element(:day, low_fare.return_dates.first)}\
 &return_month=#{get_date_element(:month, low_fare.return_dates.first)}\
-&destination=#{low_fare.destination.code}")
+&destination=#{low_fare.destination.code}"
   end
 
   def get_date_element(element, date)
@@ -53,8 +53,9 @@ class LowFareStatistic
   end
 
   def one_way_low_fare_stat(departure_flight = true, return_after = Time.now.to_date)
-    related_fares = LowUpcomingFareQuery.new(low_fare.origin, low_fare.destination, departure_flight)
-      .find_all(updated_since, return_after)
+    related_fares = LowUpcomingFareQuery
+                    .new(low_fare.origin, low_fare.destination, departure_flight)
+                    .find_all(updated_since, return_after)
 
     return unless related_fares.count > 0
 
@@ -75,12 +76,5 @@ class LowFareStatistic
 
   def valid_dates(fares, price)
     fares.reject { |fare| fare.price != price }.map(&:departure_date).sort
-  end
-end
-
-# NullDate object
-class DateUnknown
-  def strftime(*)
-    'Unknown'
   end
 end
