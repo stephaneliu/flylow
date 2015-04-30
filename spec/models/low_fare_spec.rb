@@ -62,4 +62,63 @@ describe LowFare do
       expect(low_fare.return_dates).to include(yesterday)
     end
   end
+
+  describe '#total_price' do
+    let(:departure_price) { 100 }
+    let(:return_price)    { 200 }
+
+    subject(:low_fare) do
+      described_class.new(departure_price: departure_price, return_price: return_price)
+    end
+
+    specify            { expect(low_fare.total_price).to eq(departure_price + return_price) }
+  end
+
+  describe '#formatted_return_dates' do
+    context 'when return_dates' do
+      let(:low_fare) { described_class.new(return_dates: return_dates) }
+
+      context 'is present' do
+        let(:return_dates) { [today, tomorrow] }
+        let(:today)        { Date.today }
+        let(:tomorrow)     { 1.day.from_now.to_date }
+        subject            { low_fare.formatted_return_dates }
+
+        specify do
+          is_expected.to eq("#{today.strftime('%-m/%d')}, #{tomorrow.strftime('%-m/%d')}")
+        end
+      end
+
+      context 'is nil' do
+        let(:return_dates) { nil }
+        subject            { low_fare.formatted_return_dates }
+
+        specify { is_expected.to be_nil }
+      end
+    end
+  end
+
+  describe '#formatted_departure_dates' do
+    context 'when departure_dates' do
+      let(:low_fare) { described_class.new(departure_dates: departure_dates) }
+
+      context 'is present' do
+        let(:departure_dates) { [ today, tomorrow] }
+        let(:today)           { Time.now.to_date }
+        let(:tomorrow)        { 1.day.from_now.to_date }
+        subject { low_fare.formatted_departure_dates }
+
+        specify do
+          is_expected.to eq("#{today.strftime('%-m/%d')}, #{tomorrow.strftime('%-m/%d')}")
+        end
+      end
+
+      context 'is nil' do
+        let(:departure_dates) { nil }
+        subject               { low_fare.formatted_departure_dates }
+
+        specify { is_expected.to be_nil }
+      end
+    end
+  end
 end

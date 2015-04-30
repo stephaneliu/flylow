@@ -29,4 +29,26 @@ class LowFare < ActiveRecord::Base
 
   serialize :departure_dates
   serialize :return_dates
+
+  def total_price
+    departure_price + return_price
+  end
+
+  def formatted_departure_dates
+    return unless departure_dates
+
+    format_dates(departure_dates)
+  end
+
+  def formatted_return_dates
+    return unless return_dates
+
+    format_dates(return_dates)
+  end
+
+  private
+
+  def format_dates(dates)
+    dates.map { |date| date.strftime('%-m/%d') }.join(', ')
+  end
 end
