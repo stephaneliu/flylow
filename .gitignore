@@ -30,6 +30,7 @@ latest.*
 .redcar/
 .sass-cache
 /config/config.yml
+/config/application.yml
 /coverage.data
 /coverage/
 /db/*.javadb/
@@ -46,6 +47,7 @@ latest.*
 /capybara*
 /capybara-*.html
 /gems
+/spec/support/vcr_cassettes/*
 /specifications
 rerun.txt
 pickle-email-*.html
@@ -78,4 +80,3 @@ tags
 
 # Ignore application configuration
 fly.sql
-bin/rspec

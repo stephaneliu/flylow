@@ -16,8 +16,8 @@ class City < ActiveRecord::Base
 
   include Comparable
 
-  scope :favorites, -> { where(favorite: true) }
-  scope :domestic, -> { where(region: 'Domestic') }
+  scope :favorites,     -> { where(favorite: true) }
+  scope :domestic,      -> { where(region: 'Domestic') }
   scope :international, -> { where(region: 'International') }
 
   def code
@@ -25,7 +25,7 @@ class City < ActiveRecord::Base
   end
 
   def self.oahu
-    @oahu ||= where(airport_code: 'HNL').first
+    @oahu ||= find_by(airport_code: 'HNL')
   end
 
 end
