@@ -2,76 +2,75 @@
 class LowFareStatistic
   include Comparable
 
-  attr_reader :origin, :destination, :departure_dates, :return_dates,
+  attr_reader :low_fare, :departure_dates, :return_dates,
               :low_outbound_price, :low_return_price, :checked_on, :updated_since
 
   def initialize(origin, destination, updated_since = 2.hours.ago)
-    @origin             = origin
-    @destination        = destination
-    @low_outbound_price = 0
-    @low_return_price   = 0
-    @departure_dates    = [DateUnknown.new]
-    @return_dates       = [DateUnknown.new]
-    @checked_on         = DateUnknown.new
     @updated_since      = updated_since
+    @low_fare           = LowFare.where(origin_id: origin, destination_id: destination)
+                          .first_or_initialize
   end
 
   def total_price
-    low_outbound_price + low_return_price
+    low_fare.departure_price + low_fare.return_price
   end
 
   def create_low_fare
-    statistics
-    low_fare = LowFare.where(origin_id: origin, destination_id: destination).first_or_initialize
-    low_fare.price           = total_price
-    low_fare.departure_dates = departure_dates
-    low_fare.departure_price = low_outbound_price
-    low_fare.return_price    = low_return_price
-    low_fare.return_dates    = return_dates
-    low_fare.url_reference   = calendar_url
-    low_fare.last_checked    = checked_on
+    one_way_low_fare_stat(:outbound)
+    one_way_low_fare_stat(!:outbound)
+
+    if low_fare.departure_dates && low_fare.return_dates
+      low_fare.url_reference = calendar_url
+    end
+
     low_fare.save!
     low_fare
   end
+
+  private
 
   def calendar_url(travelers = 2)
     ("https://fly.hawaiianairlines.com/Calendar/Default.aspx\
 ?qrys=qres&Trip=RT\
 &adult_no=#{travelers}\
-&departure=#{origin.code}\
-&out_day=#{departure_dates.first.strftime('%d')}\
-&out_month=#{departure_dates.first.strftime('%m')}\
-&return_day=#{return_dates.first.strftime('%d')}\
-&return_month=#{return_dates.first.strftime('%m')}\
-&destination=#{destination.code}")
+&departure=#{low_fare.origin.code}\
+&out_day=#{get_date_element(:day, low_fare.departure_dates.first)}\
+&out_month=#{get_date_element(:month, low_fare.departure_dates.first)}\
+&return_day=#{get_date_element(:day, low_fare.return_dates.first)}\
+&return_month=#{get_date_element(:month, low_fare.return_dates.first)}\
+&destination=#{low_fare.destination.code}")
   end
 
-  def statistics
-    outbound_attr       = one_way_low_fare_stat(origin, destination, updated_since)
-    @low_outbound_price = outbound_attr[:price]
-    @departure_dates    = outbound_attr[:dates]
-    @checked_on         = outbound_attr[:checked_on]
-
-    return_attr         = one_way_low_fare_stat(destination, origin, updated_since)
-    @return_dates       = return_attr[:dates]
-    @low_return_price   = return_attr[:price]
-  end
-
-  private
-
-  def one_way_low_fare_stat(origin, destination, updated_since, return_after = Time.now.to_date)
-    attributes    = { price: 0, dates: [DateUnknown.new], checked_on: DateUnknown.new }
-    related_fares = LowUpcomingFareQuery.new(origin, destination)
-                    .find_all(updated_since, return_after)
-
-    if related_fares.size > 0
-      lowest_price            = related_fares.first.price
-      attributes[:dates]      = valid_dates(related_fares, lowest_price)
-      attributes[:price]      = lowest_price
-      attributes[:checked_on] = related_fares.order(:updated_at).last.updated_at.tap {|check| puts "checked: #{check}"}
+  def get_date_element(element, date)
+    case element
+    when :month
+      date.strftime('%m')
+    when :day
+      date.strftime('%d')
+    else
+      ''
     end
+  end
 
-    attributes
+  def one_way_low_fare_stat(departure_flight = true, return_after = Time.now.to_date)
+    related_fares = LowUpcomingFareQuery.new(low_fare.origin, low_fare.destination, departure_flight)
+      .find_all(updated_since, return_after)
+
+    if related_fares.count> 0
+      lowest_price = related_fares.first.price
+
+      if departure_flight
+        low_fare.departure_dates = valid_dates(related_fares, lowest_price)
+        low_fare.departure_price = lowest_price
+      else
+        low_fare.return_dates = valid_dates(related_fares, lowest_price)
+        low_fare.return_price = lowest_price
+      end
+
+      low_fare.last_checked  = related_fares.order(:updated_at).last.updated_at
+
+      low_fare
+    end
   end
 
   def valid_dates(fares, price)
