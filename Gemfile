@@ -52,6 +52,7 @@ group :development do
   gem 'sqlite3'
   gem 'thin'
   gem 'tracer_bullets'
+  gem 'web-console'
 
   # ~/.irbrc files
   gem 'awesome_print'
