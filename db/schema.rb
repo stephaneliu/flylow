@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 20150430050121) do
     t.decimal  "price",           precision: 8, scale: 2, default: 0.0
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
-    t.string   "url_reference"
     t.text     "departure_dates"
     t.decimal  "departure_price", precision: 8, scale: 2, default: 0.0
     t.text     "return_dates"

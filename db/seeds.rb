@@ -85,9 +85,9 @@ end
 
 # Favorites
 ["HNL", "KOA", "LIH", "OGG", "JHM", "BOS", "ORD", "FLL", "LAS", "LAX", "MRY", "JFK", "EWR", "OAK", "PDX", "SAN", "SFO", "SJC", "SEA", "IAD", "PHX"].each do |code|
-  City.where(airport_code: code).first.update_attribute(:favorite, true)
+  City.find_by(airport_code: code).update_attribute(:favorite, true)
   end
 
 ["ITO", "KOA", "LIH", "JHM", "BOS", "ORD", "FLL", "MRY", "EWR", "OAK", "SJC"].each do |code|
-  City.where(airport_code: code).update_attribute(:favorite, false)
+  City.find_by(airport_code: code).update_attribute(:favorite, false)
 end

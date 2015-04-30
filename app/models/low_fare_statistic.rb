@@ -20,7 +20,7 @@ class LowFareStatistic
     one_way_low_fare_stat(!:outbound, low_fare.departure_dates.first)
 
     if low_fare.departure_dates && low_fare.return_dates
-      low_fare.url_reference = calendar_url
+      low_fare.url = calendar_url
     end
 
     low_fare.save!

@@ -8,7 +8,7 @@
 #  price           :decimal(8, 2)    default(0.0)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  url_reference   :string(255)
+#  url             :string(255)
 #  departure_dates :text
 #  departure_price :decimal(8, 2)    default(0.0)
 #  return_dates    :text
@@ -103,7 +103,7 @@ describe LowFare do
       let(:low_fare) { described_class.new(departure_dates: departure_dates) }
 
       context 'is present' do
-        let(:departure_dates) { [ today, tomorrow] }
+        let(:departure_dates) { [today, tomorrow] }
         let(:today)           { Time.now.to_date }
         let(:tomorrow)        { 1.day.from_now.to_date }
         subject { low_fare.formatted_departure_dates }

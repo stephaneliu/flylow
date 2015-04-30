@@ -11,15 +11,6 @@ describe LowFareStatistic do
       expect(subject.updated_since).to_not be_nil
     end
   end
-  describe 'in general' do
-    context 'cities without fares' do
-      subject(:low_fare_statistic) { described_class.new(origin, destination) }
-
-      specify do
-
-      end
-    end
-  end
 
   describe '.create_low_fare' do
     context 'cached data attributes' do
@@ -46,7 +37,7 @@ describe LowFareStatistic do
         expect(low_fare.departure_price).to eq(departure_price)
         expect(low_fare.return_price).to eq(return_price)
         expect(low_fare.return_dates).to include(return_date)
-        expect(low_fare.url_reference).to start_with('https://fly.hawaiianairlines.com')
+        expect(low_fare.url).to start_with('https://fly.hawaiianairlines.com')
         expect(low_fare.last_checked).to be_within(1.second).of checked_on
       end
 

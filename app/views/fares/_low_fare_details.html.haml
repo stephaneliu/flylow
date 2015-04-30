@@ -18,7 +18,7 @@
     Total: 
   =number_to_currency(@low_fare.total_price)
 %p
-  =link_to "Go to fare", @low_fare.url_reference, target: "_new_#{@target}"
+  =link_to "Go to fare", @low_fare.url, target: "_new_#{@target}"
   %span.glyphicon.glyphicon-share-alt
 %p.muted
   Last checked: #{@low_fare.last_checked.strftime("%-m/%-d/%y @ %l:%M %p")} HST
