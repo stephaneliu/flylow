@@ -23,7 +23,6 @@ gem 'mysql2'
 gem 'pg'
 gem 'sass-rails',   '4.0.3'
 gem 'whenever', require: false
-gem 'newrelic_rpm'
 
 group :assets do
   gem 'coffee-rails', '4.1.0' 
@@ -64,6 +63,7 @@ group :development do
 end
 
 group :test do
+  gem 'rake' # required by Travis CI
   gem 'capybara'
   gem 'database_cleaner'
   gem 'email_spec'
@@ -83,4 +83,5 @@ end
 
 group :production do 
   gem 'unicorn'
+  gem 'newrelic_rpm'
 end
