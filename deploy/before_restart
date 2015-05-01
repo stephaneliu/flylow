@@ -21,6 +21,8 @@ end
 puts "Coppying database configuration from shared"
 run "cp ../shared/config/database.yml config/"
 
+puts "Copying secret key"
+run "cp ../shared/config/secrets.yml config/"
 
 if File.file? 'Rakefile'
   tasks = []
