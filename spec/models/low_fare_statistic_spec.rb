@@ -29,7 +29,7 @@ RSpec.describe LowFareStatistic do
       let(:return_price)    { 300.0 }
       let(:departure_date)  { 1.day.from_now.to_date }
       let(:return_date)     { 5.days.from_now.to_date }
-      let(:checked_on)      { Time.now }
+      let(:checked_on)      { Time.zone.now }
       subject(:low_fare)    { described_class.new(origin, destination).create_low_fare }
 
       it 'saves additional \'cached\' data' do
