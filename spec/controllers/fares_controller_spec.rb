@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe FaresController do
+RSpec.describe FaresController do
   describe 'GET index' do
     it 'assigns all fares as @fares' do
       get :index, {}

@@ -15,7 +15,7 @@ class LowFareStatistic
     low_fare.departure_price + low_fare.return_price
   end
 
-  def create_low_fare
+  def create_low_fare # rubocop:disable Metrics/AbcSize
     one_way_low_fare_stat(:outbound)
     one_way_low_fare_stat(!:outbound, low_fare.departure_dates.first)
 
@@ -29,7 +29,7 @@ class LowFareStatistic
 
   private
 
-  def calendar_url(travelers = 2)
+  def calendar_url(travelers = 2) # rubocop:disable Metrics/AbcSize
     "https://fly.hawaiianairlines.com/Calendar/Default.aspx\
 ?qrys=qres&Trip=RT\
 &adult_no=#{travelers}\
@@ -52,6 +52,7 @@ class LowFareStatistic
     end
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def one_way_low_fare_stat(departure_flight = true, return_after = Time.now.to_date)
     related_fares = LowUpcomingFareQuery
                     .new(low_fare.origin, low_fare.destination, departure_flight)

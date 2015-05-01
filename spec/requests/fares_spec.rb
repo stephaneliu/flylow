@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/DescribeClass
-describe 'Tickets' do
+RSpec.describe 'Tickets' do
   before do
     sign_in create :plain_user
   end
