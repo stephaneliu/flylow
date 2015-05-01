@@ -13,9 +13,9 @@
 
 FactoryGirl.define do
   factory :city do
-    sequence(:name) { |f| "city_name_#{f}" }
+    sequence(:name)         { |f| "city_name_#{f}" }
+    sequence(:airport_code) { |f| "code_#{f}" }
     region "Domestic"
-    sequence(:airport_code) { ['PDX','SFO', 'SEA'].shuffle.first }
 
     trait :favorite do
       favorite true

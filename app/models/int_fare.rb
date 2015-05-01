@@ -1,11 +1,10 @@
-# 
 # fare = IntFare.new
 # page = fare.get_page
 # json = JSON.parse(page.body)
 #
 # departure_prices = json["Availabilities"][0]["PriceTabs"]
 #
-# Json has following structure: 
+# Json has following structure:
 # { Availabilities:
 #   { 0: departure
 #     { PriceTabs:
@@ -19,8 +18,10 @@
 #     # same as departure
 #   }
 # }
-# PriceTabs has an array 0 for outbound, 1 for return. Each has 6 elements containing Price and TabDate.
+# PriceTabs has an array 0 for outbound, 1 for return. Each has 6 elements containing Price and
+# TabDate.
 #
+# rubocop:disable all
 class IntFare
   attr_reader :agent
   def initialize(options={})
@@ -42,6 +43,7 @@ class IntFare
     json["Availabilities"][price_tab_element]["PriceTabs"].map {|el| [el["TabDate"], el["Price"]]}
   end
 
+  # rubocop:disable Metrics/LineLength
   def get_page
     @agent.get('https://fly.hawaiianairlines.com/reservations/2/default.aspx?qrys=qres&source=&Trip=RT&departure=HNL&destination=HND&out_day=21&out_month=4&return_day=9&return_month=5&adult_no=4&lang=us')
 

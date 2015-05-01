@@ -25,7 +25,7 @@ group :red_green_refactor, halt_on_fail: true do
   # -f (format):
   #   - doc
   #   - progress
-  guard :rspec, cmd: 'bin/rspec -f Fuubar --color spec', failed_mode: :keep, all_on_start: false, all_after_pass: false do
+  guard :rspec, cmd: 'bin/rspec -f Fuubar --color spec', failed_mode: :focus, all_on_start: false, all_after_pass: false do
     watch('config/routes.rb')                           { "spec/routing" }
     watch('app/controllers/application_controller.rb')  { "spec/controllers" }
     watch(%r{^spec/.+_spec\.rb$})

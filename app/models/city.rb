@@ -12,9 +12,12 @@
 #  favorite     :boolean
 #
 
+# ORM object representing City
 class City < ActiveRecord::Base
-
   include Comparable
+
+  validates :name, :airport_code, presence: true, uniqueness: true
+  validates :region, inclusion: { in: %w(Domestic International) }
 
   scope :favorites,     -> { where(favorite: true) }
   scope :domestic,      -> { where(region: 'Domestic') }
@@ -27,5 +30,4 @@ class City < ActiveRecord::Base
   def self.oahu
     @oahu ||= find_by(airport_code: 'HNL')
   end
-
 end

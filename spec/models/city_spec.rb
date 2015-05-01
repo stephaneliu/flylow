@@ -17,21 +17,34 @@ require 'rails_helper'
 describe City do
   before { create(:city) }
 
+  describe 'validations' do
+    subject { described_class.new }
+    specify do
+      is_expected.to validate_presence_of :name
+      is_expected.to validate_presence_of :airport_code
+
+      is_expected.to validate_uniqueness_of :name
+      is_expected.to validate_uniqueness_of :airport_code
+
+      is_expected.to validate_inclusion_of(:region).in_array(%w(Domestic International))
+    end
+  end
+
   describe '#favorites' do
     let(:favorite) { create(:favorite_city) }
-    subject        { City.favorites }
-    it             { is_expected.to include(favorite) }
+    subject        { described_class.favorites }
+    specify        { is_expected.to include(favorite) }
   end
 
   describe '#domestic' do
     let(:domestic) { create :domestic_city }
-    subject        { City.domestic }
-    it             { is_expected.to include(domestic) }
+    subject        { described_class.domestic }
+    specify        { is_expected.to include(domestic) }
   end
 
   describe '#international' do
     let(:international) { create :international_city }
-    subject             { City.international }
-    it                  { is_expected.to include international }
+    subject             { described_class.international }
+    specify             { is_expected.to include international }
   end
 end

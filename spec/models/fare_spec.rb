@@ -13,42 +13,49 @@
 #  updated_at     :datetime         not null
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Fare do
+  describe 'validations' do
+    subject { described_class.new }
 
-  describe '.smart_save' do
-    before do
-      @price      = "100.00"
-      @existing   = create :fare 
-      @not_first  = create :fare, origin: @existing.origin, destination: @existing.destination, price: @price
-    end
-
-    context "when price has changed" do
-      before do
-        @not_first_updated_at = @not_first.updated_at
-        @fare = build(:fare, price: @existing.price, origin: @existing.origin, destination: @existing.destination)
-
-        @fare.smart_save
-        @not_first.reload
-      end
-
-      subject { @not_first_updated_at.to_s }
-      it      { should == @not_first.updated_at.to_s}
-    end
-
-    context "when price has not change" do
-      before do
-        @not_first_updated_at  = @not_first.updated_at
-        @fare                 = build(:fare, price: @price, origin: @existing.origin,
-                                      destination: @existing.destination)
-        @fare.smart_save
-        @not_first.reload
-      end
-
-      subject { @not_first_updated_at }
-      it      { should_not == @not_first.updated_at }
+    specify do
+      is_expected.to validate_presence_of :price
+      is_expected.to validate_presence_of :origin_id
+      is_expected.to validate_presence_of :destination_id
     end
   end
 
+  describe '#smart_save' do
+    let!(:existing_fare) { create :fare }
+    let(:fare) do
+      build(:fare, price: new_price,
+                   origin: existing_fare.origin,
+                   destination: existing_fare.destination)
+    end
+
+    context 'when price has changed' do
+      let(:new_price) { existing_fare.price + 100 }
+
+      specify do
+        expect { fare.smart_save }.to change { described_class.count }.by 1
+        expect { fare.smart_save }.to_not change { existing_fare.updated_at }
+      end
+    end
+
+    context 'when price has not change' do
+      let(:new_price) { existing_fare.price }
+
+      specify do
+        # This syntax not detecting change of updated_at
+        # expect { fare.smart_save }.to change { existing_fare.updated_at }
+
+        current_updated_at = existing_fare.updated_at
+        fare.smart_save
+        existing_fare.reload
+        expect(existing_fare.updated_at).to_not eq(current_updated_at)
+        expect { fare.smart_save }.to_not change { described_class.count }
+      end
+    end
+  end
 end
