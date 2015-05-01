@@ -7,10 +7,13 @@ AllCops:
     - '**/Rakefile'
     - '**/config.ru'
   Exclude:
+    - 'features/**/*'
+    - 'bin/*'
+    - 'deploy/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
     - 'spec/factories/*'
     - !ruby/regexp /old_and_unused\.rb$/
 Metrics/LineLength:
-  Max: 99
+  Max: 100

@@ -1,2 +1,3 @@
+# NODOC
 module FaresHelper
 end

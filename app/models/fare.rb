@@ -13,26 +13,22 @@
 #  updated_at     :datetime         not null
 #
 
+# ORM object representing Fare for application
 class Fare < ActiveRecord::Base
-
   belongs_to :origin, class_name: 'City'
   belongs_to :destination, class_name: 'City'
 
-  validates_presence_of :price, :departure_date, :origin_id, :destination_id
+  validates :price, :departure_date, :origin_id, :destination_id, presence: true
 
-  # if price does not change for departure_date, update updated_at
   def smart_save
-    existing = find_existing(origin, destination, departure_date)
-
-    (existing && existing.price == self.price) ?  existing.touch : self.save
+    existing = find_existing
+    (existing && existing.price == price) ? existing.touch : save
   end
 
   private
 
-  def find_existing(origin,  destination, departure_date)
-    Fare.where(origin_id: self.origin).
-      where(destination_id: self.destination).
-      where(departure_date: self.departure_date).
-      order(:created_at).last
+  def find_existing
+    Fare.where(origin: origin, destination: destination, departure_date: departure_date)
+      .order(:created_at).last
   end
 end

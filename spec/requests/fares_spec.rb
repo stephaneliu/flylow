@@ -1,11 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Tickets" do
+# rubocop:disable RSpec/DescribeClass
+describe 'Tickets' do
   before do
     sign_in create :plain_user
   end
 
-  describe "GET /tickets" do
+  describe 'GET /tickets' do
     # it "works! (now write some real specs)" do
     #   # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
     #   get fares_path

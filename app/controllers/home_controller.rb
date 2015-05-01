@@ -1,9 +1,9 @@
+# Object currently has no use
 class HomeController < ApplicationController
-
-  before_filter :authorize_public_area!
+  before_action :authorize_public_area!
 
   def index
-    #@favorites = City.favorites
+    # @favorites = City.favorites
   end
 
   def whats_new

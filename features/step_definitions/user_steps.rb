@@ -46,7 +46,7 @@ def sign_in
 end
 
 ### GIVEN ###
-Given /^I am not logged in$/ do
+Given / ^I am not logged in$ / do
   visit '/users/sign_out'
 end
 
@@ -185,7 +185,7 @@ Then /^I should see an account edited message$/ do
   page.should have_content "You updated your account successfully."
 end
 
-Then /^I should see my name$/ do
+Then / ^I should see my name$ / do
   create_user
   page.should have_content @user[:name]
 end

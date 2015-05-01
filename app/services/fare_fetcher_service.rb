@@ -23,8 +23,6 @@ class FareFetcherService
       end
 
       update_low_fare_cache
-
-      fares
     end
   end
 
@@ -41,12 +39,11 @@ class FareFetcherService
         yield Fare.new(price: content_fare, departure_date: day,
                        origin: origin, destination: destination)
       end
-    end.tap do
-      Rails.logger.info(
-        "#{Time.now.to_s(:db)} - Obtaining fare for #{origin.code}/#{destination.code} \
-(elapsed: #{Time.now - start_time})"
-      )
     end
+
+    Rails.logger.info(
+      "#{Time.now.to_s(:db)} - Obtaining fare for #{origin.code}/#{destination.code} \
+(elapsed: #{Time.now - start_time})")
   end
 
   def update_low_fare_cache

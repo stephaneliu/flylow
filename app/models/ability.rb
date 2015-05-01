@@ -1,3 +1,4 @@
+# Object holds authorization for app
 class Ability
   include CanCan::Ability
 
@@ -10,12 +11,11 @@ class Ability
       can [:index, :details], Fare
       can [:read, :update], User, id: user.id
       cannot :index, User
-      can :read, :static_pages 
+      can :read, :static_pages
     end
 
-    if user.has_role? :admin
-      can :manage, :all
-    end
+    # rubocop:disable Style/GuardClause
+    can :manage, :all if user.has_role? :admin
 
     # Define abilities for the passed in user here. For example:
     #
