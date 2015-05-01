@@ -28,6 +28,7 @@ class FareFetcherService
 
   private
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def obtain_fare
     start_time = Time.now
 
