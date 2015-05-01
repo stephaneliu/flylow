@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe LowFareStatistic do
+RSpec.describe LowFareStatistic do
   let(:origin)      { create :city, airport_code: 'HNL' }
   let(:destination) { create :city, airport_code: 'PDX' }
 

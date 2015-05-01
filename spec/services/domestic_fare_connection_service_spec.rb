@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe DomesticFareConnectionService do
   let(:origin)      { 'HNL' }
   let(:destination) { 'PDX' }

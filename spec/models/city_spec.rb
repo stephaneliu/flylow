@@ -14,7 +14,7 @@
 
 require 'rails_helper'
 
-describe City do
+RSpec.describe City do
   before { create(:city) }
 
   describe 'validations' do

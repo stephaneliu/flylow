@@ -15,7 +15,7 @@
 
 require 'rails_helper'
 
-describe Fare do
+RSpec.describe Fare do
   describe 'validations' do
     subject { described_class.new }
 

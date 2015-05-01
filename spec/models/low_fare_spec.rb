@@ -19,7 +19,7 @@
 
 require 'rails_helper'
 
-describe LowFare do
+RSpec.describe LowFare do
   describe '#valid' do
     subject { described_class.new }
 

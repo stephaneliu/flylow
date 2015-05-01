@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe UsersController do
+RSpec.describe UsersController do
 end

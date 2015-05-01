@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe DomesticFareParserService do
+RSpec.describe DomesticFareParserService do
   let(:departure_date) { 1.day.from_now.to_date }
 
   describe '.initialize' do
