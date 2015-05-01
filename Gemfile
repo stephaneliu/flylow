@@ -28,11 +28,9 @@ group :assets do
 end
 
 group :development do
+  gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'html2haml'
-  gem 'quiet_assets'
-  gem 'annotate'
   gem 'foreman'
   gem 'fuubar'
   gem 'guard'
@@ -40,7 +38,8 @@ group :development do
   gem 'guard-livereload', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
-  gem 'guard-schema'
+  gem 'html2haml'
+  gem 'quiet_assets'
   gem 'rack-livereload' 
   gem 'rb-fsevent'
   gem 'spring'
