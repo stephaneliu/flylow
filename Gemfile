@@ -17,7 +17,7 @@ gem 'high_voltage', '~>2.3'
 gem 'jquery-rails', '4.0.3'
 gem 'mechanize', '2.7.3'   # pin to 2.6 due to mime-type conflict with rails 4.1.1
 gem 'mysql2'
-# gem 'rolify', '4.0.0'
+gem 'rolify', '4.0.0'
 gem 'sass-rails',   '5.0.3'
 gem 'simple_form', '3.1.0'
 gem 'whenever', require: false
