@@ -30,7 +30,7 @@ class FareFetcherService
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def obtain_fare
-    start_time = Time.now
+    start_time = Time.zone.now
 
     months.each do |month|
       content               = connection.get_content(origin.code, destination.code, month)
@@ -43,16 +43,16 @@ class FareFetcherService
     end
 
     Rails.logger.info(
-      "#{Time.now.to_s(:db)} - Obtaining fare for #{origin.code}/#{destination.code} \
-(elapsed: #{Time.now - start_time})")
+      "#{Time.zone.now.to_s(:db)} - Obtaining fare for #{origin.code}/#{destination.code} \
+(elapsed: #{Time.zone.now - start_time})")
   end
 
   def update_low_fare_cache
-    start_time = Time.now
+    start_time = Time.zone.now
 
     LowFareStatistic.new(origin, destination).create_low_fare
 
-    end_time = Time.now
+    end_time = Time.zone.now
     Rails.logger.info("#{end_time.to_s(:db)} - Caching low fare for \
 #{origin.code}/#{destination.code} (elapsed: #{end_time - start_time})")
   end

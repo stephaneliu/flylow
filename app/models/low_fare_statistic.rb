@@ -53,7 +53,7 @@ class LowFareStatistic
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  def one_way_low_fare_stat(departure_flight = true, return_after = Time.now.to_date)
+  def one_way_low_fare_stat(departure_flight = true, return_after = Time.zone.now.to_date)
     related_fares = LowUpcomingFareQuery
                     .new(low_fare.origin, low_fare.destination, departure_flight)
                     .find_all(updated_since, return_after)

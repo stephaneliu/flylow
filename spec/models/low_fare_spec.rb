@@ -41,7 +41,7 @@ RSpec.describe LowFare do
     before          { low_fare.departure_dates = [today, yesterday] }
 
     let(:low_fare)  { described_class.new }
-    let(:today)     { Time.now }
+    let(:today)     { Time.zone.now }
     let(:yesterday) { 1.day.ago }
 
     it 'formats date' do
@@ -54,7 +54,7 @@ RSpec.describe LowFare do
     before          { low_fare.return_dates = [today, yesterday] }
 
     let(:low_fare)  { described_class.new }
-    let(:today)     { Time.now }
+    let(:today)     { Time.zone.now }
     let(:yesterday) { 1.day.ago }
 
     it 'formats date' do
@@ -80,7 +80,7 @@ RSpec.describe LowFare do
 
       context 'is present' do
         let(:return_dates) { [today, tomorrow] }
-        let(:today)        { Date.today }
+        let(:today)        { Time.zone.today.to_date }
         let(:tomorrow)     { 1.day.from_now.to_date }
         subject            { low_fare.formatted_return_dates }
 
@@ -104,7 +104,7 @@ RSpec.describe LowFare do
 
       context 'is present' do
         let(:departure_dates) { [today, tomorrow] }
-        let(:today)           { Time.now.to_date }
+        let(:today)           { Time.zone.now.to_date }
         let(:tomorrow)        { 1.day.from_now.to_date }
         subject { low_fare.formatted_departure_dates }
 

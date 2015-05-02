@@ -17,7 +17,7 @@ RSpec.describe LowUpcomingFareQuery do
   end
 
   describe '#find_all' do
-    subject { query.find_all(Time.now, 2.days.from_now) }
+    subject { query.find_all(Time.zone.now, 2.days.from_now) }
     specify { is_expected.to be_a ActiveRecord::Relation }
   end
 end

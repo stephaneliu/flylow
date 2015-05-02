@@ -1,27 +1,25 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.2.1'
 
-gem 'bootstrap-sass', '~>3.3.1.0'
-gem 'autoprefixer-rails', '~>4.0.2'
-gem 'descriptive-statistics', '~>2.1.2'
+gem 'autoprefixer-rails', '~>5.1'
+gem 'bootstrap-sass', '~>3.3.4'
 gem 'cancan', '1.6.10'
-gem 'chartkick', '~>1.3.2'
+gem 'chartkick', '~>1.3'
 gem 'coveralls', require: false
-gem 'descriptive_statistics', '~>2.4.0'
-gem 'groupdate', '~>2.3.0'
+gem 'descriptive_statistics', '~>2.5'
 gem 'devise', '3.4.1'
-gem 'figaro', '0.7.0'
-gem 'haml-rails', '0.6.0'
-gem 'mechanize', '~>2.6.0'   # pin to 2.6 due to mime-type conflict with rails 4.1.1
-gem 'rolify', '3.4.0'
-gem 'simple_form', '3.0.2'
+gem 'figaro', '~>1.1'
 gem 'gon', '5.2.3'
-gem 'high_voltage', '2.1.0'
-gem 'jquery-rails', '3.1.2'
+gem 'groupdate', '~>2.4'
+gem 'haml-rails', '0.9.0'
+gem 'high_voltage', '~>2.3'
+gem 'jquery-rails', '4.0.3'
+gem 'mechanize', '2.7.3'   # pin to 2.6 due to mime-type conflict with rails 4.1.1
 gem 'mysql2'
-gem 'pg'
-gem 'sass-rails',   '4.0.3'
+gem 'rolify', '4.0.0'
+gem 'sass-rails',   '5.0.3'
+gem 'simple_form', '3.1.0'
 gem 'whenever', require: false
 
 group :assets do
@@ -30,11 +28,9 @@ group :assets do
 end
 
 group :development do
+  gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'html2haml'
-  gem 'quiet_assets'
-  gem 'annotate'
   gem 'foreman'
   gem 'fuubar'
   gem 'guard'
@@ -42,8 +38,8 @@ group :development do
   gem 'guard-livereload', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
-  gem 'guard-schema'
-  gem 'mina'
+  gem 'html2haml'
+  gem 'quiet_assets'
   gem 'rack-livereload' 
   gem 'rb-fsevent'
   gem 'spring'
