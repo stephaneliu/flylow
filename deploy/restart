@@ -1,4 +1,4 @@
 #!/bin/sh
-service unicorn stop
-sleep 5
-service unicorn stop
+/etc/init.d/unicorn stop
+sleep 2
+/etc/init.d/unicorn start
