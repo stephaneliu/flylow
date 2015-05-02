@@ -1,2 +1,4 @@
 #!/bin/sh
-service unicorn restart
+service unicorn stop
+sleep 5
+service unicorn stop
