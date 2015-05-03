@@ -11,7 +11,5 @@ RSpec.describe BaseFareParserService do
   describe '#parse' do
     specify { expect { parser.parse }
               .to raise_error(NotImplementedError, "Expect to be implemented by inherited class") }
-      # expect { base.content }.to(
-      #   raise_error(NotImplementedError, "Expect to be implemented by inherited class"))
   end
 end
