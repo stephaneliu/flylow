@@ -10,12 +10,12 @@ class DomesticFareConnectionService
   end
 
   # outbound - origin to destination
-  def get_content(origin, destination, departure_date, outbound = true)
+  def get_content(origin, destination, departure_date)
     @origin         = origin.upcase
     @destination    = destination.upcase
     @departure_date = departure_date.to_date
 
-    mechanize.get(calendar_url(outbound)).content
+    mechanize.get(calendar_url).content
   end
 
   private
@@ -29,14 +29,14 @@ class DomesticFareConnectionService
   end
 
   # rubocop:disable Style/LineEndConcatenation
-  def calendar_url(outbound = true)
+  def calendar_url
     # origin must be uppercase - very picky
     "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx" +
       "?orig=#{origin}" +
       "&dest=#{destination}" +
       "&traveler=#{travelers}" +
       "&depDate=#{format_date(departure_date)}" +
-      "&owORob=#{outbound}" +
+      "&owORob=true" +
       "&isDM=false" +
       "&isRoundTrip=true" +
       "&isEAward=false"
