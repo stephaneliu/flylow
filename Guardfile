@@ -26,7 +26,7 @@ group :red_green_refactor, halt_on_fail: true do
   # -f (format):
   #   - doc
   #   - progress
-  guard :rspec, cmd: 'bin/rspec -f Fuubar --color spec', failed_mode: :focus, all_on_start: true, all_after_pass: true do
+  guard :rspec, cmd: 'bin/rspec -f Fuubar --color spec', failed_mode: :none, all_on_start: false, all_after_pass: true do
     require "guard/rspec/dsl"
     dsl = Guard::RSpec::Dsl.new(self)
 
@@ -67,7 +67,7 @@ group :red_green_refactor, halt_on_fail: true do
     end
   end
 
-  guard :rubocop, all_on_start: true, cli: ['--rails', '--display-cop-names'] do
+  guard :rubocop, all_on_start: false, cli: ['--rails', '--display-cop-names'] do
     watch(%r{.+\.rb$})
     watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
   end
