@@ -50,7 +50,6 @@ group :development do
   gem 'web-console'
 
   # ~/.irbrc files
-  gem 'awesome_print'
   gem 'bullet'
   gem 'hirb'
   gem 'looksee'
@@ -71,6 +70,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'rubocop', require: false
