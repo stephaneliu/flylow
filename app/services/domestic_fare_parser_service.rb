@@ -1,10 +1,10 @@
 # Object parses content with fare info
-class DomesticFareParserService
-  attr_accessor :departure_date, :parser
+class DomesticFareParserService < BaseFareParserService
+  attr_accessor :departure_date
 
   def initialize(departure_date = 1.day.from_now.to_date, parser = Nokogiri::HTML)
+    super(parser)
     @departure_date = departure_date
-    @parser         = parser
   end
 
   def parse(content)

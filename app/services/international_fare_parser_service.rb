@@ -20,11 +20,9 @@
 # }
 # PriceTabs has an array 0 for outbound, 1 for return.
 # Each has 6 elements containing Price and TabDate.
-class InternationalFareParserService
-  attr_reader :parser
-
+class InternationalFareParserService < BaseFareParserService
   def initialize(parser = Nokogiri::HTML)
-    @parser = parser
+    super
   end
 
   # { departure: {
