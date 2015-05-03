@@ -7,8 +7,8 @@ class InternationalFareConnectionService < BaseConnectionService
   end
 
   def get_content(origin, destination, departure_date, _outbound = true)
-    @origin      = origin
-    @destination = destination
+    @origin      = origin.upcase
+    @destination = destination.upcase
 
     offset_date(departure: departure_date)
     setup_session

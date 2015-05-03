@@ -24,13 +24,24 @@ RSpec.describe InternationalFareConnectionService do
   end
 
   describe '.get_content', :vcr do
-    subject(:content) { described_class.new.get_content(origin, destination, 1.day.from_now) }
+    subject(:content) { connection.get_content(origin, destination, 1.day.from_now) }
 
     context 'with origin HNL and destination HND - Tokyo-Haneda (vcr cassettes)' do
       it 'returns parsable nokogiri html document object' do
         expect(content).to include('Availabilities')
         expect(content).to include('PriceTabs')
         expect(content).to include('TabDate')
+      end
+    end
+
+    context 'when origin and destination is lowercase' do
+      let(:origin)      { 'hnl' }
+      let(:destination) { 'hnd' }
+
+      specify do
+        connection.get_content(origin, destination, 1.day.from_now)
+        expect(connection.origin).to eq(origin.upcase)
+        expect(connection.destination).to eq(destination.upcase)
       end
     end
   end
