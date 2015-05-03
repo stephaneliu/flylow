@@ -1,18 +1,20 @@
 # Object parses content with fare info
 class DomesticFareParserService
-  attr_accessor :departure_date
+  attr_accessor :departure_date, :parser
 
-  def initialize(departure_date = 1.day.from_now.to_date)
+  def initialize(departure_date = 1.day.from_now.to_date, parser = Nokogiri::HTML)
     @departure_date = departure_date
+    @parser         = parser
   end
 
   def parse(content)
     return {} unless content.present?
 
+    parsed        = parser.parse(content)
     find_elements = ['td.CalendarDayDefault', 'td.CalendarDayCheapest']
 
     find_elements.each_with_object({}) do |find_element, day_with_fare|
-      content.css(find_element).each do |day_fare|
+      parsed.css(find_element).each do |day_fare|
         date, fare          = parse_date_and_fare_from(day_fare)
         day_with_fare[date] = fare
       end

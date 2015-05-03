@@ -13,6 +13,7 @@ RSpec.describe DomesticFareParserService do
       subject { described_class.new(departure_date) }
 
       it 'attributes' do
+        expect(subject.parser)
         expect(subject.departure_date).to eq(departure_date)
 
         two_months             = 2.months.from_now
@@ -25,16 +26,14 @@ RSpec.describe DomesticFareParserService do
 
   describe '.parse' do
     let(:content) do
-      Nokogiri::HTML::Document.parse("
-        <td class='CalendarDayDefault'>
+      "<td class='CalendarDayDefault'>
           <div class='#{day_class}'>#{day}</div>
           <div class='#{fare_class}'>$#{high_price}</div>
         </td>
         <td class='CalendarDayCheapest'>
           <div class='#{day_class}'>#{day}</div>
           <div class='#{fare_class}'>$#{price}</div>
-        </td>
-      ")
+        </td>"
     end
 
     let(:day)        { 15 }

@@ -15,7 +15,7 @@ class DomesticFareConnectionService
     @destination    = destination.upcase
     @departure_date = departure_date.to_date
 
-    Nokogiri::HTML.parse mechanize.get(calendar_url(outbound)).content
+    mechanize.get(calendar_url(outbound)).content
   end
 
   private
@@ -28,7 +28,7 @@ class DomesticFareConnectionService
     date.strftime('%m/%d/%y')
   end
 
-  # rubocop:disable all
+  # rubocop:disable Style/LineEndConcatenation
   def calendar_url(outbound = true)
     # origin must be uppercase - very picky
     "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx" +
