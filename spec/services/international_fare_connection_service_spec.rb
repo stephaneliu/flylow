@@ -26,6 +26,8 @@ RSpec.describe InternationalFareConnectionService do
     context 'with origin HNL and destination HND - Tokyo-Haneda (vcr cassettes)' do
       it 'returns parsable nokogiri html document object' do
         expect(content).to include('Availabilities')
+        expect(content).to include('PriceTabs')
+        expect(content).to include('TabDate')
       end
     end
   end

@@ -9,17 +9,16 @@ class InternationalFareConnectionService
     @travelers = travelers
   end
 
-  def get_content(origin, destination, departure_date, outbound = true)
+  def get_content(origin, destination, departure_date, _outbound = true)
     @origin      = origin
     @destination = destination
 
     offset_date(departure: departure_date)
     setup_session
-    get_data.content
+    mechanize.post(post_url).content
   end
 
-
-  # private
+  private
 
   def mechanize_agent
     Mechanize.new.tap { |mech| mech.ssl_version = 'SSLv3' }
@@ -34,12 +33,7 @@ class InternationalFareConnectionService
   def setup_session
     mechanize.get(calendar_url)
   end
-
-  def get_data
-    mechanize.post('https://fly.hawaiianairlines.com/Reservations/2/Availability.mvc/Flights')
-  end
-
-  # rubocop:disable Style/LineEndConcatenation
+  # rubocop:disable Style/LineEndConcatenation, Metrics/MethodLength, Metrics/AbcSize
   def calendar_url
     "https://fly.hawaiianairlines.com/reservations/1/default.aspx?" +
       "qrys=qres" +
@@ -53,5 +47,9 @@ class InternationalFareConnectionService
       "&return_month=#{return_date.month}" +
       "&adult_no=#{travelers}" +
       "&lang=us"
+  end
+
+  def post_url
+    'https://fly.hawaiianairlines.com/Reservations/2/Availability.mvc/Flights'
   end
 end
