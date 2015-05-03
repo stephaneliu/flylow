@@ -2,8 +2,6 @@
 class InternationalFareConnectionService < BaseConnectionService
   attr_reader :mechanize, :departure_date, :return_date, :travelers, :origin, :destination
 
-  attr_writer :origin, :destination
-
   def initialize(travelers = 4)
     super
   end
