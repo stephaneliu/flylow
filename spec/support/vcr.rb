@@ -1,6 +1,6 @@
 require 'vcr'
 
-real_requests = ENV['REAL_REQUESTS']
+real_requests = true # ENV['REAL_REQUESTS']
 
 RSpec.configure do |config|
   if real_requests
