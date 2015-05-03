@@ -4,7 +4,7 @@ RSpec.describe DomesticFareConnectionService do
   let(:origin)      { 'hnl' }
   let(:destination) { 'pdx' }
 
-  describe '.initialize' do
+  describe '#new' do
     let(:connection)       { described_class.new }
     let(:num_of_travelers) { 4 }
     let(:departure_date)   { 1.day.from_now }

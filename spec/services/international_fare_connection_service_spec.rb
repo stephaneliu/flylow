@@ -4,7 +4,7 @@ RSpec.describe InternationalFareConnectionService do
   let(:origin)      { 'HNL' }
   let(:destination) { 'HND' }
 
-  describe '.initialize' do
+  describe '#new' do
     let(:travelers)      { 4 }
     let(:connection)     { described_class.new(travelers) }
     let(:departure_date) { 1.day.from_now }
