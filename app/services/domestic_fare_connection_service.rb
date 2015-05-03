@@ -1,12 +1,11 @@
 # Class gets fares from external site given origin and destination
 # airport code of origin and destination on new
-class DomesticFareConnectionService
-  attr_reader :mechanize, :origin, :destination, :travelers
+class DomesticFareConnectionService < BaseConnectionService
+  attr_reader :origin, :destination
   attr_accessor :departure_date
 
   def initialize(travelers = 4)
-    @mechanize = mechanize_agent
-    @travelers = travelers
+    super
   end
 
   # outbound - origin to destination
@@ -19,10 +18,6 @@ class DomesticFareConnectionService
   end
 
   private
-
-  def mechanize_agent
-    Mechanize.new.tap { |mech| mech.ssl_version = 'SSLv3' }
-  end
 
   def format_date(date)
     date.strftime('%m/%d/%y')

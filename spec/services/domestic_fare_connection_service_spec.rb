@@ -3,9 +3,13 @@ require 'rails_helper'
 RSpec.describe DomesticFareConnectionService do
   let(:origin)      { 'hnl' }
   let(:destination) { 'pdx' }
+  let(:connection)       { described_class.new }
+
+  describe 'inheritence' do
+    specify { expect(connection).to be_a BaseConnectionService }
+  end
 
   describe '#new' do
-    let(:connection)       { described_class.new }
     let(:num_of_travelers) { 4 }
     let(:departure_date)   { 1.day.from_now }
 

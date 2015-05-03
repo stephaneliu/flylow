@@ -1,12 +1,11 @@
 # Object obtains connection info to external resource
-class InternationalFareConnectionService
+class InternationalFareConnectionService < BaseConnectionService
   attr_reader :mechanize, :departure_date, :return_date, :travelers, :origin, :destination
 
   attr_writer :origin, :destination
 
   def initialize(travelers = 4)
-    @mechanize = mechanize_agent
-    @travelers = travelers
+    super
   end
 
   def get_content(origin, destination, departure_date, _outbound = true)
@@ -20,10 +19,6 @@ class InternationalFareConnectionService
 
   private
 
-  def mechanize_agent
-    Mechanize.new.tap { |mech| mech.ssl_version = 'SSLv3' }
-  end
-
   def offset_date(departure: date)
     @departure_date = departure + 3.days
     @return_date    = departure_date + 1.day
@@ -33,6 +28,7 @@ class InternationalFareConnectionService
   def setup_session
     mechanize.get(calendar_url)
   end
+
   # rubocop:disable Style/LineEndConcatenation, Metrics/MethodLength, Metrics/AbcSize
   def calendar_url
     "https://fly.hawaiianairlines.com/reservations/1/default.aspx?" +
