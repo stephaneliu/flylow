@@ -1,26 +1,21 @@
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe DomesticFareParserService do
   let(:departure_date) { 1.day.from_now.to_date }
 
   describe '.initialize' do
     context 'without parameters' do
-      subject { described_class.new }
-      specify { expect(subject.departure_date).to eq(1.day.from_now.to_date) }
+      subject(:parser) { described_class.new }
+
+      specify do
+        expect(parser.departure_date).to eq(1.day.from_now.to_date)
+        expect(parser.parser)
+      end
     end
 
     context 'with departure_date' do
       subject { described_class.new(departure_date) }
-
-      it 'attributes' do
-        expect(subject.parser)
-        expect(subject.departure_date).to eq(departure_date)
-
-        two_months             = 2.months.from_now
-        subject.departure_date = two_months
-
-        expect(subject.departure_date).to eq(two_months)
-      end
+      specify { expect(subject.departure_date).to eq(departure_date) }
     end
   end
 
@@ -53,11 +48,10 @@ RSpec.describe DomesticFareParserService do
     end
 
     context 'when content is not parseable' do
-      let(:day_class) { 'text' }
+      let(:day_class)  { 'text' }
       let(:fare_class) { 'fare' }
 
       subject { described_class.new(departure_date).parse(content) }
-      it      { is_expected.to all(be_blank) }
       it      { is_expected.to all(be_blank) }
     end
   end
