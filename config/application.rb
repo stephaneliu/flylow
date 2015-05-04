@@ -21,7 +21,7 @@ module HawaiianAir
     # -- all .rb files in that directory are automatically loaded.
     
     config.autoload_paths += %W(#{config.root}/lib)
-    config.autoload_paths += %W(#{config.root}/app/query_objects)
+    config.autoload_paths += %W(#{config.root}/app/queries)
     config.autoload_paths += %W(#{config.root}/app/services)
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
