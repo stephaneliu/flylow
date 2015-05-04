@@ -27,7 +27,8 @@ RSpec.describe Fare do
   end
 
   describe '#smart_save' do
-    let!(:existing_fare) { create :fare }
+    let!(:existing_fare) { create :fare, price: existing_price }
+    let(:existing_price) { 500 }
     let(:fare) do
       build(:fare, price: new_price,
                    origin: existing_fare.origin,
@@ -55,6 +56,15 @@ RSpec.describe Fare do
         existing_fare.reload
         expect(existing_fare.updated_at).to_not eq(current_updated_at)
         expect { fare.smart_save }.to_not change { described_class.count }
+      end
+    end
+
+    context 'when price is 0' do
+      let(:new_price) { 0 }
+
+      specify do
+        fare.smart_save
+        expect(fare.new_record?).to eq(true)
       end
     end
   end

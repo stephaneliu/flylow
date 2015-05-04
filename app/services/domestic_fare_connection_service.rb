@@ -1,42 +1,37 @@
 # Class gets fares from external site given origin and destination
 # airport code of origin and destination on new
-class DomesticFareConnectionService
-  attr_reader :mechanize, :origin, :destination, :travelers
+class DomesticFareConnectionService < BaseConnectionService
+  attr_reader :origin, :destination
   attr_accessor :departure_date
 
   def initialize(travelers = 4)
-    @mechanize = mechanize_agent
-    @travelers = travelers
+    super
   end
 
   # outbound - origin to destination
-  def get_content(origin, destination, departure_date, outbound = true)
+  def get_content(origin, destination, departure_date)
     @origin         = origin.upcase
     @destination    = destination.upcase
     @departure_date = departure_date.to_date
 
-    Nokogiri::HTML.parse mechanize.get(calendar_url(outbound)).content
+    mechanize.get(calendar_url).content
   end
 
   private
-
-  def mechanize_agent
-    Mechanize.new.tap { |mech| mech.ssl_version = 'SSLv3' }
-  end
 
   def format_date(date)
     date.strftime('%m/%d/%y')
   end
 
-  # rubocop:disable all
-  def calendar_url(outbound = true)
+  # rubocop:disable Style/LineEndConcatenation
+  def calendar_url
     # origin must be uppercase - very picky
     "https://fly.hawaiianairlines.com/Calendar/Calendar.aspx" +
       "?orig=#{origin}" +
       "&dest=#{destination}" +
       "&traveler=#{travelers}" +
       "&depDate=#{format_date(departure_date)}" +
-      "&owORob=#{outbound}" +
+      "&owORob=true" +
       "&isDM=false" +
       "&isRoundTrip=true" +
       "&isEAward=false"
