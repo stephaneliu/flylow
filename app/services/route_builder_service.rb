@@ -7,16 +7,16 @@ class RouteBuilderService
     @home         = City.oahu
   end
 
-  def self.generate(destinations)
-    new(destinations).generate
+  def self.generate(destinations, only_one_way = false)
+    new(destinations).generate(only_one_way)
   end
 
-  def generate
+  def generate(only_one_way = false)
     remove_destination_hnl
 
-    destinations.each_with_object([]) do |destination, from_to|
-      from_to << [destination, home]
-      from_to << [home, destination]
+    destinations.each_with_object([]) do |destination, routes|
+      routes << [home, destination]
+      routes << [destination, home] unless only_one_way
     end
   end
 

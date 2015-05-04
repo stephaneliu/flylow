@@ -18,8 +18,9 @@ RSpec.describe RouteBuilderService do
   end
 
   describe '.generate' do
+    let(:destinations) { [pdx, sfo, lax] }
+
     context 'when destinations is an array with PDX, SFO, LAX' do
-      let(:destinations) { [pdx, sfo, lax] }
       subject            { route_builder.generate }
 
       it do
@@ -36,6 +37,16 @@ RSpec.describe RouteBuilderService do
       let(:destinations) { [pdx, sfo, lax, hnl] }
       subject            { route_builder.generate }
       specify            { is_expected.to_not include [hnl, hnl] }
+    end
+
+    context 'when only_one_way is true' do
+      subject(:routes) { route_builder.generate(only_one_way=true) }
+
+      specify do
+        expect(routes).to_not include [pdx, hnl]
+        expect(routes).to_not include [sfo, hnl]
+        expect(routes).to_not include [lax, hnl]
+      end
     end
   end
 end
