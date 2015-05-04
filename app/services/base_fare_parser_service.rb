@@ -1,6 +1,7 @@
 # Interface for parsers
 class BaseFareParserService
   attr_reader :parser
+  attr_accessor :departure_date
 
   def initialize(parser = Nokogiri::HTML)
     @parser = parser

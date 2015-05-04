@@ -14,4 +14,11 @@ RSpec.describe BaseFareParserService do
         .to raise_error(NotImplementedError, "Expect to be implemented by inherited class")
     end
   end
+
+  describe 'accessor' do
+    it 'has departure_date setter' do
+      expect { parser.departure_date = Time.zone.now }.to_not raise_error
+      expect(parser.departure_date)
+    end
+  end
 end

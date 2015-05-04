@@ -1,27 +1,34 @@
 # Object parses content with fare info
 class DomesticFareParserService < BaseFareParserService
-  attr_accessor :departure_date
-
-  def initialize(departure_date = 1.day.from_now.to_date, parser = Nokogiri::HTML)
-    super(parser)
-    @departure_date = departure_date
+  def initialize(parser = Nokogiri::HTML)
+    super
   end
 
   def parse(content)
     return {} unless content.present?
 
-    parsed        = parser.parse(content)
-    find_elements = ['td.CalendarDayDefault', 'td.CalendarDayCheapest']
+    fail ArgumentError, "departure_date not assigned" unless departure_date.present?
 
-    find_elements.each_with_object({}) do |find_element, day_with_fare|
-      parsed.css(find_element).each do |day_fare|
-        date, fare          = parse_date_and_fare_from(day_fare)
-        day_with_fare[date] = fare
-      end
-    end.compact
+    parsed          = parser.parse(content)
+    days_with_fares = {}
+
+    find_fares_from_content(parsed) { |date, fare| days_with_fares[date] = fare }
+    days_with_fares.compact
   end
 
   private
+
+  def find_fares_from_content(content)
+    find_elements = ['td.CalendarDayDefault', 'td.CalendarDayCheapest']
+
+    find_elements.each do |find_element|
+      content.css(find_element).each do |day_fare|
+        yield parse_date_and_fare_from(day_fare)
+      end
+    end
+
+    @departure_date = nil
+  end
 
   def parse_date_and_fare_from(element)
     [parse_date_from(element), parse_fare_from(element)]

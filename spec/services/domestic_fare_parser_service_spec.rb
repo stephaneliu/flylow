@@ -1,22 +1,11 @@
 require 'spec_helper'
 
 RSpec.describe DomesticFareParserService do
+  subject(:parser)     { described_class.new }
   let(:departure_date) { 1.day.from_now.to_date }
 
   describe '.initialize' do
-    context 'without parameters' do
-      subject(:parser) { described_class.new }
-
-      specify do
-        expect(parser.departure_date).to eq(1.day.from_now.to_date)
-        expect(parser.parser)
-      end
-    end
-
-    context 'with departure_date' do
-      subject { described_class.new(departure_date) }
-      specify { expect(subject.departure_date).to eq(departure_date) }
-    end
+    specify { expect(parser.parser).to eq(Nokogiri::HTML) }
   end
 
   describe '.parse' do
@@ -37,8 +26,25 @@ RSpec.describe DomesticFareParserService do
     let(:day_class)  { 'Text' }
     let(:fare_class) { 'Fare' }
 
+    context 'expecting departure_date to be assigned' do
+      specify do
+        expect { parser.parse(content) }
+          .to raise_error(ArgumentError, "departure_date not assigned")
+      end
+    end
+
+    context 'departure_date assignment after parse is called' do
+      before { parser.departure_date = Time.zone.now.to_date }
+
+      it 'is assigned to nil' do
+        parser.parse(content)
+        expect(parser.departure_date).to eq(nil)
+      end
+    end
+
     context 'when content is as expected' do
-      subject { described_class.new(departure_date).parse(content) }
+      before  { parser.departure_date = departure_date }
+      subject { parser.parse(content) }
 
       it 'obtains days and fare' do
         expect(subject.keys.map(&:day)).to include day
@@ -48,10 +54,11 @@ RSpec.describe DomesticFareParserService do
     end
 
     context 'when content is not parseable' do
+      before           { parser.departure_date = Time.zone.now.to_date }
       let(:day_class)  { 'text' }
       let(:fare_class) { 'fare' }
 
-      subject { described_class.new(departure_date).parse(content) }
+      subject { parser.parse(content) }
       it      { is_expected.to all(be_blank) }
     end
   end
