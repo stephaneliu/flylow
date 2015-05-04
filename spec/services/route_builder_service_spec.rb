@@ -40,7 +40,7 @@ RSpec.describe RouteBuilderService do
     end
 
     context 'when only_one_way is true' do
-      subject(:routes) { route_builder.generate(only_one_way=true) }
+      subject(:routes) { route_builder.generate(:only_one_way) }
 
       specify do
         expect(routes).to_not include [pdx, hnl]
