@@ -1,5 +1,7 @@
 # Object parses content with fare info
 class DomesticFareParserService < BaseFareParserService
+  attr_reader :fares
+
   def initialize(parser = Nokogiri::HTML)
     super
   end
@@ -13,7 +15,13 @@ class DomesticFareParserService < BaseFareParserService
     days_with_fares = {}
 
     find_fares_from_content(parsed) { |date, fare| days_with_fares[date] = fare }
-    days_with_fares.compact
+    @fares = { departure: days_with_fares.compact, return: {} }
+  end
+
+  def fares(departing = true)
+    direction_key = departing ? :departure : :return
+
+    @fares[direction_key]
   end
 
   private

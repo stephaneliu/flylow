@@ -21,6 +21,8 @@
 # PriceTabs has an array 0 for outbound, 1 for return.
 # Each has 6 elements containing Price and TabDate.
 class InternationalFareParserService < BaseFareParserService
+  attr_reader :fares
+
   def initialize(parser = Nokogiri::HTML)
     super
   end
@@ -31,13 +33,23 @@ class InternationalFareParserService < BaseFareParserService
   #   '05/02/2015' => '420.00', ...}
   # }
   def parse(content)
-    parsed = parser.parse(content)
-    formatted = JSON.parse(parsed)
+    parsed       = parser.parse(content)
+    formatted    = JSON.parse(parsed)
+    parsed_fares = {}
 
-    { departure: 0, return: 1 }.each_with_object({}) do |directional_label_value, date_with_fare|
+    { departure: 0, return: 1 }
+      .each_with_object(parsed_fares) do |directional_label_value, date_with_fare|
       direction_label, direction_value = directional_label_value
       date_with_fare[direction_label] = parse_date_price(formatted, direction_value)
     end
+
+    @fares = parsed_fares
+  end
+
+  def fares(departing = true)
+    direction_key = departing ? :departure : :return
+
+    @fares[direction_key]
   end
 
   private

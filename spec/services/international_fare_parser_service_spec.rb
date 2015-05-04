@@ -37,18 +37,21 @@ RSpec.describe InternationalFareParserService do
     let(:return_price)    { 2000 }
 
     context 'when content is as expected' do
+      before { parser.parse(content) }
+
+      let(:parser)          { described_class.new }
       let(:departure_date)  { "08/16/2020" }
       let(:departure_price) { 1000 }
       let(:return_date)     { "11/18/2020" }
       let(:return_price)    { 2000 }
-      subject(:days_with_fares) { described_class.new.parse(content) }
 
       it 'obtains days and fare' do
-        expect(days_with_fares[:departure].keys)
+        expect(parser.fares(:departing).values).to include(departure_price)
+        expect(parser.fares(:departure).keys)
           .to include(Date.strptime(departure_date, "%m/%d/%Y"))
-        expect(days_with_fares[:departure].values).to include(departure_price)
-        expect(days_with_fares[:return].keys).to include(Date.strptime(return_date, "%m/%d/%Y"))
-        expect(days_with_fares[:return].values).to include(return_price)
+
+        expect(parser.fares(!:departure).keys).to include(Date.strptime(return_date, "%m/%d/%Y"))
+        expect(parser.fares(!:departure).values).to include(return_price)
       end
     end
 

@@ -43,23 +43,43 @@ RSpec.describe DomesticFareParserService do
     end
 
     context 'when content is as expected' do
-      before  { parser.departure_date = departure_date }
-      subject { parser.parse(content) }
+      before do
+        parser.departure_date = departure_date
+        parser.parse(content)
+      end
 
-      it 'obtains days and fare' do
-        expect(subject.keys.map(&:day)).to include day
-        expect(subject.values).to include price.to_f
-        expect(subject.values).to_not include high_price.to_f
+      context 'conforming to inheritted class' do
+        context 'departure fares' do
+          let(:departing) { true }
+
+          it 'obtains days and fare' do
+            expect(parser.fares(departing).keys.map(&:day)).to include day
+            expect(parser.fares(departing).values).to include price.to_f
+            expect(parser.fares(departing).values).to_not include high_price.to_f
+          end
+        end
+
+        context 'return fares' do
+          let(:departing) { false }
+
+          it 'returns empty hash' do
+            expect(parser.fares(departing).keys).to be_blank
+            expect(parser.fares(departing).values).to be_blank
+          end
+        end
       end
     end
 
     context 'when content is not parseable' do
-      before           { parser.departure_date = Time.zone.now.to_date }
+      before do
+        parser.departure_date = Time.zone.now.to_date
+        parser.parse(content)
+      end
+
       let(:day_class)  { 'text' }
       let(:fare_class) { 'fare' }
 
-      subject { parser.parse(content) }
-      it      { is_expected.to all(be_blank) }
+      specify { expect(parser.fares).to be_blank }
     end
   end
 end

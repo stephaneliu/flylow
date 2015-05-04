@@ -36,9 +36,18 @@ class FareFetcherService
       content               = connection.get_content(origin.code, destination.code, month)
       parser.departure_date = month
 
-      parser.parse(content).each do |day, content_fare|
-        yield Fare.new(price: content_fare, departure_date: day,
-                       origin: origin, destination: destination)
+      parser.parse(content)
+
+      [:departure, !:departure].each do |departing|
+        departing_from = departing ? origin : destination
+        going_to       = departing ? destination : origin
+
+        fares = parser.fares(departing)
+
+        fares.each do |date, price|
+          yield Fare.new(price: price, departure_date: date,
+                         origin: departing_from, destination: going_to)
+        end
       end
     end
 
