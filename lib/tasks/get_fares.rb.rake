@@ -15,17 +15,34 @@ namespace :get_fares do
   end
 
   desc "Obtain fares for cities"
-  task for_cities: :setup_logger do 
+  task for_domestics: :setup_logger do
     start_time = Time.now
-    Rails.logger.info "####### Start: #{start_time.to_s(:db)} #######"
+    Rails.logger.info "####### Start Domestic: #{start_time.to_s(:db)} #######"
+
     connection = DomesticFareConnectionService.new
     parser     = DomesticFareParserService.new
-    routes     = RouteBuilderService.generate(City.favorites)
+    routes     = RouteBuilderService.generate(City.favorites.domestic)
     fetcher    = FareFetcherService.new(connection, parser, routes)
     fetcher.fares
 
     end_time = Time.now
-    Rails.logger.info "End: #{end_time.to_s(:db)}"
+    Rails.logger.info "End Domestic: #{end_time.to_s(:db)}"
+    Rails.logger.info "####### Duration: #{end_time - start_time}" 
+  end
+
+  task for_internationals: :setup_logger do
+    start_time = Time.now
+    Rails.logger.info "####### Start International: #{start_time.to_s(:db)} #######"
+
+    connection = InternationalFareConnectionService.new
+    parser     = InternationalFareParserService.new
+    routes     = RouteBuilderService.generate(City.favorites.international, :only_one_way)
+    dates      = 0.upto(12).map { |num| num.public_send(:week).public_send(:from_now) }
+    fetcher    = FareFetcherService.new(connection, parser, routes, dates)
+    fetcher.fares
+
+    end_time = Time.now
+    Rails.logger.info "End International: #{end_time.to_s(:db)}"
     Rails.logger.info "####### Duration: #{end_time - start_time}" 
   end
 
