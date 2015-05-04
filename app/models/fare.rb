@@ -22,10 +22,23 @@ class Fare < ActiveRecord::Base
 
   def smart_save
     existing = find_existing
-    (existing && existing.price == price) ? existing.touch : save
+
+    if same_price? existing
+      existing.touch
+    elsif greater_than_zero?
+      save
+    end
   end
 
   private
+
+  def same_price?(record)
+    record && record.price == price
+  end
+
+  def greater_than_zero?
+    price > 0
+  end
 
   def find_existing
     Fare.where(origin: origin, destination: destination, departure_date: departure_date)
