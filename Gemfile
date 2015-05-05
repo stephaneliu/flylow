@@ -6,7 +6,6 @@ gem 'autoprefixer-rails', '~>5.1'
 gem 'bootstrap-sass', '~>3.3.4'
 gem 'cancan', '1.6.10'
 gem 'chartkick', '~>1.3'
-gem 'coveralls', require: false
 gem 'descriptive_statistics', '~>2.5'
 gem 'devise', '3.4.1'
 gem 'figaro', '~>1.1'
