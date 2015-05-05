@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RouteBuilderService do
-  let!(:hnl) { create(:oahu) }
+  let!(:hnl) { create(:city, name: 'Honolulu', airport_code: 'HNL') }
   let(:pdx)  { create(:city, name: 'Portland', airport_code: 'PDX') }
   let(:sfo)  { create(:city, name: 'San Francisco', airport_code: 'SFO') }
   let(:lax)  { create(:city, name: 'Los Angeles', airport_code: 'LAX') }
@@ -19,10 +19,9 @@ RSpec.describe RouteBuilderService do
 
   describe '.generate' do
     let(:destinations) { [pdx, sfo, lax] }
+    subject            { route_builder.generate }
 
     context 'when destinations is an array with PDX, SFO, LAX' do
-      subject            { route_builder.generate }
-
       it do
         is_expected.to include [pdx, hnl]
         is_expected.to include [hnl, pdx]
@@ -35,7 +34,6 @@ RSpec.describe RouteBuilderService do
 
     context 'when destinations include HNL' do
       let(:destinations) { [pdx, sfo, lax, hnl] }
-      subject            { route_builder.generate }
       specify            { is_expected.to_not include [hnl, hnl] }
     end
 
