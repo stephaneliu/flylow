@@ -1,7 +1,6 @@
 # Controller class for fares
 class FaresController < ApplicationController
   before_action :authorize_public_area!
-  before_action :assign_js_vars, only: :index
 
   # GET /fares
   # GET /fares.json
@@ -20,10 +19,6 @@ class FaresController < ApplicationController
   end
 
   protected
-
-  def assign_js_vars
-    gon.fare_details_path = fare_details_path(9999)
-  end
 
   private
 

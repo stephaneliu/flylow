@@ -122,11 +122,6 @@ GEM
       ruby-progressbar (~> 1.4)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
-    gon (5.2.3)
-      actionpack (>= 2.3.0)
-      json
-      multi_json
-      request_store (>= 1.0.5)
     groupdate (2.4.0)
       activesupport (>= 3)
     guard (2.12.5)
@@ -264,7 +259,6 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    request_store (1.1.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rolify (4.0.0)
@@ -391,7 +385,6 @@ DEPENDENCIES
   figaro (~> 1.1)
   foreman
   fuubar
-  gon (= 5.2.3)
   groupdate (~> 2.4)
   guard
   guard-ctags-bundler
