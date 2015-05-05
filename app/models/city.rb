@@ -28,6 +28,6 @@ class City < ActiveRecord::Base
   end
 
   def self.oahu
-    @oahu ||= find_by(airport_code: 'HNL')
+    find_by(airport_code: 'HNL')
   end
 end
