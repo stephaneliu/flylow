@@ -14,7 +14,7 @@ filter_fares_by_location = (target) ->
 fetch_fare_details = (target) ->
   if $(target).find('img').length > 0
     fare_id = $(target).data('id')
-    $.get(gon.fare_details_path.replace('9999', fare_id), {target: $(target).attr('id')}, null, "script")
+    $.get(Routes.fare_details_path(fare_id), {target: $(target).attr('id')}, null, "script")
 
 toggle_chevron = (target) ->
   $(target).siblings().find('span').toggleClass('rotated')

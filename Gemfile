@@ -14,6 +14,7 @@ gem 'groupdate', '~>2.4'
 gem 'haml-rails', '0.9.0'
 gem 'high_voltage', '~>2.3'
 gem 'jquery-rails', '4.0.3'
+gem 'js-routes', '~>1.0'
 gem 'mechanize', '2.7.3'   # pin to 2.6 due to mime-type conflict with rails 4.1.1
 gem 'mysql2'
 gem 'rolify', '4.0.0'
