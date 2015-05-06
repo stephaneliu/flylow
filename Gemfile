@@ -20,6 +20,7 @@ gem 'rolify', '4.0.0'
 gem 'sass-rails',   '5.0.3'
 gem 'simple_form', '3.1.0'
 gem 'whenever', require: false
+gem 'skylight'
 
 group :assets do
   gem 'coffee-rails', '4.1.0' 
@@ -41,7 +42,6 @@ group :development do
   gem 'quiet_assets'
   gem 'rack-livereload' 
   gem 'rb-fsevent'
-  gem 'skylight'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'sqlite3'
