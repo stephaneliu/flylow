@@ -207,7 +207,6 @@ GEM
     nenv (0.2.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
-    newrelic_rpm (3.11.2.286)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     notiffany (0.0.6)
@@ -403,7 +402,6 @@ DEPENDENCIES
   looksee
   mechanize (= 2.7.3)
   mysql2
-  newrelic_rpm
   quiet_assets
   rack-livereload
   rails (= 4.2.1)
