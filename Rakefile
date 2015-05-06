@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-HawaiianAir::Application.load_tasks
+FlyLow::Application.load_tasks
