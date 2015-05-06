@@ -41,6 +41,7 @@ group :development do
   gem 'quiet_assets'
   gem 'rack-livereload' 
   gem 'rb-fsevent'
+  gem 'skylight'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'sqlite3'
