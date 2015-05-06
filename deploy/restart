@@ -1,4 +1,6 @@
 #!/bin/sh
+echo "Stopping unicorn"
 /etc/init.d/unicorn stop
 sleep 5
+echo "Starting unicorn"
 /etc/init.d/unicorn start
