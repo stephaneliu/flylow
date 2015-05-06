@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-FlyLow::Application.load_tasks
+Flylow::Application.load_tasks

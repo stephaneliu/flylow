@@ -48,7 +48,7 @@ namespace :get_fares do
 
   task setup_logger: :environment do
     logger       = Logger.new(File.join(Rails.root, 'log',
-                                        "#{Date.tody.to_s(:db).underscore}_get_fares.log"), 'daily')
+                                        "#{Date.today.to_s(:db).underscore}_get_fares.log"), 'daily')
     logger.level = Logger::INFO
     Rails.logger = logger
   end
