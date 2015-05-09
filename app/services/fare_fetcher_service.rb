@@ -3,10 +3,12 @@ class FareFetcherService
   attr_reader :cities, :connection, :destination,
               :dates, :origin, :routes, :parser
 
-  def initialize(connection, parser, routes,
-                 dates = [1.day.from_now.localtime,
-                          1.month.from_now, 2.months.from_now,
-                          3.months.from_now, 4.months.from_now])
+  def initialize(connection: DomesticFareConnectionService.new,
+                 parser: DomesticFareParserService.new,
+                 routes:,
+                 dates: [1.day.from_now.localtime,
+                         1.month.from_now, 2.months.from_now,
+                         3.months.from_now, 4.months.from_now])
     @connection = connection
     @parser     = parser
     @dates      = dates

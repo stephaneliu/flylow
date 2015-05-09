@@ -7,20 +7,20 @@ RSpec.describe FareFetcherService do
   let(:parser)     { double('parser') }
   let(:routes)     { [[hnl, pdx], [pdx, hnl]] }
 
-  # describe '.initialize' do
-  #   subject { described_class.new(connection, parser, routes) }
-  #   it      { expect { subject }.to_not raise_error }
-  # end
+  let(:fare_fetcher) do
+    described_class.new(connection: connection, parser: parser, routes: routes,
+                        dates: [1.day.from_now])
+  end
 
-  # describe 'attributes' do
-  #   subject { described_class.new(connection, parser, routes) }
+  describe 'attributes' do
+    subject { described_class.new(connection, parser, routes) }
 
-  #   it do
-  #     expect(subject.parser).to eq(parser)
-  #     expect(subject.connection).to eq(connection)
-  #     expect(subject.routes).to_not be_nil
-  #   end
-  # end
+    it do
+      expect(fare_fetcher.parser).to eq(parser)
+      expect(fare_fetcher.connection).to eq(connection)
+      expect(fare_fetcher.routes).to_not be_nil
+    end
+  end
 
   describe '.fares', :vcr do
     before do
@@ -34,7 +34,7 @@ RSpec.describe FareFetcherService do
     let(:departure_date) { 1.day.from_now.to_date }
     let(:fare)           { 100.to_f }
 
-    subject { described_class.new(connection, parser, routes, [1.day.from_now]).fares }
+    subject { fare_fetcher.fares }
 
     it 'create lowfare record' do
       expect { subject }.to change { LowFare.count }
