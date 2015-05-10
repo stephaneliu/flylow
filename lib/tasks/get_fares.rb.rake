@@ -80,7 +80,7 @@ namespace :get_fares do
 
   def setup_logger(label:)
     logger       = Logger.new(
-      File.join(Rails.root, 'log',
+      File.join(Rails.root, 'log', 'rake_tasks'
                 "#{Date.today.to_s(:db).underscore}_#{label}_fares.log"), 'daily')
     logger.level = Logger::INFO
     Rails.logger = logger
