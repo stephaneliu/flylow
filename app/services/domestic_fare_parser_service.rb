@@ -15,6 +15,7 @@ class DomesticFareParserService < BaseFareParserService
     days_with_fares = {}
 
     find_fares_from_content(parsed) { |date, fare| days_with_fares[date] = fare }
+    # Domestic fares currently does not have return flights
     @fares = { departure: days_with_fares.compact, return: {} }
   end
 

@@ -14,41 +14,74 @@ namespace :get_fares do
     puts "True! Outbound and Return fares are the same!" if fares.uniq.size == 2
   end
 
-  desc "Obtain fares for cities"
-  task for_domestics: :setup_logger do
-    start_time = Time.now
-    Rails.logger.info "####### Start Domestic: #{start_time.to_s(:db)} #######"
+  desc "Obtain fares for favorite domestic routes"
+  task :domestic, :horizon do |_, args|
+    args.with_defaults(horizon: :near_term)
 
-    connection = DomesticFareConnectionService.new
-    parser     = DomesticFareParserService.new
-    routes     = RouteBuilderService.generate(City.favorites.domestic)
-    fetcher    = FareFetcherService.new(connection, parser, routes)
+    horizon    = args[:horizon]
+
+    setup_logger(label: "domestic_#{horizon}")
+
+    start_time = Time.now
+
+    Rails.logger.info "# Start | #{horizon} Domestic |"
+
+    months          = horizons[horizon]
+    months_in_words = months.map { |month| month.strftime('%m-%Y') }
+    routes          = RouteBuilderService.generate(City.favorites.domestic)
+    fetcher         = FareFetcherService.new(routes: routes, dates: months)
+
     fetcher.fares
 
-    end_time = Time.now
-    Rails.logger.info "End Domestic: #{end_time.to_s(:db)}"
-    Rails.logger.info "####### Duration: #{end_time - start_time}" 
+    Rails.logger.info "# End | #{horizon} Domestic | duration: #{Time.zone.now - start_time}"
   end
 
-  task for_internationals: :setup_logger do
+  desc "Obtain fares for favorite international routes"
+  task :international, :horizon do |_, args|
+    args.with_defaults(horizon: :near_term)
+
+    horizon = args[:horizon]
+
+    setup_logger(label: "intl_#{horizon}")
+
     start_time = Time.now
-    Rails.logger.info "####### Start International: #{start_time.to_s(:db)} #######"
+
+    Rails.logger.info "# Start | #{horizon} International |"
 
     connection = InternationalFareConnectionService.new
     parser     = InternationalFareParserService.new
     routes     = RouteBuilderService.generate(City.favorites.international, :only_one_way)
+    dates      = horizons(!:as_months)[horizon]
     dates      = 0.upto(12).map { |num| num.public_send(:week).public_send(:from_now) }
-    fetcher    = FareFetcherService.new(connection, parser, routes, dates)
-    fetcher.fares
+    fetcher    = FareFetcherService.new(connection: connection, parser: parser, routes: routes, dates: dates)
 
-    end_time = Time.now
-    Rails.logger.info "End International: #{end_time.to_s(:db)}"
-    Rails.logger.info "####### Duration: #{end_time - start_time}" 
+    fetcher.fares
+    Rails.logger.info "# End | #{horizon} International | duration: #{Time.zone.now - start_time}"
   end
 
-  task setup_logger: :environment do
-    logger       = Logger.new(File.join(Rails.root, 'log',
-                                        "#{Date.today.to_s(:db).underscore}_get_fares.log"), 'daily')
+
+  def horizons(as_months = true)
+    if as_months
+      HashWithIndifferentAccess.new(near_term: week_or_month_in_range(:months, 0, 10),
+                                    mid_term:  week_or_month_in_range(:months, 11, 25),
+                                    long_term: week_or_month_in_range(:months, 26, 47))
+    else
+      HashWithIndifferentAccess.new(near_term: week_or_month_in_range(:weeks, 0, 2),
+                                    mid_term:  week_or_month_in_range(:weeks, 3, 6),
+                                    long_term: week_or_month_in_range(:weeks, 7, 11))
+    end
+  end
+
+  def week_or_month_in_range(operator, from_start, to_end)
+    from_start.upto(to_end).map do |num|
+      num.send(operator.to_sym).send(:from_now)
+    end
+  end
+
+  def setup_logger(label:)
+    logger       = Logger.new(
+      File.join(Rails.root, 'log',
+                "#{Date.today.to_s(:db).underscore}_#{label}_fares.log"), 'daily')
     logger.level = Logger::INFO
     Rails.logger = logger
   end
