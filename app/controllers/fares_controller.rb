@@ -18,8 +18,6 @@ class FaresController < ApplicationController
     @target   = params[:target]
   end
 
-  protected
-
   private
 
   def fare_params
