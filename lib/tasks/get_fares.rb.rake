@@ -15,7 +15,7 @@ namespace :get_fares do
   end
 
   desc "Obtain fares for favorite domestic routes"
-  task :domestic, :horizon do |_, args|
+  task :domestic, [:horizon] => :environment do |_, args|
     args.with_defaults(horizon: :near_term)
 
     horizon    = args[:horizon]
@@ -37,7 +37,7 @@ namespace :get_fares do
   end
 
   desc "Obtain fares for favorite international routes"
-  task :international, :horizon do |_, args|
+  task :international, [:horizon] => :environment do |_, args|
     args.with_defaults(horizon: :near_term)
 
     horizon = args[:horizon]
@@ -62,13 +62,13 @@ namespace :get_fares do
 
   def horizons(as_months = true)
     if as_months
-      HashWithIndifferentAccess.new(near_term: week_or_month_in_range(:months, 0, 10),
-                                    mid_term:  week_or_month_in_range(:months, 11, 25),
-                                    long_term: week_or_month_in_range(:months, 26, 47))
+      HashWithIndifferentAccess.new(near_term: week_or_month_in_range(:months, 0, 2),
+                                    mid_term:  week_or_month_in_range(:months, 3, 6),
+                                    long_term: week_or_month_in_range(:months, 7, 11))
     else
-      HashWithIndifferentAccess.new(near_term: week_or_month_in_range(:weeks, 0, 2),
-                                    mid_term:  week_or_month_in_range(:weeks, 3, 6),
-                                    long_term: week_or_month_in_range(:weeks, 7, 11))
+      HashWithIndifferentAccess.new(near_term: week_or_month_in_range(:weeks, 0, 10),
+                                    mid_term:  week_or_month_in_range(:weeks, 11, 25),
+                                    long_term: week_or_month_in_range(:weeks, 26, 47))
     end
   end
 
