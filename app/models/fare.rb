@@ -21,8 +21,6 @@ class Fare < ActiveRecord::Base
   validates :price, :departure_date, :origin_id, :destination_id, presence: true
 
   def smart_save
-    existing = find_existing
-
     if existing && existing.price == price
       existing.touch
     elsif price > 0
@@ -32,8 +30,8 @@ class Fare < ActiveRecord::Base
 
   private
 
-  def find_existing
-    Fare.where(origin: origin, destination: destination, departure_date: departure_date)
-      .order(:created_at).last
+  def existing
+    @existing ||= Fare.where(origin: origin, destination: destination,
+                             departure_date: departure_date).order(:created_at).last
   end
 end
