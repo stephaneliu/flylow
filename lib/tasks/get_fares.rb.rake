@@ -26,10 +26,10 @@ namespace :get_fares do
 
     Rails.logger.info "# Start | #{horizon} Domestic |"
 
-    months          = horizons[horizon]
-    months_in_words = months.map { |month| month.strftime('%m-%Y') }
-    routes          = RouteBuilderService.generate(City.favorites.domestic)
-    fetcher         = FareFetcherService.new(routes: routes, dates: months)
+    dates          = horizons[horizon]
+    dates_in_words = dates.map { |month| month.strftime('%m-%Y') }
+    routes         = RouteBuilderService.generate(City.favorites.domestic)
+    fetcher        = FareFetcherService.new(routes: routes, dates: dates)
 
     fetcher.fares
 
@@ -52,7 +52,6 @@ namespace :get_fares do
     parser     = InternationalFareParserService.new
     routes     = RouteBuilderService.generate(City.favorites.international, :only_one_way)
     dates      = horizons(!:as_months)[horizon]
-    dates      = 0.upto(12).map { |num| num.public_send(:week).public_send(:from_now) }
     fetcher    = FareFetcherService.new(connection: connection, parser: parser, routes: routes, dates: dates)
 
     fetcher.fares
