@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 gem 'autoprefixer-rails', '~>5.1'
+gem 'awesome_print'
 gem 'bootstrap-sass', '~>3.3.4'
 gem 'cancan', '1.6.10'
 gem 'chartkick', '~>1.3'
@@ -70,7 +71,6 @@ group :test do
 end
 
 group :development, :test do
-  gem 'awesome_print'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'rubocop', require: false
