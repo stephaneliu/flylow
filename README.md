@@ -3,7 +3,7 @@ Flylow
 
 [![Build Status][BS img]][Build Status]
 [![Code Climate][CC img]][Code Climate]
-[![security][SS img]][Security Status]
+[![Security Status][SS img]][Security Status]
 
 [BS img]: https://travis-ci.org/stephaneliu/flylow.svg?branch=master
 [CC img]: https://codeclimate.com/github/stephaneliu/flylow/badges/gpa.svg
