@@ -61,6 +61,7 @@ end
 group :test do
   gem 'rake' # required by Travis CI
   gem 'capybara'
+  gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'launchy'

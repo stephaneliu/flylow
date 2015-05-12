@@ -5,7 +5,7 @@ bundler_args: --without production
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
-  - bundle exec rspec spec
+  - CODECLIMATE_REPO_TOKEN=79bee510ae70864a78707c1f9d2cdf086bda944d21c8cdc5321f6a0a14bb10cc bundle exec rspec spec
 before_script:
   - mysql -e 'create database flylow_test;'
 branches:
