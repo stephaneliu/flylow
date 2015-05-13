@@ -6,14 +6,15 @@
 # GMAIL_USERNAME: Your_Gmail_Username
 # makes 'Your_Gmail_Username' available as ENV["GMAIL_USERNAME"]
 # Add application configuration variables here, as shown below.
-#
-GMAIL_USERNAME: Your_Username
-GMAIL_PASSWORD: Your_Password
-ADMIN_NAME: First User
-ADMIN_EMAIL: user@example.com
-ADMIN_PASSWORD: changeme
-ROLES: [admin, user, VIP]
-TEST_LOCAL: true
-SKYLIGHT_APPLICATION_NAME: application name
-SKYLIGHT_AUTHENTICATION: skylight auth
-RUBY_GC_TOKEN: ruby_gc_token
+
+GMAIL_USERNAME: "Your_Username"
+GMAIL_PASSWORD: "Your_Password"
+ADMIN_NAME: "Stephane Liu"
+ADMIN_EMAIL: "sliu@sjliu.com"
+ADMIN_PASSWORD: "password"
+ROLES: "admin,user,VIP"
+TEST_LOCAL: "true"
+DATABASE_USERNAME: "root"
+TEST_LOCAL: "true"
+SKYLIGHT_APPLICATION_NAME: "application name"
+SKYLIGHT_AUTHENTICATION: "skylight auth"
