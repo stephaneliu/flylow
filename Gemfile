@@ -40,6 +40,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
   gem 'html2haml'
+  gem 'lol_dba'
   gem 'quiet_assets'
   gem 'rack-livereload' 
   gem 'rb-fsevent'
