@@ -16,6 +16,7 @@ gem 'high_voltage', '~>2.3'
 gem 'jquery-rails', '4.0.3'
 gem 'js-routes', '~>1.0'
 gem 'mechanize', '2.7.3'   # pin to 2.6 due to mime-type conflict with rails 4.1.1
+# mysql2 must be before rack-mini-profiler
 gem 'mysql2'
 gem 'rolify', '4.0.0'
 gem 'sass-rails',   '5.0.3'
@@ -57,6 +58,9 @@ group :development do
   gem 'looksee'
   gem 'what_methods'
   gem 'wirble'
+  # rack-mini-profiler must be after mysql2
+  gem 'rack-mini-profiler'
+  gem 'flamegraph'
 end
 
 group :test do
