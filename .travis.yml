@@ -2,6 +2,8 @@ language: ruby
 rvm:
   - 2.2.2
 bundler_args: --without production
+env:
+  - DATABASE_USERNAME: travis
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare

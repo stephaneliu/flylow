@@ -38,7 +38,7 @@ sqlite: &sqlite
   adapter:  sqlite3
   pool:     5
   timeout:  5000
-  # database: db/development.sqlite3
+  database: db/development.sqlite3
 
 # postgres -D /usr/local/var/postgres
 postgres: &postgres  
@@ -47,19 +47,13 @@ postgres: &postgres
   pool:      5
 
 development: 
-  # database: db/development.sqlite3
   <<: *mysql
   database: flylow_development
 
-test: &test
-  <% if ENV["TRAVIS"] %>
+test:
     <<: *mysql
     database: flylow_test
-    username: travis
-  <% else %>
-    <<: *sqlite
-    database: db/test.sqlite3
-  <% end %>
+    username: <%= ENV['DATABASE_USERNAME'] %>
 
 production:
   <<: *mysql
