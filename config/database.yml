@@ -47,10 +47,9 @@ postgres: &postgres
   pool:      5
 
 development: 
-  # <<: *postgres
-  # database: flylow_development
-  <<: *sqlite
-  database: db/development.sqlite3
+  # database: db/development.sqlite3
+  <<: *mysql
+  database: flylow_development
 
 test: &test
   <% if ENV["TRAVIS"] %>
