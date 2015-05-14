@@ -15,9 +15,16 @@
 require 'rails_helper'
 
 RSpec.describe Fare do
-  describe 'validations' do
-    subject { described_class.new }
+  subject { described_class.new }
+  
+  describe 'relationships' do
+    specify do
+      is_expected.to belong_to(:origin).class_name('City')
+      is_expected.to belong_to(:destination).class_name('City')
+    end
+  end
 
+  describe 'validations' do
     specify do
       is_expected.to validate_presence_of :price
       is_expected.to validate_presence_of :origin_id

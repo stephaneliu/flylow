@@ -12,13 +12,7 @@ guard 'ctags-bundler', src_path: ["app", "lib", "spec/support"] do
   watch('Gemfile.lock')
 end
 
-# Runs rake db:test:clone on schema.rb change
-#guard 'schema' do
-#  watch('db/schema.rb')
-#end
-
 group :red_green_refactor, halt_on_fail: true do
-
   # failed_mode:
   #   - :focus (default) - Focus on the first 10 failed specs, rerun it until they pass
   #   - :keep - keep failed specs until they pass (add new failing specs when discovered)
