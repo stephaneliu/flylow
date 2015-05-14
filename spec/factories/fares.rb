@@ -7,7 +7,7 @@
 #  departure_date :date
 #  origin_id      :integer
 #  destination_id :integer
-#  comments       :text
+#  comments       :text(65535)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #

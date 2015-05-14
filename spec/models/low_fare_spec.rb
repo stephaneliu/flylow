@@ -8,12 +8,11 @@
 #  price           :decimal(8, 2)    default(0.0)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  url             :string(255)
-#  departure_dates :text
+#  departure_dates :text(65535)
 #  departure_price :decimal(8, 2)    default(0.0)
-#  return_dates    :text
+#  return_dates    :text(65535)
 #  return_price    :decimal(8, 2)    default(0.0)
-#  url             :text
+#  url             :text(65535)
 #  last_checked    :datetime
 #
 
