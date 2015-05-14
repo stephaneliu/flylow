@@ -36,6 +36,7 @@ group :development do
   gem 'foreman'
   gem 'fuubar'
   gem 'guard'
+  gem 'guard-brakeman'
   gem 'guard-ctags-bundler'
   gem 'guard-livereload', require: false
   gem 'guard-rspec', require: false
