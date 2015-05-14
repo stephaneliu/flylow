@@ -13,20 +13,20 @@ RSpec.describe LowFareLeadTimeQuery do
     create :fare, origin: origin, destination: destination, departure_date: departure_date,
                   price: 500
   end
-  let(:lead_time) do
+  let(:lead_query) do
     described_class.new(origin: origin, destination: destination, departure_date: departure_date)
   end
 
   describe '#initialize' do
     specify do
-      expect(lead_time.origin).to eq(origin)
-      expect(lead_time.destination).to eq(destination)
-      expect(lead_time.departure_date).to eq(departure_date)
+      expect(lead_query.origin).to eq(origin)
+      expect(lead_query.destination).to eq(destination)
+      expect(lead_query.departure_date).to eq(departure_date)
     end
   end
 
   describe '#find_all' do
-    subject { lead_time.find_all }
+    subject { lead_query.find_all }
 
     specify do
       is_expected.to include(low_fare)
