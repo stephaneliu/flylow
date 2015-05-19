@@ -78,6 +78,7 @@
   "Seoul-Incheon, South Korea" => ["ICN", "International"],
   "Sydney, Australia" => ["SYD", "International"],
   "Taipei, Taiwan" => ["TPE", "International"],
+  "Sendai, Japan" => ["SJD", "International"],
   "Tokyo-Haneda, Japan" => ["HND", "International"]}.each do |city, code_region|
   code, region = code_region
   City.where(name: city, airport_code: code, region: region).first_or_create
