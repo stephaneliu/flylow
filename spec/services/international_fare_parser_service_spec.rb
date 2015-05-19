@@ -3,8 +3,10 @@ require 'spec_helper'
 RSpec.describe InternationalFareParserService do
   describe '.initialize' do
     subject(:parser) { described_class.new }
+
     specify do
-      expect(parser.parser)
+      expect(parser.fares(:departure)).to eq []
+      expect(parser.fares(!:departure)).to eq []
     end
   end
 
@@ -35,11 +37,11 @@ RSpec.describe InternationalFareParserService do
     let(:departure_price) { 1000 }
     let(:return_date)     { "05/05/2015" }
     let(:return_price)    { 2000 }
+    let(:parser)          { described_class.new }
 
     context 'when content is as expected' do
       before { parser.parse(content) }
 
-      let(:parser)          { described_class.new }
       let(:departure_date)  { "08/16/2020" }
       let(:departure_price) { 1000 }
       let(:return_date)     { "11/18/2020" }
@@ -68,6 +70,16 @@ RSpec.describe InternationalFareParserService do
         it 'does not include price to parsed data' do
           expect(described_class.new.parse(content)[:departure].keys).to_not include(nil)
         end
+      end
+    end
+
+    context 'does not have any availabilities' do
+      before        { parser.parse(content) }
+      let(:content) { { Availabilities: [] }.to_json }
+
+      specify do
+        expect(parser.fares(:departing)).to be_blank
+        expect(parser.fares(!:departing)).to be_blank
       end
     end
 

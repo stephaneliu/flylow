@@ -25,6 +25,7 @@ class InternationalFareParserService < BaseFareParserService
 
   def initialize(parser = Nokogiri::HTML)
     super
+    @fares = { departure: [], return: [] }
   end
 
   # { departure: {
@@ -55,6 +56,8 @@ class InternationalFareParserService < BaseFareParserService
   private
 
   def parse_date_price(data, direction_value)
+    return {} unless data["Availabilities"].present?
+
     data["Availabilities"][direction_value]["PriceTabs"]
       .each_with_object({}) do |row, date_and_price|
       if (formatted_date = format_date(row["TabDate"])).present?
