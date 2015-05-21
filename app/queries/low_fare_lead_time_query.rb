@@ -1,16 +1,14 @@
 # Object crafts a query to determine the average days a low fare is observed
 class LowFareLeadTimeQuery
-  attr_reader :origin, :destination, :departure_date, :scope
+  attr_reader :origin, :destination, :scope
 
-  def initialize(origin:, destination:, departure_date:)
+  def initialize(origin:, destination:)
     @origin         = origin
     @destination    = destination
-    @departure_date = departure_date
-    @scope          = Fare.where(origin: origin, destination: destination,
-                                 departure_date: departure_date)
+    @scope          = Fare.where(origin: origin, destination: destination)
   end
 
-  def find_all
+  def find_all_for(departure_date: Time.zone.to_date)
     scope.where(price: lowest_price)
   end
 
