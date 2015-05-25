@@ -26,7 +26,7 @@ RSpec.describe Fare do
     end
   end
 
-  describe '#smart_save' do
+  describe '#save_or_touch' do
     let!(:existing_fare) { create :fare, price: existing_price }
     let(:existing_price) { 500 }
     let(:fare) do
@@ -39,8 +39,8 @@ RSpec.describe Fare do
       let(:new_price) { existing_fare.price + 100 }
 
       specify do
-        expect { fare.smart_save }.to change { described_class.count }.by 1
-        expect { fare.smart_save }.to_not change { existing_fare.updated_at }
+        expect { fare.save_or_touch }.to change { described_class.count }.by 1
+        expect { fare.save_or_touch }.to_not change { existing_fare.updated_at }
       end
     end
 
@@ -49,23 +49,22 @@ RSpec.describe Fare do
 
       specify do
         # This syntax not detecting change of updated_at
-        # expect { fare.smart_save }.to change { existing_fare.updated_at }
+        # due to object reference
+        # expect { fare.save_or_touch }.to change { existing_fare.updated_at }
 
         current_updated_at = existing_fare.updated_at
-        fare.smart_save
+        fare.save_or_touch
         existing_fare.reload
         expect(existing_fare.updated_at).to_not eq(current_updated_at)
-        expect { fare.smart_save }.to_not change { described_class.count }
+        expect { fare.save_or_touch }.to_not change { described_class.count }
       end
     end
 
     context 'when price is 0' do
+      before          { fare.save_or_touch }
       let(:new_price) { 0 }
 
-      specify do
-        fare.smart_save
-        expect(fare.new_record?).to eq(true)
-      end
+      specify { expect(fare.new_record?).to eq(true) }
     end
   end
 end

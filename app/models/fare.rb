@@ -20,7 +20,8 @@ class Fare < ActiveRecord::Base
 
   validates :price, :departure_date, :origin_id, :destination_id, presence: true
 
-  def smart_save
+  # def save_or_touch
+  def save_or_touch
     if existing && existing.price == price
       existing.touch
     elsif price > 0

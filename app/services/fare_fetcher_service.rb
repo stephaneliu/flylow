@@ -24,7 +24,7 @@ class FareFetcherService
       Rails.logger.info("## Start | #{origin.code} / #{destination.code} |")
 
       obtain_fare do |fare|
-        fare.smart_save
+        fare.save_or_touch
         fares << fare
       end
 
