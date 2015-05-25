@@ -7,7 +7,6 @@
     %title= content_for?(:title) ? yield(:title) : "Fly Low"
     %meta{:content => content_for?(:description) ? yield(:description) : "Fly Low", :name => "description"}
     = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag "application"
     /[if lt IE 9]
       %script{src: "https://html5shim.googlecode.com/svn/trunk/html5.js", type: "text/javascript"}
     = csrf_meta_tags
@@ -33,5 +32,4 @@
               = render 'layouts/messages'
               = yield
           %footer
-      / ! end of .container
-    / ! end of #main
+    = javascript_include_tag "application"
