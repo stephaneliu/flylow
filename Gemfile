@@ -22,7 +22,6 @@ gem 'rolify', '4.0.0'
 gem 'sass-rails',   '5.0.3'
 gem 'simple_form', '3.1.0'
 gem 'whenever', require: false
-gem 'skylight'
 
 group :assets do
   gem 'coffee-rails', '4.1.0' 
