@@ -50,6 +50,7 @@ group :development do
   gem 'thin'
   gem 'tracer_bullets'
   gem 'web-console'
+  gem 'rubycritic'
 
   # ~/.irbrc files
   gem 'bullet'
