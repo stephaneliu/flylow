@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.5'
 
-gem 'autoprefixer-rails', '~>5.1'
+gem 'autoprefixer-rails', '~>6.1'
 gem 'awesome_print'
 gem 'bootstrap-sass', '~>3.3.4'
 gem 'cancan', '1.6.10'
 gem 'chartkick', '~>1.3'
 gem 'descriptive_statistics', '~>2.5'
-gem 'devise', '3.4.1'
+gem 'devise', '~>3.5'
 gem 'figaro', '~>1.1'
 gem 'groupdate', '~>2.4'
 gem 'haml-rails', '0.9.0'
@@ -19,8 +19,7 @@ gem 'mechanize', '2.7.3'   # pin to 2.6 due to mime-type conflict with rails 4.1
 # mysql2 must be before rack-mini-profiler
 gem 'mysql2'
 gem 'rolify', '4.0.0'
-gem 'sass-rails',   '5.0.3'
-gem 'simple_form', '3.1.0'
+gem 'sass-rails',   '~>5.0.4'
 gem 'whenever', require: false
 
 group :assets do
@@ -50,7 +49,7 @@ group :development do
   gem 'thin'
   gem 'tracer_bullets'
   gem 'web-console'
-  gem 'rubycritic'
+  gem 'rubycritic', require: false
 
   # ~/.irbrc files
   gem 'bullet'
